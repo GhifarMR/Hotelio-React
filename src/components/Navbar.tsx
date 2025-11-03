@@ -1,39 +1,67 @@
-const Navbar = () => {
+import React, { useState } from "react";
+import Logo from "./NavBar/Logo";
+import Sublogo from "./NavBar/SubLogo";
+import NavItem from "./NavBar/NavItem";
+import NavButton from "./NavBar/NavButton";
+import { Menu, X } from "lucide-react";
+
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const menuItems: string[] = ["Home", "Help", "Be a Partner", "About Us"];
+
   return (
     <div className="fixed top-0 left-0 w-full z-1000 bg-white p-3 shadow flex justify-between font-[Arial] h-15">
       {/* Left Side */}
-      <div className="font-bold cursor-pointer text-2xl ml-6 hover:bg-purple-950 hover:text-white pt-1 pb-1 pl-1 pr-1">
-        <a href="#">
-          HOTELIO
-        </a>
-      </div>
-      <div className="flex-1 cursor-pointer text-2xl font-semibold animate-sublogo pt-1 pb-1">
-        <a href="#">
-          .com
-        </a>
+      <div className="flex items-center">
+        <Logo />
+        <Sublogo />
       </div>
 
-      {/* Right Side */}
-      <div className="flex gap-4">
-        {["Home", "Help", "Be a Partner", "About Us"].map((item) => (
-          <button
-
-            key={item}
-            className="relative cursor-pointer active:text-purple-950
-            after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 after:bg-purple-950
-            after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
-          >
-            {item}
-          </button>
+      {/* Right Side (Desktop) */}
+      <div className="hidden md:flex gap-4">
+        {menuItems.map((item) => (
+          <NavItem key={item} item={item} />
         ))}
 
-        <button className="border-2 border-gray-950 pl-4 pr-4 rounded-[10px] ml-3 cursor-pointer hover:bg-black hover:text-white active:bg-purple-950 transition">
-          Login
-        </button>
-        <button className="border-2 border-gray-950 pl-3 pr-3 rounded-[10px] ml-1 mr-6 cursor-pointer hover:bg-black hover:text-white active:bg-purple-950 transition">
-          Register
-        </button>
+        {/* Tombol Login & Register */}
+        <div onClick={() => (window.location.href = "/login")}>
+          <NavButton className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">Login</NavButton>
+        </div>
+        <div onClick={() => (window.location.href = "/register")}>
+          <NavButton className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6">Register</NavButton>
+        </div>
       </div>
+
+      {/* Menu Button (Mobile) */}
+      <button
+        className="md:hidden flex items-center p-2"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X size={26} /> : <Menu size={26} />}
+      </button>
+
+      {/* Dropdown Menu (Mobile) */}
+      {isOpen && (
+        <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start p-4 gap-3 md:hidden">
+          {menuItems.map((item) => (
+            <NavItem key={item} item={item} />
+          ))}
+          <div className="flex w-full gap-3 mt-2">
+            <div
+              className="flex-1"
+              onClick={() => (window.location.href = "/login")}
+            >
+              <NavButton className="w-full">Login</NavButton>
+            </div>
+            <div
+              className="flex-1"
+              onClick={() => (window.location.href = "/register")}
+            >
+              <NavButton className="w-full">Register</NavButton>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
