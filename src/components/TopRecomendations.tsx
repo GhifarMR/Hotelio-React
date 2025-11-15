@@ -1,8 +1,9 @@
 import BigCards from "./Recomendation/BigCards";
 import HeadLine from "./Recomendation/HeadLine";
+import SmallCards from "./Recomendation/SmallCards";
 
 const TopRecommendations = () => {
-  const hotel = [
+  const bigHotel = [
     {
       id: 1,
       name: "Grand Ghifar Hotel",
@@ -10,6 +11,25 @@ const TopRecommendations = () => {
       img: "https://images.unsplash.com/photo-1479502806991-251c94be6b15?q=80&w=1170&auto=format&fit=crop",
       ratingStars: "★★★★★",
       ratingNumbers: "5.0 stars",
+    },
+  ];
+
+  const smallHotel = [
+    {
+      id: 2,
+      name: "Ghifar Ocean View Resort",
+      location: "Garung, Indonesia",
+      img: "https://plus.unsplash.com/premium_photo-1687960116497-0dc41e1808a2?w=600&auto=format&fit=crop",
+      ratingStars: "★★★★★",
+      ratingNumbers: "4.8 stars",
+    },
+    {
+      id: 3,
+      name: "Ghifar Blue Lagoon Hotel",
+      location: "Sawangan, Indonesia",
+      img: "https://images.unsplash.com/photo-1529316275402-0462fcc4abd6?w=600&auto=format&fit=crop",
+      ratingStars: "★★★★★",
+      ratingNumbers: "4.9 stars",
     },
   ];
 
@@ -24,7 +44,7 @@ const TopRecommendations = () => {
       {/* Grid */}
       <div className="grid md:grid-cols-3 gap-6">
 
-        {hotel.map((item) => (
+        {bigHotel.map((item) => (
           <BigCards
             key={item.id}
             name={item.name}
@@ -35,49 +55,17 @@ const TopRecommendations = () => {
           />
         ))}
 
-        {/* Small cards*/}
         <div className="flex flex-col gap-6">
-          {/* Small cards top*/}
-          <a
-            href="#"
-            className="relative rounded-xl overflow-hidden group h-auto w-auto]"
-          >
-            <img
-              src="https://plus.unsplash.com/premium_photo-1687960116497-0dc41e1808a2?w=600&auto=format&fit=crop"
-              alt="Ghifar Ocean View Resort"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          {smallHotel.map((item) => (
+            <SmallCards
+              key={item.id}
+              name={item.name}
+              location={item.location}
+              img={item.img}
+              ratingStars={item.ratingStars}
+              ratingNumbers={item.ratingNumbers}
             />
-            <div className="absolute bottom-3 left-3 text-white drop-shadow-lg">
-              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">
-                Ghifar Ocean View Resort
-              </h3>
-              <span className="block text-sm">Garung, Indonesia</span>
-              <div className=" text-xs">
-                <span className="text-yellow-400">★★★★★</span> 4.8 stars rating
-              </div>
-            </div>
-          </a>
-
-          {/* Small cards bottom*/}
-          <a
-            href="#"
-            className="relative rounded-xl overflow-hidden group h-auto w-auto"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1529316275402-0462fcc4abd6?w=600&auto=format&fit=crop"
-              alt="Ghifar Blue Lagoon Hotel"
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute bottom-3 left-3 text-white drop-shadow-lg">
-              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">
-                Ghifar Blue Lagoon Hotel
-              </h3>
-              <span className="block text-sm">Sawangan, Indonesia</span>
-              <div className=" text-xs">
-                <span className="text-yellow-400">★★★★★</span> 4.9 stars rating
-              </div>
-            </div>
-          </a>
+          ))}
         </div>
       </div>
     </div>
