@@ -1,6 +1,6 @@
 const TopRecommendations = () => {
   return (
-    <section className="w-full px-6 md:px-16 my-16 mt-30">
+    <div className="w-full px-6 md:px-16 my-16 mt-30">
       {/* Header */}
 
       <div className="flex justify-between mb-10 max-w-x1">
@@ -71,7 +71,7 @@ const TopRecommendations = () => {
           </a>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
