@@ -1,41 +1,42 @@
+import BigCards from "./Recomendation/BigCards";
+import HeadLine from "./Recomendation/HeadLine";
+
 const TopRecommendations = () => {
+  const hotel = [
+    {
+      id: 1,
+      name: "Grand Ghifar Hotel",
+      location: "Kertek, Indonesia",
+      img: "https://images.unsplash.com/photo-1479502806991-251c94be6b15?q=80&w=1170&auto=format&fit=crop",
+      ratingStars: "★★★★★",
+      ratingNumbers: "5.0 stars",
+    },
+  ];
+
   return (
     <div className="w-full px-6 md:px-16 my-16 mt-30">
       {/* Header */}
-
-      <div className="flex justify-between mb-10 max-w-x1">
-        <h2 className="text-4xl font-bold hover:bg-red-900 hover:text-white">
-          OUR MOST VISITED HOTEL IN 2025
-        </h2>
-        <p className="text-gray-600 max-w-md hover:text-black">
-          Take a look at our best choice for the hotels of the year, we pick the hotels from our amazing visitor
-        </p>
-      </div>
-
+      <HeadLine
+        title="OUR MOST VISITED HOTEL IN 2025"
+        description="Take a look at our best choice for the hotels of the year, we pick the hotels from our amazing visitor"
+      />
 
       {/* Grid */}
       <div className="grid md:grid-cols-3 gap-6">
-        
-        {/* Big card (col-span-2) */}
-        <a
-          href="#"
-          className="relative col-span-2 rounded-xl overflow-hidden group h-auto w-auto"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1479502806991-251c94be6b15?q=80&w=1170&auto=format&fit=crop"
-            alt="Grand Ghifar Hotel"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+
+        {hotel.map((item) => (
+          <BigCards
+            key={item.id}
+            name={item.name}
+            location={item.location}
+            img={item.img}
+            ratingStars={item.ratingStars}
+            ratingNumbers={item.ratingNumbers}
           />
-          <div className="absolute bottom-4 left-4 text-white drop-shadow-lg">
-            <h3 className="text-xl font-bold hover:bg-yellow-300 hover:text-black">Grand Ghifar Hotel</h3>
-            <span className="block text-sm">Kertek, Indonesia</span>
-            <div className="text-sm"><span className="text-yellow-400">★★★★★</span> 5.0 stars rating</div>
-          </div>
-        </a>
+        ))}
 
         {/* Small cards*/}
         <div className="flex flex-col gap-6">
-
           {/* Small cards top*/}
           <a
             href="#"
@@ -47,9 +48,13 @@ const TopRecommendations = () => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute bottom-3 left-3 text-white drop-shadow-lg">
-              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">Ghifar Ocean View Resort</h3>
+              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">
+                Ghifar Ocean View Resort
+              </h3>
               <span className="block text-sm">Garung, Indonesia</span>
-              <div className=" text-xs"><span className="text-yellow-400">★★★★★</span> 4.8 stars rating</div>
+              <div className=" text-xs">
+                <span className="text-yellow-400">★★★★★</span> 4.8 stars rating
+              </div>
             </div>
           </a>
 
@@ -64,9 +69,13 @@ const TopRecommendations = () => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute bottom-3 left-3 text-white drop-shadow-lg">
-              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">Ghifar Blue Lagoon Hotel</h3>
+              <h3 className="text-lg font-bold hover:bg-yellow-300 hover:text-black">
+                Ghifar Blue Lagoon Hotel
+              </h3>
               <span className="block text-sm">Sawangan, Indonesia</span>
-              <div className=" text-xs"><span className="text-yellow-400">★★★★★</span> 4.9 stars rating</div>
+              <div className=" text-xs">
+                <span className="text-yellow-400">★★★★★</span> 4.9 stars rating
+              </div>
             </div>
           </a>
         </div>
