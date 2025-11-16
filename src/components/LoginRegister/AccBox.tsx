@@ -1,13 +1,12 @@
 interface AccProps {
-    label: string;
-    type: string;
-    placeholder: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-
-const AccBox = ({label, type, placeholder, value, onChange}: AccProps) => {
+const AccBox = ({ label, type, placeholder, value, onChange }: AccProps) => {
   return (
     <div>
       <label className="text-sm font-medium">{label}</label>

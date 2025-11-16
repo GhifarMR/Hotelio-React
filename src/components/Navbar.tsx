@@ -13,16 +13,20 @@ const Navbar: React.FC = () => {
       to: "/",
     },
     {
+      label: "Explore",
+      to: "/explore",
+    },
+    {
       label: "Help",
-      to: "/",
+      to: "/help",
     },
     {
       label: "Be a Partner",
-      to: "/",
+      to: "/be-a-partner",
     },
     {
       label: "About Us",
-      to: "/",
+      to: "/about-us",
     },
   ];
 

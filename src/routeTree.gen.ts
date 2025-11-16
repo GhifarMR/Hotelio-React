@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as BeAPartnerRouteImport } from './routes/be-a-partner'
+import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -23,6 +27,26 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BeAPartnerRoute = BeAPartnerRouteImport.update({
+  id: '/be-a-partner',
+  path: '/be-a-partner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutUsRoute = AboutUsRouteImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +55,68 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/be-a-partner': typeof BeAPartnerRoute
+  '/explore': typeof ExploreRoute
+  '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/be-a-partner': typeof BeAPartnerRoute
+  '/explore': typeof ExploreRoute
+  '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about-us': typeof AboutUsRoute
+  '/be-a-partner': typeof BeAPartnerRoute
+  '/explore': typeof ExploreRoute
+  '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/about-us'
+    | '/be-a-partner'
+    | '/explore'
+    | '/help'
+    | '/login'
+    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to:
+    | '/'
+    | '/about-us'
+    | '/be-a-partner'
+    | '/explore'
+    | '/help'
+    | '/login'
+    | '/register'
+  id:
+    | '__root__'
+    | '/'
+    | '/about-us'
+    | '/be-a-partner'
+    | '/explore'
+    | '/help'
+    | '/login'
+    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutUsRoute: typeof AboutUsRoute
+  BeAPartnerRoute: typeof BeAPartnerRoute
+  ExploreRoute: typeof ExploreRoute
+  HelpRoute: typeof HelpRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -75,6 +137,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/be-a-partner': {
+      id: '/be-a-partner'
+      path: '/be-a-partner'
+      fullPath: '/be-a-partner'
+      preLoaderRoute: typeof BeAPartnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutUsRoute: AboutUsRoute,
+  BeAPartnerRoute: BeAPartnerRoute,
+  ExploreRoute: ExploreRoute,
+  HelpRoute: HelpRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
 }

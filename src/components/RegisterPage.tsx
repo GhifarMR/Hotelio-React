@@ -40,20 +40,18 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center p-6">
+    <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center p-6 overflow-hidden">
       <Navbar />
 
-      <div className="w-full relative mt-[6vh] h-[87vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
+      <div className="w-full relative mt-[6vh] min-h-[75vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
         
-        {/* Left Image Section */}
         <AccImage
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1170&auto=format&fit=crop"
+          src="https://plus.unsplash.com/premium_photo-1676488643831-1c5fda040662?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Background"
           text="Create Your Journey"
           subText="Join us and start planning your next amazing stay"
         />
 
-        {/* Right Register Section */}
         <div className="flex flex-col justify-center px-10 py-12">
           <h2 className="text-2xl font-bold mb-2">Create Account</h2>
           <p className="text-gray-500 mb-6 text-sm">
@@ -62,52 +60,41 @@ const RegisterPage: React.FC = () => {
 
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
 
-            {/* Username */}
             <AccBox
-              label = "Username"
-              type = "text"
-              placeholder= "yourname"
-              value = {username}
-              onChange = {(e) => setUsername(e.target.value)}
+              label="Username"
+              type="text"
+              placeholder="yourname"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
 
-            {/* Email */}
             <AccBox
-              label = "Email"
-              type = "email"
-              placeholder= "you@example.com"
-              value = {email}
-              onChange = {(e) => setEmail(e.target.value)}
+              label="Email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
-            {/* Password */}
             <AccBox
-              label = "Password"
-              type = "password"
-              placeholder= "••••••••"
-              value = {password}
-              onChange = {(e) => setPassword(e.target.value)}
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
-            {/* Confirm Password */}
             <AccBox
-              label = "Confirm Password"
-              type = "password"
-              placeholder= "••••••••"
-              value = {confirm}
-              onChange = {(e) => setConfirm(e.target.value)}
+              label="Confirm Password"
+              type="password"
+              placeholder="••••••••"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
             />
 
-            {/* Error */}
-            {error && (
-              <p className="text-red-500 text-sm -mt-2">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm h-4">{error}</p>}
 
-            {/* Register Button */}
-            <AccButton
-              text="Register"
-            />
-
+            <AccButton text="Register" />
             <AccGoogleButton />
           </form>
         </div>

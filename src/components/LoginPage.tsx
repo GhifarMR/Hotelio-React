@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import AccGoogleButton from "./LoginRegister/AccGoogleButton";
+import AccImage from "./LoginRegister/AccImage";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -30,20 +31,16 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center p-6">
       <Navbar />
       
-      <div className="w-full relative mt-[6vh] h-[87vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
+      <div className="w-full relative mt-[6vh] h-[89vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
         
         {/* Left Image Section */}
-        <div className="relative h-80 md:h-auto">
-          <img
-            src="https://images.unsplash.com/photo-1748775038871-3f988bf6381e?q=80&w=1170&auto=format&fit=crop"
-            alt="Hotel"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute bottom-8 left-8 text-white">
-            <h2 className="text-2xl font-bold">Turn Vacations Into Stories</h2>
-            <p className="opacity-90 text-sm">Unforgettable stays, tailored just for you</p>
-          </div>
-        </div>
+
+        <AccImage
+          src="https://images.unsplash.com/photo-1748775038871-3f988bf6381e?q=80&w=1170&auto=format&fit=crop"
+          alt="Background"
+          text="Turn Vacations Into Stories"
+          subText="Unforgettable stays, tailored just for you"
+        />
 
         {/* Right Login Section */}
         <div className="flex flex-col justify-center px-10 py-12">
@@ -100,7 +97,7 @@ const LoginPage: React.FC = () => {
 
             {/* Google Button */}
             <AccGoogleButton />
-            
+
           </form>
         </div>
       </div>
