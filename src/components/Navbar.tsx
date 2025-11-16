@@ -7,7 +7,25 @@ import { Menu, X } from "lucide-react";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const menuItems: string[] = ["Home", "Help", "Be a Partner", "About Us"];
+  const menuItems = [
+    // "Home", "Help", "Be a Partner", "About Us"
+    {
+      label: "Home",
+      to: "/",
+    },
+    {
+      label: "Help",
+      to: "/",
+    },
+    {
+      label: "Be a Partner",
+      to: "/",
+    },
+    {
+      label: "About Us",
+      to: "/",
+    },
+  ];
 
   return (
     <div className="fixed top-0 left-0 w-full z-1000 bg-white p-3 shadow flex justify-between font-[Arial] h-15">
@@ -19,9 +37,13 @@ const Navbar: React.FC = () => {
 
       {/* Right Side (Desktop) */}
       <div className="hidden md:flex gap-4">
-        {menuItems.map((item) => (
-          <NavItem key={item} item={item} />
-        ))}
+        
+        <div className="hidden md:flex gap-4 mt-2">
+          {menuItems.map((item) => (
+            <NavItem key={item.label} item={item.label} to={item.to} />
+          ))}
+        </div>
+        
 
         {/* Button Login & Register */}
         <div onClick={() => (window.location.href = "/login")}>
