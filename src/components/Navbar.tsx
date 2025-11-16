@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-1000 bg-white p-3 shadow flex justify-between font-[Arial] h-15">
+    <div className="fixed top-0 left-0 w-full z-1000 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-15 backdrop-blur-md">
       {/* Left Side */}
       <div className="flex items-center">
         <Logo />
