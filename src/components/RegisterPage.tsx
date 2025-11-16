@@ -46,7 +46,7 @@ const RegisterPage: React.FC = () => {
       <div className="w-full relative mt-[6vh] min-h-[75vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
         
         <AccImage
-          src="https://plus.unsplash.com/premium_photo-1676488643831-1c5fda040662?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src="https://images.unsplash.com/photo-1591091421729-01e9cebccfc8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Background"
           text="Create Your Journey"
           subText="Join us and start planning your next amazing stay"
