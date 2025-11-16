@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuItems = [
-    // "Home", "Help", "Be a Partner", "About Us"
     {
       label: "Home",
       to: "/",
@@ -66,7 +65,7 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start p-4 gap-3 md:hidden">
           {menuItems.map((item) => (
-            <NavItem key={item} item={item} />
+            <NavItem key={item.label} item={item.label} to={item.to} />
           ))}
           <div className="flex w-full gap-3 mt-2">
             <div
