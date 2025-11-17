@@ -35,8 +35,8 @@ const LoginPage: React.FC = () => {
         <AccImage
           src="https://images.unsplash.com/photo-1748775038871-3f988bf6381e?q=80&w=1170&auto=format&fit=crop"
           alt="Background"
-          text="Create Your Journey"
-          subText="Join us and start planning your next amazing stay"
+          text="Turn Vacations Into Stories"
+          subText="Unforgettable stays, tailored just for you"
         />
 
         <div className="flex flex-col justify-center px-10 py-12">
