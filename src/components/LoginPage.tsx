@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen w-full bg-gray-100 flex items-center justify-center p-6 overflow-hidden">
       <Navbar />
 
-      <div className="w-full relative mt-[6vh] min-h-[75vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
+      <div className="w-full relative mt-[6vh] min-h-[88vh] rounded-3xl overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2 shadow-xl">
         <AccImage
           src="https://images.unsplash.com/photo-1748775038871-3f988bf6381e?q=80&w=1170&auto=format&fit=crop"
           alt="Background"
