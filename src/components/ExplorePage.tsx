@@ -1,11 +1,28 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { MapPin, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import SearchBox from "./MainDashboard/SearchBox";
+import CardExploreBox from "./ExplorePage/CardExploreBox";
 
 const ExplorePage = () => {
   const [starRating, setStarRating] = useState(4);
+
+  const Hotels = [
+    {
+      id: 1,
+      name: "Valeriia Bugaiova",
+      location: "Garung, Indonesia",
+      img: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.1.0&auto=format&fit=crop&q=60&w=600",
+      ratingStars: "★★★★★",
+      ratingNumbers: "4.8 stars",
+      discount: 3.33,
+      reviews: 690,
+      facilities1: "Wifi",
+      facilities2: "Pools",
+      facilities3: "Restaurant",
+    },
+  ];
 
   return (
     <>
@@ -96,64 +113,22 @@ const ExplorePage = () => {
         </div>
 
         {/* Hotel Results */}
-        <main className="flex-1 space-y-6">
-          {/* Hotel Card */}
-          <div className="bg-white rounded-xl overflow-hidden transition shadow-lg">
-            <div className="flex flex-col md:flex-row">
-              <div className="md:w-80 h-64 bg-gray-200">
-                <img
-                  src="https://plus.unsplash.com/premium_photo-1694475318104-93896256067f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Great Ghifar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="flex-1 p-6 flex justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300">
-                    Great Ghifar Hotel
-                  </h2>
-                  <p className="text-gray-600 flex items-center gap-1 mt-1">
-                    <MapPin className="w-4 h-4" />
-                    Manhattan, NYC
-                  </p>
-
-                  <div className="flex items-center gap-3 mt-4">
-                    <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded">
-                      33.3% OFF
-                    </span>
-                    <span className="text-2xl font-bold">5.0</span>
-                    <span className="text-gray-500 text-sm cursor-pointer">689 Reviews</span>
-                  </div>
-
-                  <div className="flex gap-6 mt-6 text-sm text-gray-600">
-                    <button className="hover:text-indigo-600 flex items-center gap-1 cursor-pointer">
-                      Wifi
-                    </button>
-                    <button className="hover:text-indigo-600 flex items-center gap-1 cursor-pointer">
-                      Pools
-                    </button>
-                    <button className="hover:text-indigo-600 flex items-center gap-1 cursor-pointer">
-                      Restaurant
-                    </button>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-gray-900">
-                    $ 100
-                  </div>
-                  <div className="text-sm text-gray-500 line-through mb-4">
-                    $ 150
-                  </div>
-                  <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white cursor-pointer transition">
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
+        <div className="flex-1 space-y-6">
+          {Hotels.map((item) => (
+            <CardExploreBox
+              name={item.name}
+              location={item.location}
+              img={item.img}
+              ratingStars={item.ratingStars}
+              ratingNumbers={item.ratingNumbers}
+              discount={item.discount}
+              reviews={item.reviews}
+              facilities1={item.facilities1}
+              facilities2={item.facilities2}
+              facilities3={item.facilities3}
+            />
+          ))}
+        </div>
       </div>
 
       <Footer />
