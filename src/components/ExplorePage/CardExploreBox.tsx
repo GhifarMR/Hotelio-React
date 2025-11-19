@@ -28,7 +28,7 @@ const CardExploreBox = ({
   priceBefore,
 }: CardContainerProps) => {
   return (
-    <div className="bg-white rounded-xl overflow-hidden transition shadow-lg">
+    <div className="bg-white rounded-xl overflow-hidden transition hover:shadow-lg">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-80 h-64 bg-gray-200">
           <img src={img} alt={name} className="w-full h-full object-cover" />
