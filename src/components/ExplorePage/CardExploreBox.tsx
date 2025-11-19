@@ -9,6 +9,8 @@ interface CardContainerProps {
   facilities1: string;
   facilities2: string;
   facilities3: string;
+  price: number,
+  priceBefore: number,
 }
 
 const CardExploreBox = ({
@@ -22,6 +24,8 @@ const CardExploreBox = ({
   facilities1,
   facilities2,
   facilities3,
+  price,
+  priceBefore,
 }: CardContainerProps) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden transition shadow-lg">
@@ -70,8 +74,8 @@ const CardExploreBox = ({
           </div>
 
           <div className="text-right">
-            <div className="text-3xl font-bold text-gray-900">$ 100</div>
-            <div className="text-sm text-gray-500 line-through mb-4">$ 150</div>
+            <div className="text-3xl font-bold text-gray-900">$ {price}</div>
+            <div className="text-sm text-gray-500 line-through mb-4">$ {priceBefore}</div>
             <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white cursor-pointer transition">
               Book Now
             </button>
