@@ -26,26 +26,27 @@ const CardExploreBox = ({
   facilities3,
   price,
   priceBefore,
+
 }: CardContainerProps) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden transition hover:shadow-lg">
       <div className="flex flex-col md:flex-row">
-        <div className="md:w-80 h-64 bg-gray-200">
+        <a href="#" className="md:w-80 h-64 overflow-hidden transition-all duration-300">
           <img src={img} alt={name} className="w-full h-full object-cover" />
-        </div>
+        </a>
 
         <div className="flex-1 p-6 flex justify-between">
           <div>
             <h2 className="text-2xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300">
               {name}
             </h2>
-            <p className="text-gray-600 flex items-center gap-1 mt-1">
+            <p className="text-gray-600 flex items-center gap-1 mt-1 max-w-80">
               {location}
             </p>
 
             <div className="flex items-center gap-3 mt-4">
               <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded">
-                {discount} OFF
+                {discount} % OFF
               </span>
               <span className="text-2xl font-bold">5.0</span>
               <span className="text-gray-500 text-sm cursor-pointer">

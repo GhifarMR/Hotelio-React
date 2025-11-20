@@ -17,9 +17,9 @@ const FacilitiesFilter = () => {
           <label key={item} className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
-              className="w-4 h-4 text-indigo-600 rounded"
+              className="w-4 h-4 rounded"
             />
-            <span className="text-gray-700">{item}</span>
+            <span className="text-black">{item}</span>
           </label>
         ))}
       </div>
