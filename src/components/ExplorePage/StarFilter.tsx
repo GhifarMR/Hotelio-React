@@ -1,26 +1,26 @@
-import { Star } from "lucide-react";
-import { useState } from "react";
-
 const StarFilter = () => {
-    const [starRating, setStarRating] = useState(4);
 
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-semibold text-lg">Star Rating</h3>
+        <h3 className="font-semibold text-lg">Rating</h3>
         <button className="text-indigo-600 text-sm">Reset</button>
       </div>
-      <div className="flex gap-2">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            className={`w-10 h-10 cursor-pointer transition ${
-              star <= starRating
-                ? "fill-yellow-400 text-yellow-400"
-                : "text-gray-300"
-            }`}
-            onClick={() => setStarRating(star)}
-          />
+      <div className="space-y-3">
+        {[
+          "★★★★★",
+          "★★★★",
+          "★★★",
+          "★★",
+          "★",
+        ].map((item) => (
+          <label key={item} className="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              className="w-4 h-4 rounded"
+            />
+            <span className="text-yellow-400">{item}</span>
+          </label>
         ))}
       </div>
     </div>

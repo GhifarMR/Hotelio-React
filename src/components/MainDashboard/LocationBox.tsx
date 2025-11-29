@@ -1,7 +1,7 @@
 const LocationBox = () => {
   return (
     <div className="flex flex-col flex-1 w-full md:w-auto">
-      <label className="text-xs text-gray-500 mb-1">Location</label>
+      <label className="text-xs text-black mb-1">Location</label>
       <input
         type="search"
         placeholder="Enter location"

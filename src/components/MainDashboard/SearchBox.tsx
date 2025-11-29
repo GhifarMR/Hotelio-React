@@ -13,7 +13,8 @@ const SearchBox = () => {
           "
     >
       <LocationBox />
-      <DateBox />
+      <DateBox name="Check-In" />
+      <DateBox name="Check-Out" />
       <GuestSelectorBox />
       <SearchButtonBox />
     </div>

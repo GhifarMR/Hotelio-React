@@ -88,7 +88,7 @@ const GuestSelector: React.FC = () => {
 
           <button
             onClick={handleDone}
-            className="w-full border rounded-lg py-2 hover:bg-black hover:text-white transition-colors"
+            className="w-full border rounded-lg py-2 hover:bg-black hover:text-white transition-colors cursor-pointer"
           >
             Done
           </button>
