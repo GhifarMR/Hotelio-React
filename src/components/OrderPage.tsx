@@ -170,7 +170,7 @@ const OrderPage = () => {
               <iframe
                 className="w-full h-full"
                 loading="lazy"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.984853720026!2d109.90254897482514!3d-7.355593472371469"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.984806288536!2d109.90254897500061!3d-7.3555987926533435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7aa0592f3f9d0d%3A0xa421378e660a9e77!2sKresna%20Hotel%20Wonosobo!5e0!3m2!1sen!2sid!4v1764420621488!5m2!1sen!2sid"
               ></iframe>
             </div>
           </div>
