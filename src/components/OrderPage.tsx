@@ -184,9 +184,9 @@ const OrderPage = () => {
         )}
       </div>
 
-      {/* VIEWER POPUP PUTIH */}
+      {/* White VIEWER POPUP */}
       {viewerOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-5">
           {/* CLICK OUTSIDE */}
           <div className="absolute inset-0" onClick={closeViewer}></div>
 
@@ -197,7 +197,7 @@ const OrderPage = () => {
             {/* CLOSE BUTTON */}
             <button
               onClick={closeViewer}
-              className="absolute top-3 right-4 text-gray-500 hover:text-black text-3xl leading-none"
+              className="absolute top-3 left-4 cursor-pointer text-gray-500 hover:text-black text-3xl leading-none"
             >
               ×
             </button>
@@ -206,7 +206,7 @@ const OrderPage = () => {
             <div className="flex-1 flex items-center justify-center">
               <img
                 src={selectedPhoto}
-                className="max-h-[70vh] w-auto shadow-lg transition"
+                className="max-h-[65vh] shadow-lg transition"
               />
             </div>
 

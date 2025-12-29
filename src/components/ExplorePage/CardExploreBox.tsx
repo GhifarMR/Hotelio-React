@@ -77,7 +77,7 @@ const CardExploreBox = ({
           <div className="text-right">
             <div className="text-3xl font-bold text-gray-900">Rp. {price}</div>
             <div className="text-sm text-gray-500 line-through mb-4">Rp. {priceBefore}</div>
-            <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white cursor-pointer transition">
+            <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white active:bg-blue-950 active:text-white cursor-pointer transition">
               Order
             </button>
           </div>
