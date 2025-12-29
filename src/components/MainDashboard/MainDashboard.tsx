@@ -1,4 +1,4 @@
-import SearchBox from "./MainDashboard/SearchBox";
+import SearchBox from "../SearchBox/SearchBox";
 
 const MainDashboard: React.FC = () => {
   return (

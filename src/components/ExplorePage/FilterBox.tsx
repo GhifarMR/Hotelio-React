@@ -1,4 +1,4 @@
-import BudgetBox from "./BudgetBox"
+import BudgetBox from "./BudgetFilter"
 import StarFilter from "./StarFilter"
 import FacilitiesFilter from "./FacilitiesFilter"
 

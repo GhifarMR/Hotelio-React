@@ -1,6 +1,6 @@
-import CardContainer from "./Recomendation/CardContainer";
-import HeadLine from "./Recomendation/HeadLine";
-import MoreButton from "./Recomendation/MoreButton";
+import CardContainer from "../Recomendation/CardContainer";
+import HeadLine from "../Recomendation/HeadLine";
+import MoreButton from "../Recomendation/MoreButton";
 
 const GeneralRecomendations = () => {
   const hotels = [

@@ -1,6 +1,6 @@
-import BigCards from "./Recomendation/BigCards";
-import HeadLine from "./Recomendation/HeadLine";
-import SmallCards from "./Recomendation/SmallCards";
+import BigCards from "../Recomendation/BigCards";
+import HeadLine from "../Recomendation/HeadLine";
+import SmallCards from "../Recomendation/SmallCards";
 
 const TopRecommendations = () => {
   const bigHotel = [

@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
-import Footer from "./Footer";
-import SearchBox from "./MainDashboard/SearchBox";
+import Footer from "./MainDashboard/Footer";
+import SearchBox from "./SearchBox/SearchBox";
 import CardExploreBox from "./ExplorePage/CardExploreBox";
 import FilterBox from "./ExplorePage/FilterBox";
 

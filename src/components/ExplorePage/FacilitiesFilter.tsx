@@ -1,9 +1,11 @@
+import ResetBtn from "./ResetBtn";
+
 const FacilitiesFilter = () => {
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-semibold text-lg">Popular Facilities</h3>
-        <button className="text-indigo-600 text-sm">Reset</button>
+        <ResetBtn></ResetBtn>
       </div>
       <div className="space-y-3">
         {[
@@ -24,9 +26,6 @@ const FacilitiesFilter = () => {
         ))}
       </div>
       
-      {/*   <button className="text-indigo-600 text-sm mt-4 block">
-              See All →
-            </button> */}
     </div>
   );
 };
