@@ -29,7 +29,7 @@ const CardExploreBox = ({
 
 }: CardContainerProps) => {
   return (
-    <div className="bg-white rounded-xl overflow-hidden transition hover:shadow-lg">
+    <div className="bg-white rounded-xl overflow-hidden transition">
       <div className="flex flex-col md:flex-row">
         <a href="#" className="md:w-80 h-64 overflow-hidden transition-all duration-300">
           <img src={img} alt={name} className="w-full h-full object-cover" />

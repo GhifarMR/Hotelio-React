@@ -13,8 +13,11 @@ const SearchBox = () => {
           "
     >
       <LocationBox />
-      <DateBox name="Check-In" />
-      <DateBox name="Check-Out" />
+      <div className="flex">
+        <DateBox name="Check-In" />
+        <DateBox name="Check-Out" />
+      </div>
+
       <GuestSelectorBox />
       <SearchButtonBox />
     </div>

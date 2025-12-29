@@ -2,8 +2,6 @@ interface button{
   name: string;
 }
 
-
-
 const DateBox = ({name}: button) => {
   return (
       <div className="flex flex-col flex-1">
