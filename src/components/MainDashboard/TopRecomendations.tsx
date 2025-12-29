@@ -3,7 +3,7 @@ import HeadLine from "../Recomendation/HeadLine";
 import SmallCards from "../Recomendation/SmallCards";
 
 const TopRecommendations = () => {
-  const bigHotel = [
+  const hotels = [
     {
       id: 1,
       name: "Grand Ghifar Hotel",
@@ -12,9 +12,6 @@ const TopRecommendations = () => {
       ratingStars: "★★★★★",
       ratingNumbers: "5.0 stars",
     },
-  ];
-
-  const smallHotel = [
     {
       id: 2,
       name: "Ghifar Ocean View Resort",
@@ -41,10 +38,9 @@ const TopRecommendations = () => {
         description="Take a look at our best choice for the hotels of the year, we pick the hotels from our amazing visitor"
       />
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        {bigHotel.map((item) => (
+      {/* Grid for md*/}
+      <div className="hidden md:grid md:grid-cols-3 gap-6">
+        {hotels.slice(0, 1).map((item) => (
           <BigCards
             key={item.id}
             name={item.name}
@@ -56,7 +52,7 @@ const TopRecommendations = () => {
         ))}
 
         <div className="flex flex-col gap-6">
-          {smallHotel.map((item) => (
+          {hotels.slice(1).map((item) => (
             <SmallCards
               key={item.id}
               name={item.name}
@@ -67,6 +63,20 @@ const TopRecommendations = () => {
             />
           ))}
         </div>
+
+      </div>
+
+      <div className="grid grid-cols-1 md:hidden gap-6">
+        {hotels.map((item) => (
+          <BigCards
+            key={item.id}
+            name={item.name}
+            location={item.location}
+            img={item.img}
+            ratingStars={item.ratingStars}
+            ratingNumbers={item.ratingNumbers}
+          />
+        ))}
       </div>
     </div>
   );

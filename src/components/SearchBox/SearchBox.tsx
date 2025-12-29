@@ -13,7 +13,7 @@ const SearchBox = () => {
           "
     >
       <LocationBox />
-      <div className="flex">
+      <div className="flex gap-2">
         <DateBox name="Check-In" />
         <DateBox name="Check-Out" />
       </div>
