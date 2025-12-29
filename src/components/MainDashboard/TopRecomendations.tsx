@@ -66,6 +66,7 @@ const TopRecommendations = () => {
 
       </div>
 
+      {/* Grid for mobile */}
       <div className="grid grid-cols-1 md:hidden gap-6">
         {hotels.map((item) => (
           <BigCards
