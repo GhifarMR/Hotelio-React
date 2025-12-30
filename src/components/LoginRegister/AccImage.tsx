@@ -15,7 +15,7 @@ const AccImage = ({src, alt, text, subText}: AccImageProps) => {
       />
       <div className="absolute bottom-8 left-8 text-white">
         <h2 className="text-2xl font-bold">{text}</h2>
-        <p className="opacity-90 text-sm"> {subText} </p>
+        <p className="opacity-90 text-sm mr-4"> {subText} </p>
       </div>
     </div>
   );
