@@ -47,7 +47,6 @@ const Navbar: React.FC = () => {
           ))}
         </div>
         
-
         {/* Button Login & Register */}
         <div onClick={() => (window.location.href = "/login")}>
           <NavButton className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">Login</NavButton>
