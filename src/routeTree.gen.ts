@@ -14,6 +14,7 @@ import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as BookRouteImport } from './routes/book'
 import { Route as BeAPartnerRouteImport } from './routes/be-a-partner'
 import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as IndexRouteImport } from './routes/index'
@@ -43,6 +44,11 @@ const ExploreRoute = ExploreRouteImport.update({
   path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BeAPartnerRoute = BeAPartnerRouteImport.update({
   id: '/be-a-partner',
   path: '/be-a-partner',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/be-a-partner': typeof BeAPartnerRoute
+  '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/be-a-partner': typeof BeAPartnerRoute
+  '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
   '/be-a-partner': typeof BeAPartnerRoute
+  '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/be-a-partner'
+    | '/book'
     | '/explore'
     | '/help'
     | '/login'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/be-a-partner'
+    | '/book'
     | '/explore'
     | '/help'
     | '/login'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-us'
     | '/be-a-partner'
+    | '/book'
     | '/explore'
     | '/help'
     | '/login'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutUsRoute: typeof AboutUsRoute
   BeAPartnerRoute: typeof BeAPartnerRoute
+  BookRoute: typeof BookRoute
   ExploreRoute: typeof ExploreRoute
   HelpRoute: typeof HelpRoute
   LoginRoute: typeof LoginRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/be-a-partner': {
       id: '/be-a-partner'
       path: '/be-a-partner'
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutUsRoute: AboutUsRoute,
   BeAPartnerRoute: BeAPartnerRoute,
+  BookRoute: BookRoute,
   ExploreRoute: ExploreRoute,
   HelpRoute: HelpRoute,
   LoginRoute: LoginRoute,

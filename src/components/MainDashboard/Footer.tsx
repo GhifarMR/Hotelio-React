@@ -19,17 +19,17 @@ const Footer = () => {
         <div className="grid grid-cols-3 gap-10 text-sm">
           <div>
             <h4 className="font-semibold mb-3">Page</h4>
-            <p className="text-gray-600 hover:text-black cursor-pointer">Home</p>
-            <p className="text-gray-600 hover:text-black cursor-pointer">Search</p>
-            <p className="text-gray-600 hover:text-black cursor-pointer">Blog</p>
-            <p className="text-gray-600 hover:text-black cursor-pointer">About Us</p>
+            <a href="/" className="block text-gray-600 hover:text-black cursor-pointer">Home</a>
+            <a href="/explore" className="block text-gray-600 hover:text-black cursor-pointer">Search</a>
+            <a href="/about-us" className="block text-gray-600 hover:text-black cursor-pointer">Blog</a>
+            <a href="/about-us" className="block text-gray-600 hover:text-black cursor-pointer">About Us</a>
           </div>
 
           <div>
             <h4 className="font-semibold mb-3">Feature</h4>
             <p className="text-gray-600 hover:text-black cursor-pointer">Find Hotels</p>
             <p className="text-gray-600 hover:text-black cursor-pointer">Book Hotels</p>
-            <p className="text-gray-600 hover:text-black cursor-pointer">Reviews</p>
+            <a href="#reviewPage" className="text-gray-600 hover:text-black cursor-pointer">Reviews</a>
           </div>
 
           <div>

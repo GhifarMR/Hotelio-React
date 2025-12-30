@@ -9,8 +9,8 @@ interface CardContainerProps {
   facilities1: string;
   facilities2: string;
   facilities3: string;
-  price: number,
-  priceBefore: number,
+  price: number;
+  priceBefore: number;
 }
 
 const CardExploreBox = ({
@@ -26,12 +26,14 @@ const CardExploreBox = ({
   facilities3,
   price,
   priceBefore,
-
 }: CardContainerProps) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden transition">
       <div className="flex flex-col md:flex-row">
-        <a href="#" className="md:w-80 h-64 overflow-hidden transition-all duration-300">
+        <a
+          href="#"
+          className="md:w-80 h-64 overflow-hidden transition-all duration-300"
+        >
           <img src={img} alt={name} className="w-full h-full object-cover" />
         </a>
 
@@ -76,10 +78,14 @@ const CardExploreBox = ({
 
           <div className="text-right">
             <div className="text-3xl font-bold text-gray-900">Rp. {price}</div>
-            <div className="text-sm text-gray-500 line-through mb-4">Rp. {priceBefore}</div>
-            <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white active:bg-blue-950 active:text-white cursor-pointer transition">
-              Order
-            </button>
+            <div className="text-sm text-gray-500 line-through mb-4">
+              Rp. {priceBefore}
+            </div>
+            <a href="/order">
+              <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white active:bg-blue-950 active:text-white cursor-pointer transition">
+                Order
+              </button>
+            </a>
           </div>
         </div>
       </div>

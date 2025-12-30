@@ -99,7 +99,7 @@ const ReviewPage = () => {
   };
 
   return (
-    <div className="bg-[#1f1f1f] py-12 text-white relative">
+    <div id="reviewPage" className="bg-[#1f1f1f] py-12 text-white relative">
       {/* Header */}
       <h2 className="text-center text-3xl font-semibold mb-8">
         Let’s Hear How Their Experiences <br /> Use Our Platforms
