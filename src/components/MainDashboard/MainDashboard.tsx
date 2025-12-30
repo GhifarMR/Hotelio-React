@@ -2,7 +2,7 @@ import SearchBox from "../SearchBox/SearchBox";
 
 const MainDashboard: React.FC = () => {
   return (
-    <div className="relative mt-[9vh] w-[99%] h-[90vh] mx-auto rounded-3xl overflow-hidden">
+    <div className="relative mt-[9vh] w-[95%] md:w-[99%] h-[90vh] mx-auto rounded-3xl overflow-hidden">
       
       {/* Background */}
       <div
@@ -15,7 +15,7 @@ const MainDashboard: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center h-full px-5 md:px-16 text-white">
         <div className="max-w-2xl">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
             Find The Best Hotel <br />
             With <span className="text-yellow-400">HOTELIO</span>
           </h1>
