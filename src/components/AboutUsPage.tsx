@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import Footer from "./MainDashboard/Footer";
 
 const AboutUsPage = () => {
     return (
@@ -6,48 +7,85 @@ const AboutUsPage = () => {
             <Navbar />
 
             <div className="max-w-4xl mx-auto px-6 py-16 mt-3">
-                <h1 className="text-4xl font-bold text-gray-800 mb-6">About Us</h1>
+                <h1 className="text-4xl font-bold mb-6 inline-block hover:bg-red-950 hover:text-white py-2 px-1">About Us</h1>
 
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    Welcome to <span className="font-semibold">Skyline Hotel</span>, 
-                    a modern and comfortable place designed to provide the perfect stay for travelers, 
-                    families, and business guests. Our hotel combines warm hospitality with 
-                    exceptional service to create a memorable experience for every visitor.
+                <p className="text-lg leading-relaxed mb-6">
+                    Welcome to <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>, 
+                    a modern hotel booking platform designed to help users find and book 
+                    hotels easily, quickly, and securely. <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> was created to simplify 
+                    the hotel reservation process by providing all essential features 
+                    in one convenient and user-friendly website.
                 </p>
 
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    Located in a strategic and peaceful area, Skyline Hotel offers easy access 
-                    to popular destinations, dining spots, and essential city facilities. 
-                    With elegant rooms, friendly staff, and complete amenities, we ensure that 
-                    our guests enjoy comfort from the moment they arrive.
+                <p className="text-lg leading-relaxed mb-6">
+                    Through <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>, users can explore 
+                    a wide range of hotel options, compare prices, and view detailed 
+                    information before making a reservation. <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> supports travelers in 
+                    planning their trips, whether for vacations, business travel, 
+                    or short stays, by offering reliable and accessible booking services.
                 </p>
 
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    From relaxing stays to business needs, we are committed to delivering 
-                    an environment where guests can rest, recharge, and feel at home. 
-                    Your comfort and satisfaction are our top priorities.
+                <p className="text-lg leading-relaxed mb-6">
+                    One of the main advantages of <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> is its interactive and intuitive interface. 
+                    The platform is designed to be easy to navigate, allowing users 
+                    to complete bookings without confusion. 
+                    By focusing on interactivity and clarity, 
+                    <span className="font-semibold hover:bg-blue-950 hover:text-white"> HOTELIO</span> ensures a smooth and 
+                    enjoyable experience for every user.
                 </p>
 
-                <h2 className="text-2xl font-semibold text-gray-800 mt-10 mb-4">
+                <p className="text-lg leading-relaxed mb-6">
+                    User comfort is a top priority at <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>. 
+                    The website is fully responsive and optimized for various devices, 
+                    ensuring consistent performance and usability. 
+                    From browsing hotels to confirming reservations, <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> is committed to delivering 
+                    a sense of comfort, trust, and convenience throughout the entire process.
+                </p>
+
+                <p className="text-lg leading-relaxed mb-6">
+                    By continuously improving features and design, <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> aims to become a reliable 
+                    companion for travelers who seek a seamless and modern hotel booking experience.
+                </p>
+
+                <h2 className="text-2xl font-semibold inline-block hover:bg-red-950 hover:text-white text-gray-800 mt-12 mb-4">
                     Our Vision
                 </h2>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    To become one of the most trusted, comfortable, and welcoming hotels 
-                    that provides exceptional hospitality experiences for guests from all around the world.
+                <p className="text-lg leading-relaxed mb-6">
+                    To become a trusted and innovative hotel booking platform 
+                    that prioritizes user comfort, simplicity, and reliability 
+                    in every reservation experience.
                 </p>
 
-                <h2 className="text-2xl font-semibold text-gray-800 mt-10 mb-4">
+                <h2 className="text-2xl font-semibold inline-block hover:bg-red-950 hover:text-white text-gray-800 mt-12 mb-4">
                     Our Mission
                 </h2>
-                <ul className="list-disc pl-6 text-lg text-gray-700 space-y-2">
-                    <li>Provide excellent service with professionalism and care.</li>
-                    <li>Deliver clean, safe, and well-maintained facilities for all guests.</li>
-                    <li>Offer a comfortable environment for both leisure and business needs.</li>
-                    <li>Continuously improve our services to meet guest expectations.</li>
+                <ul className="list-disc pl-6 text-lg space-y-3">
+                    <li>
+                        To provide an easy, fast, and secure hotel booking process 
+                        for users through <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>.
+                    </li>
+                    <li>
+                        To develop an interactive and user-friendly platform 
+                        that enhances user engagement and satisfaction.
+                    </li>
+                    <li>
+                        To ensure user comfort by delivering a responsive, 
+                        well-structured, and visually pleasing website.
+                    </li>
+                    <li>
+                        To present clear, accurate, and complete hotel information 
+                        to help users make confident booking decisions.
+                    </li>
+                    <li>
+                        To continuously improve services and features based on 
+                        user needs and technological advancements.
+                    </li>
                 </ul>
             </div>
+
+            <Footer></Footer>
         </div>
-    )
-}
+    );
+};
 
 export default AboutUsPage;
