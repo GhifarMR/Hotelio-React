@@ -16,6 +16,7 @@ import { Route as HelpRouteImport } from './routes/help'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BeAPartnerRouteImport } from './routes/be-a-partner'
+import { Route as AdminDashboardEditRouteImport } from './routes/admin-dashboard-edit'
 import { Route as AdminDashboardAddRouteImport } from './routes/admin-dashboard-add'
 import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard'
 import { Route as AboutUsRouteImport } from './routes/about-us'
@@ -56,6 +57,11 @@ const BeAPartnerRoute = BeAPartnerRouteImport.update({
   path: '/be-a-partner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDashboardEditRoute = AdminDashboardEditRouteImport.update({
+  id: '/admin-dashboard-edit',
+  path: '/admin-dashboard-edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardAddRoute = AdminDashboardAddRouteImport.update({
   id: '/admin-dashboard-add',
   path: '/admin-dashboard-add',
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/about-us': typeof AboutUsRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-add': typeof AdminDashboardAddRoute
+  '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/about-us': typeof AboutUsRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-add': typeof AdminDashboardAddRoute
+  '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/about-us': typeof AboutUsRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-add': typeof AdminDashboardAddRoute
+  '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-dashboard'
     | '/admin-dashboard-add'
+    | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-dashboard'
     | '/admin-dashboard-add'
+    | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-dashboard'
     | '/admin-dashboard-add'
+    | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AboutUsRoute: typeof AboutUsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDashboardAddRoute: typeof AdminDashboardAddRoute
+  AdminDashboardEditRoute: typeof AdminDashboardEditRoute
   BeAPartnerRoute: typeof BeAPartnerRoute
   BookRoute: typeof BookRoute
   ExploreRoute: typeof ExploreRoute
@@ -224,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BeAPartnerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-dashboard-edit': {
+      id: '/admin-dashboard-edit'
+      path: '/admin-dashboard-edit'
+      fullPath: '/admin-dashboard-edit'
+      preLoaderRoute: typeof AdminDashboardEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin-dashboard-add': {
       id: '/admin-dashboard-add'
       path: '/admin-dashboard-add'
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutUsRoute: AboutUsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDashboardAddRoute: AdminDashboardAddRoute,
+  AdminDashboardEditRoute: AdminDashboardEditRoute,
   BeAPartnerRoute: BeAPartnerRoute,
   BookRoute: BookRoute,
   ExploreRoute: ExploreRoute,
