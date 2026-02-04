@@ -1,134 +1,109 @@
-import { useState } from "react"
+import { useState } from "react";
+
+type Hotel = {
+  id: number;
+  name: string;
+  city: string;
+  status: "active" | "inactive";
+  image: string;
+};
 
 const AdminDashboardPage = () => {
-  const [images, setImages] = useState<string[]>([""])
+  const [hotels, setHotels] = useState<Hotel[]>([
+    {
+      id: 1,
+      name: "Great Ghifar Hotel",
+      city: "Wonosobo",
+      status: "active",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+    },
+    {
+      id: 2,
+      name: "Ocean View Resort",
+      city: "Bali",
+      status: "inactive",
+      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    },
+  ]);
 
-  const addImageField = () => {
-    setImages([...images, ""])
-  }
-
-  const updateImage = (index: number, value: string) => {
-    const newImages = [...images]
-    newImages[index] = value
-    setImages(newImages)
-  }
+  const toggleStatus = (id: number) => {
+    setHotels((prev) =>
+      prev.map((hotel) =>
+        hotel.id === id
+          ? {
+              ...hotel,
+              status: hotel.status === "active" ? "inactive" : "active",
+            }
+          : hotel,
+      ),
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow p-8">
-        <h1 className="text-3xl font-bold mb-6">Add New Hotel</h1>
-
-        <form className="flex flex-col gap-5">
-          {/* HOTEL NAME */}
-          <div>
-            <label className="font-medium">Hotel Name</label>
-            <input
-              type="text"
-              placeholder="Input Hotel Name"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
-
-          {/* CITY */}
-          <div>
-            <label className="font-medium">City</label>
-            <input
-              type="text"
-              placeholder="Input City"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
-
-          {/* ADDRESS */}
-          <div>
-            <label className="font-medium">Full Address</label>
-            <textarea
-              placeholder="Input Full Address"
-              className="w-full border rounded-lg px-3 py-2 mt-1 min-h-[80px]"
-            />
-          </div>
-
-          {/* DESCRIPTION */}
-          <div>
-            <label className="font-medium">Description</label>
-            <textarea
-              placeholder="Describe your Hotel"
-              className="w-full border rounded-lg px-3 py-2 mt-1 min-h-[120px]"
-            />
-          </div>
-
-          {/* IMAGE URLS */}
-          <div>
-            <label className="font-medium block mb-2">
-              Hotel Images (URLs)
-            </label>
-
-            {images.map((img, idx) => (
-              <input
-                key={idx}
-                type="text"
-                placeholder="Input Image"
-                value={img}
-                onChange={(e) => updateImage(idx, e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 mb-2"
-              />
-            ))}
-
-            <button
-              type="button"
-              onClick={addImageField}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              + Add another image
-            </button>
-          </div>
-
-          {/* FACILITIES */}
-          <div>
-            <label className="font-medium block mb-2">Facilities</label>
-
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              {["WiFi", "AC", "Swimming Pool", "Parking", "Restaurant"].map(
-                (facility) => (
-                  <label key={facility} className="flex items-center gap-2">
-                    <input type="checkbox" />
-                    {facility}
-                  </label>
-                )
-              )}
-            </div>
-          </div>
-
-          {/* PRICE */}
-          <div>
-            <label className="font-medium">Starting Price / Night</label>
-            <input
-              type="number"
-              placeholder="Input Price / Night"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
-
-          {/* STATUS */}
-          <div>
-            <label className="font-medium">Status</label>
-            <select className="w-full border rounded-lg px-3 py-2 mt-1">
-              <option value="draft">Draft</option>
-              <option value="active">Active</option>
-            </select>
-          </div>
-
-          {/* SUBMIT */}
-          <button
-            type="submit"
-            className="bg-black text-white py-3 rounded-lg mt-4 hover:bg-gray-900"
-          >
-            Save Hotel
+      <div className="max-w-6xl mx-auto">
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Your Hotels</h1>
+          <button className="bg-black text-white px-5 py-2 rounded-lg">
+            + Add Hotel
           </button>
-        </form>
+        </div>
+
+        {/* HOTEL LIST */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {hotels.map((hotel) => (
+            <div
+              key={hotel.id}
+              className="bg-white rounded-xl shadow overflow-hidden"
+            >
+              <img src={hotel.image} className="h-44 w-full object-cover" />
+
+              <div className="p-5">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-xl font-semibold">{hotel.name}</h3>
+
+                  <span
+                    className={`text-xs px-2 py-1 rounded ${
+                      hotel.status === "active"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-gray-200 text-gray-600"
+                    }`}
+                  >
+                    {hotel.status}
+                  </span>
+                </div>
+
+                <p className="text-sm text-gray-500 mb-4">{hotel.city}</p>
+
+                {/* ACTIONS */}
+                <div className="flex flex-wrap gap-3 text-sm">
+                  <button className="border px-3 py-1 rounded hover:bg-gray-100">
+                    Edit
+                  </button>
+
+                  <button className="border px-3 py-1 rounded hover:bg-gray-100">
+                    Rooms
+                  </button>
+
+                  <button
+                    onClick={() => toggleStatus(hotel.id)}
+                    className={`px-3 py-1 rounded ${
+                      hotel.status === "active"
+                        ? "bg-red-100 text-red-600"
+                        : "bg-green-100 text-green-600"
+                    }`}
+                  >
+                    {hotel.status === "active" ? "Deactivate" : "Activate"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashboardPage
+export default AdminDashboardPage;
