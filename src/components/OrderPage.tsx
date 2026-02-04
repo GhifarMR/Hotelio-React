@@ -60,7 +60,7 @@ const OrderPage = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* CONTAINER PUTIH AGODA */}
+      {/* CONTAINER */}
       <div className="max-w-6xl mx-auto bg-white px-6 py-8 mt-20">
         {/* TAB MENU */}
         <div className="flex gap-6 border-b mb-6 overflow-x-auto">
@@ -88,7 +88,7 @@ const OrderPage = () => {
         {/* OVERVIEW */}
         {activeTab === "overview" && (
           <div>
-            <h1 className="text-3xl font-bold mb-4">Kresna Hotel Wonosobo</h1>
+            <h1 className="text-3xl font-bold mb-4">Great Ghifar Hotel</h1>
 
             {/* FOTO GRID TANPA ROUNDED */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-1 mb-8">

@@ -1,6 +1,7 @@
 import BudgetBox from "./BudgetFilter";
 import StarFilter from "./StarFilter";
 import FacilitiesFilter from "./FacilitiesFilter";
+import FilterButton from "./FilterButton";
 
 const FilterBox = () => {
   return (
@@ -10,13 +11,8 @@ const FilterBox = () => {
       <FacilitiesFilter />
 
       <div className="flex gap-5">
-        <button className="w-full bg-black text-white py-4 rounded-xl font-medium active:bg-blue-950 transition cursor-pointer">
-          Clear
-        </button>
-
-        <button className="w-full bg-black text-white py-4 rounded-xl font-medium active:bg-blue-950 transition cursor-pointer">
-          Select
-        </button>
+        <FilterButton>Clear</FilterButton>
+        <FilterButton>Select</FilterButton>
       </div>
     </div>
   );

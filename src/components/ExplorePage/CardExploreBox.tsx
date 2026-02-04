@@ -39,7 +39,7 @@ const CardExploreBox = ({
 
         <div className="flex-1 p-6 flex justify-between">
           <div>
-            <h2 className="text-2xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300">
+            <h2 className="md:text-2xl text-xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300">
               {name}
             </h2>
             <p className="text-gray-600 flex items-center gap-1 mt-1 max-w-80">
@@ -77,7 +77,7 @@ const CardExploreBox = ({
           </div>
 
           <div className="text-right">
-            <div className="text-3xl font-bold text-gray-900">Rp. {price}</div>
+            <div className="md:text-3xl text-xl font-bold text-gray-900">Rp. {price}</div>
             <div className="text-sm text-gray-500 line-through mb-4">
               Rp. {priceBefore}
             </div>
