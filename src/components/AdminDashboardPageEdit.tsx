@@ -1,4 +1,6 @@
 import { useState } from "react"
+import InputBoxAdd from "./AdminDashboard/InputBoxAdd"
+import DescriptionBoxAdd from "./AdminDashboard/DescriptionBoxAdd"
 
 const AdminDashboardPageEdit = () => {
   const [images, setImages] = useState<string[]>([""])
@@ -13,49 +15,33 @@ const AdminDashboardPageEdit = () => {
     setImages(newImages)
   }
 
+  const facilities = [
+    "Wifi",
+    "AC",
+    "Swimming Pool",
+    "Parking Area",
+    "Breakfast",
+    "Restaurant",
+    "Free Smoking",
+    "Smoking Area",
+    "Pet Allowed",
+    "Guest Room",
+    "Disability",
+    "Gym",
+    "Shuttle"
+  ]
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow p-8">
-        <h1 className="text-3xl font-bold mb-6">Edit Hotel</h1>
+        <h1 className="text-3xl font-bold mb-6">Add New Hotel</h1>
 
         <form className="flex flex-col gap-5">
-          {/* HOTEL NAME */}
-          <div>
-            <label className="font-medium">Hotel Name</label>
-            <input
-              type="text"
-              placeholder="Input Hotel Name"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
+          <InputBoxAdd type="text">Hotel Name</InputBoxAdd>
+          <InputBoxAdd type="text">City</InputBoxAdd>
+          <InputBoxAdd type="text">Full Address</InputBoxAdd>
 
-          {/* CITY */}
-          <div>
-            <label className="font-medium">City</label>
-            <input
-              type="text"
-              placeholder="Input City"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
-
-          {/* ADDRESS */}
-          <div>
-            <label className="font-medium">Full Address</label>
-            <textarea
-              placeholder="Input Full Address"
-              className="w-full border rounded-lg px-3 py-2 mt-1 min-h-[80px]"
-            />
-          </div>
-
-          {/* DESCRIPTION */}
-          <div>
-            <label className="font-medium">Description</label>
-            <textarea
-              placeholder="Describe your Hotel"
-              className="w-full border rounded-lg px-3 py-2 mt-1 min-h-[120px]"
-            />
-          </div>
+          <DescriptionBoxAdd />
 
           {/* IMAGE URLS */}
           <div>
@@ -88,7 +74,7 @@ const AdminDashboardPageEdit = () => {
             <label className="font-medium block mb-2">Facilities</label>
 
             <div className="grid grid-cols-2 gap-2 text-sm">
-              {["WiFi", "AC", "Swimming Pool", "Parking", "Restaurant"].map(
+              {facilities.map(
                 (facility) => (
                   <label key={facility} className="flex items-center gap-2">
                     <input type="checkbox" />
@@ -100,14 +86,7 @@ const AdminDashboardPageEdit = () => {
           </div>
 
           {/* PRICE */}
-          <div>
-            <label className="font-medium">Starting Price / Night</label>
-            <input
-              type="number"
-              placeholder="Input Price / Night"
-              className="w-full border rounded-lg px-3 py-2 mt-1"
-            />
-          </div>
+          <InputBoxAdd type="number">Price</InputBoxAdd>
 
           {/* STATUS */}
           <div>

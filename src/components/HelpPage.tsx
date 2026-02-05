@@ -11,18 +11,17 @@ const HelpPage: React.FC = () => {
           <h1 className="text-4xl font-bold mb-6 hover:bg-red-950 hover:text-white py-2 px-1 inline-block">Do you need Help? </h1>
 
             <form action="" className="flex flex-col gap-1">
-              <label htmlFor="" className="text-2xl">Email:</label> <br />
+              <label htmlFor="" className="text-xl">Email:</label>
               <input type="email" required placeholder="Enter your email here" className="border-2 rounded-lg py-2 px-2 min-w-[300px]" /> <br />
 
-              <label htmlFor="" className="text-2xl">Subject:</label> <br />
+              <label htmlFor="" className="text-xl">Subject:</label> 
               <select name="" id="" required className="border-2 px-2 py-2 rounded-lg">
                 <option value="">Choose a subject</option>
                 <option value="">Payment Error</option>
                 <option value="">Hotel Out of Service</option>
-                <option value="">Scammed</option>
               </select> <br />
 
-              <label htmlFor="" className="text-2xl">Message:</label> <br />
+              <label htmlFor="" className="text-xl">Message:</label>
               <textarea name="" id="" required placeholder="Add your message here" className="border-2 rounded-lg py-1 px-2 min-w-[300px] min-h-[200px]"></textarea> <br />
 
               <input type="submit" value="Submit" className="border-2 border-black bg-black text-white active:bg-blue-950 active:text-white cursor-pointer rounded-lg py-2 px-3 "/>

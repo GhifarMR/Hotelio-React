@@ -11,7 +11,7 @@ const Book = () => {
       <form action="">
         {/* Card Lead Guess */}
         <div className="p-5 border-1 rounded-lg">
-          <h1 className="text-2xl mb-4">Lead Guess</h1>
+          <h1 className="text-xl mb-4">Lead Guess</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <input
@@ -43,7 +43,7 @@ const Book = () => {
         {/* Card Information */}
 
         <div className="p-5 mt-5 border-1 rounded-lg">
-          <h1 className="text-2xl mb-4">Information</h1>
+          <h1 className="text-xl mb-4">Information</h1>
           
           <div className="text-xl border-1 rounded-lg p-4 mb-3">
             <h1>Great Ghifar Hotel</h1>
@@ -68,10 +68,10 @@ const Book = () => {
 
         {/* Card Message */}
         <div className="p-5 mt-5 border-1 rounded-lg">
-          <h1 className="text-2xl mb-4">Message (optional) </h1>
+          <h1 className="text-xl mb-4">Message (optional) </h1>
 
           <div className="grid grid-cols-1 gap-4 mb-4">
-            <textarea name="" id="" className="p-4 border-2 rounded-lg text-xl min-h-[300px]" placeholder="Leave a message here">
+            <textarea name="" id="" className="p-4 border-2 rounded-lg min-h-[300px]" placeholder="Leave a message here">
             </textarea>
           </div>
         </div>

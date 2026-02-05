@@ -45,9 +45,9 @@ const AdminDashboardPage = () => {
         {/* HEADER */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Your Hotels</h1>
-          <button className="bg-black text-white px-5 py-2 rounded-lg">
+          <a href="/admin-dashboard-add" className="bg-black text-white px-5 py-2 rounded-lg cursor-pointer">
             + Add Hotel
-          </button>
+          </a>
         </div>
 
         {/* HOTEL LIST */}
@@ -78,17 +78,17 @@ const AdminDashboardPage = () => {
 
                 {/* ACTIONS */}
                 <div className="flex flex-wrap gap-3 text-sm">
-                  <button className="border px-3 py-1 rounded hover:bg-gray-100">
+                  <a href="/admin-dashboard-edit" className="border px-3 py-1 rounded hover:bg-gray-100">
                     Edit
-                  </button>
+                  </a>
 
-                  <button className="border px-3 py-1 rounded hover:bg-gray-100">
+                  <a href="/admin-dashboard" className="border px-3 py-1 rounded hover:bg-gray-100">
                     Rooms
-                  </button>
+                  </a>
 
                   <button
                     onClick={() => toggleStatus(hotel.id)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1 rounded cursor-pointer ${
                       hotel.status === "active"
                         ? "bg-red-100 text-red-600"
                         : "bg-green-100 text-green-600"
