@@ -2,7 +2,7 @@ import SearchBox from "./SearchBox/SearchBox";
 
 const Book = () => {
   return (
-    <div className="my-10 grid justify-center">
+    <div className=" grid justify-center">
       
       <div className="flex justify-center">
         <SearchBox />
@@ -79,7 +79,7 @@ const Book = () => {
         <input
           type="submit"
           value="Payment"
-          className="border-2 border-black bg-black py-2 px-4 rounded-lg text-white text-2xl align-center mt-5 cursor-pointer active:bg-blue-950"
+          className="border-2 border-black bg-black py-2 px-2 rounded-lg text-white text-xl align-center mt-5 cursor-pointer active:bg-blue-950"
         />
       </form>
     </div>

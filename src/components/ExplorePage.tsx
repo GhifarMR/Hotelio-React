@@ -43,7 +43,7 @@ const ExplorePage = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   return (
-    <>
+    <div>
       <Navbar />
 
       {/* MOBILE BUTTONS */}
@@ -122,7 +122,7 @@ const ExplorePage = () => {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

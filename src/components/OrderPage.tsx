@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./MainDashboard/Footer";
+import SearchBox from "./SearchBox/SearchBox";
 
 const OrderPage = () => {
   const photosMain = [
@@ -48,6 +49,7 @@ const OrderPage = () => {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(photosMain[0]);
   const [activeTab, setActiveTab] = useState("overview");
+  const [showSearchBox, setShowSearchBox] = useState(false);
 
   const openViewer = (src: string) => {
     setSelectedPhoto(src);
@@ -61,8 +63,25 @@ const OrderPage = () => {
       <Navbar />
 
       {/* CONTAINER */}
-      <div className="max-w-6xl mx-auto bg-white px-6 py-8 mt-20">
+      <div className="max-w-6xl mx-auto bg-white px-6 py-8 ">
         {/* TAB MENU */}
+
+      <div className="hidden md:flex justify-center">
+        <SearchBox />
+      </div>
+
+      <button className="md:hidden mt-12 mb-5" onClick={() => {
+        setShowSearchBox(!showSearchBox)
+      }}>
+        Search
+      </button>
+
+      {showSearchBox && (
+        <div className="md:hidden absolute justify-center">
+        <SearchBox />
+      </div>
+      )}
+
         <div className="flex gap-6 border-b mb-6 overflow-x-auto">
           {[
             { key: "overview", label: "Overview" },

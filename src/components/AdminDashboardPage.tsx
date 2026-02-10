@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-type Hotel = {
+interface Hotel {
   id: number;
   name: string;
   city: string;
   status: "active" | "inactive";
   image: string;
-};
+}
 
 const AdminDashboardPage = () => {
   const [hotels, setHotels] = useState<Hotel[]>([
@@ -39,15 +39,37 @@ const AdminDashboardPage = () => {
     );
   };
 
+  const [showLogMenu, setShowLogMenu] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen p-8">
       <div className="max-w-6xl mx-auto">
         {/* HEADER */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Your Hotels</h1>
-          <a href="/admin-dashboard-add" className="bg-black text-white px-5 py-2 rounded-lg cursor-pointer">
-            + Add Hotel
-          </a>
+          <div>
+            <button
+              className="text-3xl font-bold cursor-pointer"
+              onClick={() => setShowLogMenu(!showLogMenu)}
+            >
+              BABA.CO
+            </button> 
+
+            {showLogMenu && (
+              <div className="absolute bg-white bottom rounded p-2 cursor-pointer shadow">
+                <a href="/">Log Out</a>
+              </div>
+            )}
+            
+          </div>
+
+          <div>
+            <a
+              href="/admin-dashboard-add"
+              className="bg-black text-white px-5 py-2 rounded-lg cursor-pointer"
+            >
+              Add Hotel
+            </a>
+          </div>
         </div>
 
         {/* HOTEL LIST */}
@@ -78,12 +100,11 @@ const AdminDashboardPage = () => {
 
                 {/* ACTIONS */}
                 <div className="flex flex-wrap gap-3 text-sm">
-                  <a href="/admin-dashboard-edit" className="border px-3 py-1 rounded hover:bg-gray-100">
+                  <a
+                    href="/admin-dashboard-edit"
+                    className="border px-3 py-1 rounded hover:bg-gray-100"
+                  >
                     Edit
-                  </a>
-
-                  <a href="/admin-dashboard" className="border px-3 py-1 rounded hover:bg-gray-100">
-                    Rooms
                   </a>
 
                   <button
