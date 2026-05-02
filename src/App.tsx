@@ -9,7 +9,9 @@ import Footer from './components/MainDashboard/Footer'
 function App() {
   return (
     <>
+    <div className='sticky top-0 left-0 z-100'>
       <Navbar />
+    </div>
       <MainDashboard />
       <TopRecommendations />
       <GeneralRecomendations />

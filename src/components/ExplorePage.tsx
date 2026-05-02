@@ -70,23 +70,14 @@ const ExplorePage = () => {
       </div>
 
       {/* SEARCH BOX */}
-      <div className="mt-6 flex justify-center">
-
-        {/* desktop */}
-        <div className="hidden md:flex">
+      <div className="md:sticky md:top-0 md:z-40 bg-white">
+        <div className="max-w-5xl mx-auto">
           <SearchBox />
         </div>
-
-        {/* mobile */}
-        {showSearch && (
-          <div className="md:hidden w-full px-4">
-            <SearchBox />
-          </div>
-        )}
       </div>
 
       {/* MAIN CONTENT */}
-      
+
       <div className="max-w-7xl mx-auto px-2 py-10 flex flex-col lg:flex-row gap-10">
         {/* FILTER */}
         <div className="hidden lg:block">

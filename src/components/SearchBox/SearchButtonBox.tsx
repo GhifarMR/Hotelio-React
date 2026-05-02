@@ -1,8 +1,12 @@
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
 const SearchButtonBox = () => {
   return (
-    <button className="text-black border-1 hover:bg-black hover:text-white active:bg-blue-950 active:text-white transition-colors px-6 py-3 rounded-lg cursor-pointer w-full md:w-auto">
+    <Button className="h-10.5 px-8 bg-black hover:bg-gray-800 text-white rounded-lg">
+      <Search size={16} className="mr-2" />
       Search
-    </button>
+    </Button>
   );
 };
 

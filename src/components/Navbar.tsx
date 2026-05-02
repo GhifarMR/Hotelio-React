@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="sticky top-0 left-0 w-full z-1000 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-16 backdrop-blur-md">
+    <div className="w-full z-1000 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-16 backdrop-blur-md">
       {/* Left Side */}
       <div className="flex items-center">
         <Logo />
@@ -70,10 +70,17 @@ const Navbar: React.FC = () => {
           ))}
           <div className="flex w-full gap-3 mt-2">
             <div className="flex-1">
-              <NavButton className="w-full">Login</NavButton>
+              <NavButton to="/login" className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">
+                Login
+              </NavButton>
             </div>
             <div className="flex-1">
-              <NavButton className="w-full">Register</NavButton>
+              <NavButton
+                to="/register"
+                className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6"
+              >
+                Register
+              </NavButton>
             </div>
           </div>
         </div>

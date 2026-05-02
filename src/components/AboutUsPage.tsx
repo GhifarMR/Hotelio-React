@@ -5,10 +5,10 @@ import SubTitleAbout from "./AboutUs/SubTitleAbout";
 
 const AboutUsPage = () => {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-gray-100">
             <Navbar />
 
-            <div className="max-w-4xl mx-auto px-6 py-16 mt-3">
+            <div className="max-w-4xl mx-auto px-6 py-2">
                 <h1 className="text-4xl font-bold mb-6 inline-block hover:bg-red-950 hover:text-white py-2 px-1">About Us</h1>
 
                 <DescriptionAbout>
