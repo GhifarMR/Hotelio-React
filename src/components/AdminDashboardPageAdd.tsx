@@ -91,8 +91,15 @@ const AdminDashboardPageAdd = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow p-8">
+    <div className="min-h-screen px-6 pt-2">
+
+      <AdminNavbar />
+
+      <div className="max-w-6xl mx-auto">
+        
+      </div>
+
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl p-8">
 
         <h1 className="text-3xl font-bold mb-6">Add New Hotel</h1>
 

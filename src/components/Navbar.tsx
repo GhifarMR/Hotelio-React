@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-1000 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-16 backdrop-blur-md">
+    <div className="sticky top-0 left-0 w-full z-1000 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-16 backdrop-blur-md">
       {/* Left Side */}
       <div className="flex items-center">
         <Logo />
@@ -40,20 +40,18 @@ const Navbar: React.FC = () => {
 
       {/* Right Side (Desktop) */}
       <div className="hidden md:flex gap-4">
-        
         <div className="hidden md:flex gap-4 mt-2">
           {menuItems.map((item) => (
             <NavItem key={item.label} item={item.label} to={item.to} />
           ))}
         </div>
-        
         {/* Button Login & Register */}
-        <div onClick={() => (window.location.href = "/login")}>
-          <NavButton className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">Login</NavButton>
-        </div>
-        <div onClick={() => (window.location.href = "/register")}>
-          <NavButton className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6">Register</NavButton>
-        </div>
+        <NavButton to="/login" className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">
+          Login
+        </NavButton>
+        <NavButton to="/register" className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6">
+          Register
+        </NavButton>
       </div>
 
       {/* Menu Button (Mobile) */}
@@ -71,16 +69,10 @@ const Navbar: React.FC = () => {
             <NavItem key={item.label} item={item.label} to={item.to} />
           ))}
           <div className="flex w-full gap-3 mt-2">
-            <div
-              className="flex-1"
-              onClick={() => (window.location.href = "/login")}
-            >
+            <div className="flex-1">
               <NavButton className="w-full">Login</NavButton>
             </div>
-            <div
-              className="flex-1"
-              onClick={() => (window.location.href = "/register")}
-            >
+            <div className="flex-1">
               <NavButton className="w-full">Register</NavButton>
             </div>
           </div>

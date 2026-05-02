@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AdminNavbar from "./AdminDashboard/adminNavbar";
 
 interface Hotel {
   id: number;
@@ -24,6 +25,27 @@ const AdminDashboardPage = () => {
       status: "inactive",
       image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
     },
+    {
+      id: 2,
+      name: "Ocean View Resort",
+      city: "Bali",
+      status: "inactive",
+      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    },
+    {
+      id: 2,
+      name: "Ocean View Resort",
+      city: "Bali",
+      status: "inactive",
+      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    },
+    {
+      id: 2,
+      name: "Ocean View Resort",
+      city: "Bali",
+      status: "inactive",
+      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    },
   ]);
 
   const toggleStatus = (id: number) => {
@@ -39,39 +61,11 @@ const AdminDashboardPage = () => {
     );
   };
 
-  const [showLogMenu, setShowLogMenu] = useState(false);
-
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen px-6 pt-2">
+      <AdminNavbar />
+
       <div className="max-w-6xl mx-auto">
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <button
-              className="text-3xl font-bold cursor-pointer"
-              onClick={() => setShowLogMenu(!showLogMenu)}
-            >
-              BABA.CO
-            </button> 
-
-            {showLogMenu && (
-              <div className="absolute bg-white bottom rounded p-2 cursor-pointer shadow">
-                <a href="/">Log Out</a>
-              </div>
-            )}
-            
-          </div>
-
-          <div>
-            <a
-              href="/admin-dashboard-add"
-              className="bg-black text-white px-5 py-2 rounded-lg cursor-pointer"
-            >
-              Add Hotel
-            </a>
-          </div>
-        </div>
-
         {/* HOTEL LIST */}
         <div className="grid md:grid-cols-2 gap-6">
           {hotels.map((hotel) => (
