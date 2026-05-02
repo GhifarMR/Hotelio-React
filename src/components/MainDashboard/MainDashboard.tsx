@@ -2,7 +2,7 @@ import SearchBox from "../SearchBox/SearchBox";
 
 const MainDashboard: React.FC = () => {
   return (
-    <div className="relative w-[99%] h-[88vh] md:h-[90vh] mx-auto rounded-3xl overflow-hidden">
+    <div className="relative w-[99%] h-[88vh] md:h-[90vh] mx-auto md:rounded-3xl overflow-hidden">
       
       {/* Background */}
       <div

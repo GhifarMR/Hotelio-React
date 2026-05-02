@@ -1,6 +1,6 @@
 import Footer from "./MainDashboard/Footer";
 import Navbar from "./Navbar";
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/LoginRegister/login-form";
 
 const LoginPage = () => {
   return (

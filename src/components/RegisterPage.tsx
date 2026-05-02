@@ -1,6 +1,6 @@
 import Footer from "./MainDashboard/Footer";
 import Navbar from "./Navbar";
-import { SignupForm } from "./signup-form";
+import { SignupForm } from "./LoginRegister/signup-form";
 
 const RegisterPage = () => {
   return (
