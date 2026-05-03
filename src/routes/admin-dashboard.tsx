@@ -1,7 +1,7 @@
-import AdminDashboardPage from '@/components/AdminDashboardPage'
-import { createFileRoute } from '@tanstack/react-router'
+// import AdminDashboardPage from '@/components/AdminDashboardPage'
+// import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/admin-dashboard')({
-  component: AdminDashboardPage,
-})
+// export const Route = createFileRoute('/admin-dashboard')({
+//   component: AdminDashboardPage,
+// })
 
