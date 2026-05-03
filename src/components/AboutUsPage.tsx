@@ -1,94 +1,137 @@
 import Navbar from "./Navbar";
 import Footer from "./MainDashboard/Footer";
-import DescriptionAbout from "./AboutUs/DescriptionAbout";
-import SubTitleAbout from "./AboutUs/SubTitleAbout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Hotel, Globe, ShieldCheck } from "lucide-react";
+
+const H = () => (
+  <span className="font-semibold text-gray-950 hover:bg-blue-950 hover:text-white px-0.5 transition">
+    HOTELIO
+  </span>
+);
 
 const AboutUsPage = () => {
-    return (
-        <div className="min-h-screen bg-gray-100">
-            <Navbar />
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
 
-            <div className="max-w-4xl mx-auto px-6 py-2">
-                <h1 className="text-4xl font-bold mb-6 inline-block hover:bg-red-950 hover:text-white py-2 px-1">About Us</h1>
+    <h1 className="text-4xl flex justify-center p-5">About Us</h1>
+      {/* About Text */}
+      <div className="max-w-3xl mx-auto p-4 space-y-5 text-gray-600 leading-relaxed">
+        
+        <p>
+          Welcome to <H />, a modern hotel booking platform designed to help users find and book
+          hotels easily, quickly, and securely. <H /> was created to simplify the hotel reservation
+          process by providing all essential features in one convenient and user-friendly website.
+        </p>
+        <p>
+          Through <H />, users can explore a wide range of hotel options, compare prices, and view
+          detailed information before making a reservation. <H /> supports travelers in planning
+          their trips, whether for vacations, business travel, or short stays.
+        </p>
+        <p>
+          One of the main advantages of <H /> is its interactive and intuitive interface. By
+          focusing on interactivity and clarity, <H /> ensures a smooth and enjoyable experience
+          for every user.
+        </p>
+        <p>
+          User comfort is a top priority at <H />. The website is fully responsive and optimized
+          for various devices. By continuously improving features and design, <H /> aims to become
+          a reliable companion for modern travelers.
+        </p>
+      </div>
 
-                <DescriptionAbout>
-                    Welcome to <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>, 
-                    a modern hotel booking platform designed to help users find and book 
-                    hotels easily, quickly, and securely. <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> was created to simplify 
-                    the hotel reservation process by providing all essential features 
-                    in one convenient and user-friendly website.
-                </DescriptionAbout>
+      <Separator className="max-w-3xl mx-auto" />
 
-                <DescriptionAbout>
-                    Through <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>, users can explore 
-                    a wide range of hotel options, compare prices, and view detailed 
-                    information before making a reservation. <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> supports travelers in 
-                    planning their trips, whether for vacations, business travel, 
-                    or short stays, by offering reliable and accessible booking services.
-                </DescriptionAbout>
+      {/* Stats */}
+      <div className="max-w-4xl mx-auto px-6 py-14 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { value: "10,000+", label: "Hotels Listed" },
+          { value: "50,000+", label: "Happy Guests" },
+          { value: "120+", label: "Cities Covered" },
+          { value: "4.8 ★", label: "Average Rating" },
+        ].map((s) => (
+          <div key={s.label}>
+            <p className="text-3xl font-bold text-gray-950">{s.value}</p>
+            <p className="text-sm text-gray-500 mt-1">{s.label}</p>
+          </div>
+        ))}
+      </div>
 
-                <DescriptionAbout>
-                    One of the main advantages of <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> is its interactive and intuitive interface. 
-                    The platform is designed to be easy to navigate, allowing users 
-                    to complete bookings without confusion. 
-                    By focusing on interactivity and clarity, <span className="font-semibold hover:bg-blue-950 hover:text-white"> HOTELIO</span> ensures a smooth and 
-                    enjoyable experience for every user.
-                </DescriptionAbout>
+      <Separator className="max-w-3xl mx-auto" />
 
-                <DescriptionAbout>
-                    User comfort is a top priority at <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>. 
-                    The website is fully responsive and optimized for various devices, 
-                    ensuring consistent performance and usability. 
-                    From browsing hotels to confirming reservations, <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> is committed to delivering 
-                    a sense of comfort, trust, and convenience throughout the entire process.
-                </DescriptionAbout>
+      {/* Vision & Mission */}
+      <div className="max-w-4xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8">
+        <Card className="border-2 shadow-none text-gray-950 rounded-2xl">
+          <CardContent className="p-8 space-y-4">
+            <h2 className="text-2xl font-bold">Our Vision</h2>
+            <p className="text-gray-950 leading-relaxed text-sm">
+              To become a trusted and innovative hotel booking platform that prioritizes user
+              comfort, simplicity, and reliability in every reservation experience.
+            </p>
+          </CardContent>
+        </Card>
 
-                <DescriptionAbout>
-                    By continuously improving features and design, <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span> aims to become a reliable 
-                    companion for travelers who seek a seamless and modern hotel booking experience.
-                </DescriptionAbout>
+        <Card className="border-2 border-gray-200 shadow-none rounded-2xl">
+          <CardContent className="p-8 space-y-4">
+            <h2 className="text-2xl font-bold text-gray-950">Our Mission</h2>
+            <ul className="space-y-2 text-sm text-gray-600">
+              {[
+                "Provide an easy, fast, and secure booking process.",
+                "Develop an interactive and user-friendly platform.",
+                "Ensure comfort with a responsive, well-structured website.",
+                "Present clear, accurate, and complete hotel information.",
+                "Continuously improve based on user needs.",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="font-bold">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
 
-                <SubTitleAbout>
-                    Our Vision
-                </SubTitleAbout>
-                
-                <DescriptionAbout>
-                    To become a trusted and innovative hotel booking platform 
-                    that prioritizes user comfort, simplicity, and reliability 
-                    in every reservation experience.
-                </DescriptionAbout>
-
-                <SubTitleAbout>
-                    Our Mission
-                </SubTitleAbout>
-
-                <ul className="list-disc pl-6 text-lg space-y-3">
-                    <li>
-                        To provide an easy, fast, and secure hotel booking process 
-                        for users through <span className="font-semibold hover:bg-blue-950 hover:text-white">HOTELIO</span>.
-                    </li>
-                    <li>
-                        To develop an interactive and user-friendly platform 
-                        that enhances user engagement and satisfaction.
-                    </li>
-                    <li>
-                        To ensure user comfort by delivering a responsive, 
-                        well-structured, and visually pleasing website.
-                    </li>
-                    <li>
-                        To present clear, accurate, and complete hotel information 
-                        to help users make confident booking decisions.
-                    </li>
-                    <li>
-                        To continuously improve services and features based on 
-                        user needs and technological advancements.
-                    </li>
-                </ul>
-            </div>
-
-            <Footer />
+      {/* Why Choose Us */}
+      <div className="py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold text-center text-gray-950 mb-10">
+            Why Choose <H />?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: <Hotel size={28} />,
+                title: "Wide Selection",
+                desc: "Thousands of hotels across hundreds of cities worldwide.",
+              },
+              {
+                icon: <Globe size={28} />,
+                title: "Best Price",
+                desc: "We compare prices so you always get the best deal available.",
+              },
+              {
+                icon: <ShieldCheck size={28} />,
+                title: "Secure Booking",
+                desc: "Your data and transactions are always protected.",
+              },
+            ].map((item) => (
+              <Card key={item.title} className="rounded-2xl border border-gray-200 shadow-none hover:shadow-md transition">
+                <CardContent className="p-6 space-y-3">
+                  <div className="text-gray-950">{item.icon}</div>
+                  <h3 className="font-semibold text-gray-950">{item.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-    );
+      </div>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default AboutUsPage;
