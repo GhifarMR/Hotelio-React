@@ -42,6 +42,8 @@ const ExplorePage = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
+  
+
   return (
     <div>
       <Navbar />
@@ -113,6 +115,7 @@ const ExplorePage = () => {
       </div>
 
       <Footer />
+
     </div>
   );
 };

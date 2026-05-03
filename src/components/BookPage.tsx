@@ -2,7 +2,7 @@ import SearchBox from "./SearchBox/SearchBox";
 
 const Book = () => {
   return (
-    <div className=" grid justify-center">
+    <div className=" grid justify-center ">
       
       <div className="flex justify-center">
         <SearchBox />
