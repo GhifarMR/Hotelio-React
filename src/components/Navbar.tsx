@@ -5,6 +5,7 @@ import NavItem from "./NavBar/NavItem";
 import NavButton from "./NavBar/NavButton";
 import { Menu, X } from "lucide-react";
 import Footer from "./MainDashboard/Footer";
+// import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,11 +20,12 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full z-50 bg-white/70 p-3 shadow flex justify-between font-[Arial] h-16 backdrop-blur-md">
+      <div className="w-full z-50 bg-white p-3 shadow flex justify-between font-[Arial] h-16 ">
         {/* Left Side */}
         <div className="flex items-center">
           <Logo />
           <Sublogo />
+          {/* <AnimatedThemeToggler variant="star" /> */}
         </div>
 
         {/* Right Side (Desktop) */}

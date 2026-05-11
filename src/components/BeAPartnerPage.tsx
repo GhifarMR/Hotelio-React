@@ -82,7 +82,7 @@ const BeAPartner = () => {
               </label>
               <textarea
                 placeholder="Number of rooms, facilities, etc."
-                className="border rounded-lg px-3 py-2 w-full min-h-[120px]"
+                className="border rounded-lg px-3 py-2 w-full min-h-30"
               />
             </div>
 

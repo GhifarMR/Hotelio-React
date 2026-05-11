@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { Button } from "../ui/button";
+
 interface CardContainerProps {
   name: string;
   location: string;
@@ -30,18 +33,18 @@ const CardExploreBox = ({
   return (
     <div className="bg-white rounded-xl overflow-hidden transition">
       <div className="flex flex-col md:flex-row">
-        <a
-          href="#"
+        <Link
+          to="/order"
           className="md:w-80 h-64 overflow-hidden transition-all duration-300"
         >
           <img src={img} alt={name} className="w-full h-full object-cover" />
-        </a>
+        </Link>
 
         <div className="flex-1 p-6 flex justify-between">
           <div>
-            <h2 className="md:text-2xl text-xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300">
+            <Link to="/order" className="md:text-2xl text-xl font-bold inline-block cursor-pointer text-gray-900 hover:bg-yellow-300 transition">
               {name}
-            </h2>
+            </Link>
             <p className="text-gray-600 flex items-center gap-1 mt-1 max-w-80">
               {location}
             </p>
@@ -77,15 +80,15 @@ const CardExploreBox = ({
           </div>
 
           <div className="text-right">
-            <div className="md:text-3xl text-xl font-bold text-gray-900">Rp. {price}</div>
+            <div className="md:text-3xl text-xl font-bold text-gray-900 hover:bg-green-900 hover:text-white transition cursor-pointer">Rp. {price.toLocaleString("id")}</div>
             <div className="text-sm text-gray-500 line-through mb-4">
               Rp. {priceBefore}
             </div>
-            <a href="/order">
-              <button className="bg-white text-black border-2 border-black px-8 py-3 rounded-lg font-semibold hover:bg-black hover:text-white active:bg-blue-950 active:text-white cursor-pointer transition">
+            <Link to="/order">
+              <Button variant={"outline"} className="bg-white text-black border-black px-8 py-5 rounded-lg font-semibold hover:bg-black hover:text-white active:bg-blue-950 active:text-white cursor-pointer transition">
                 Order
-              </button>
-            </a>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

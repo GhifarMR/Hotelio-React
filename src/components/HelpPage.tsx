@@ -24,7 +24,7 @@ const HelpPage: React.FC = () => {
             Do you need Help?
           </h1>
 
-          <Card className="md:p-10 p-5">
+          <Card className="p-5">
             <form action="" className="flex flex-col gap-3">
               <label htmlFor="" className="text-xl">
                 Email:
@@ -66,7 +66,7 @@ const HelpPage: React.FC = () => {
                 id=""
                 required
                 placeholder="Add your message here"
-                className="py-1 px-2 min-w-75 min-h-50"
+                className="p min-w-75 min-h-50"
               />{" "}
               <br />
               <div className="flex justify-center">
