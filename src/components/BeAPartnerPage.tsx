@@ -1,12 +1,12 @@
-import Navbar from "./Navbar"
+import Footer from "./MainDashboard/Footer";
+import Navbar from "./Navbar";
 
 const BeAPartner = () => {
   return (
     <div>
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-6 py-16 mt-10">
-        
+      <div className="max-w-4xl mx-auto px-6 mt-10">
         <h1 className="text-4xl font-bold mb-4">
           Partner with us and grow your hotel business
         </h1>
@@ -93,11 +93,15 @@ const BeAPartner = () => {
               Become a Partner
             </button>
           </form>
-          
         </div>
       </div>
-    </div>
-  )
-}
 
-export default BeAPartner
+      <div className="md:mt-8">
+        <Footer></Footer>
+      </div>
+
+    </div>
+  );
+};
+
+export default BeAPartner;
