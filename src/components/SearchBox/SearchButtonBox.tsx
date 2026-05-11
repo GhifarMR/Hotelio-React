@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const SearchButtonBox = () => {
   return (
-    <Button className="h-10.5 px-8 bg-black hover:bg-gray-800 text-white rounded-lg">
+    <Button variant={"outline"} className="h-10.5 px-8 rounded-lg cursor-pointer text-black">
       <Search size={16} className="mr-2" />
       Search
     </Button>

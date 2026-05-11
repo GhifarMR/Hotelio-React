@@ -1,25 +1,20 @@
-import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Link } from '@tanstack/react-router';
+import React from 'react';
 
 interface NavButtonProps {
+  item?: string;
   to: string;
-  children: string;
-  variant?: "default" | "outline";
   className?: string;
-  onClick?: () => void;
+  children?: React.ReactNode;
 }
 
-const NavButton = ({
-  to,
-  children,
-  variant = "default",
-  className,
-  onClick,
-}: NavButtonProps) => (
-  <Button asChild variant={variant} className={cn(className)} onClick={onClick}>
-    <Link to={to}>{children}</Link>
-  </Button>
+const NavButton: React.FC<NavButtonProps> = ({ to, className, children }) => (
+  <Link
+    to={to}
+    className={`border border-gray-950 rounded-[12px] cursor-pointer md:hover:bg-black md:hover:text-white md:active:bg-purple-950 active:text-white active:bg-black transition ${className}`}
+  >
+    {children}
+  </Link>
 );
 
 export default NavButton;

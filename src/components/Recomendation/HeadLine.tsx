@@ -8,19 +8,19 @@ const HeadLine = ({title, description}: HeadLineProps) => {
   return (
     <div>
       <div className="mb-10 max-w-x1 md:hidden">
-        <h2 className="text-3xl font-bold mb-3 hover:bg-red-900 hover:text-white" >
+        <h2 className="text-3xl font-bold mb-3 hover:bg-red-900 hover:text-white transition" >
           {title}
         </h2>
-        <p className="text-gray-600 max-w-md hover:text-black">
+        <p className="text-gray-600 max-w-md hover:text-black transition">
           {description}
         </p>
       </div>
 
       <div className="md:flex justify-between mb-10 max-w-x1 hidden">
-        <h2 className="text-4xl font-bold hover:bg-red-900 hover:text-white" >
+        <h2 className="text-4xl font-bold hover:bg-red-900 hover:text-white transition" >
           {title}
         </h2>
-        <p className="text-gray-600 max-w-md hover:text-black">
+        <p className="text-gray-600 max-w-md hover:text-black transition">
           {description}
         </p>
       </div>

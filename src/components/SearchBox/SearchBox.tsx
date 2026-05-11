@@ -16,7 +16,7 @@ const POPULAR_CITIES = [
   "Paris, France",
 ];
 
-const SearchBar = () => {
+const SearchBox = () => {
   const [location, setLocation] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -87,4 +87,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default SearchBox;

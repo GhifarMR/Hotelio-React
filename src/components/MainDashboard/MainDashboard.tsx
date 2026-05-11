@@ -3,14 +3,15 @@ import SearchBox from "../SearchBox/SearchBox";
 const MainDashboard: React.FC = () => {
   return (
     <div className="relative w-[99%] h-[88vh] md:h-[90vh] mx-auto md:rounded-3xl overflow-hidden">
-      
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{backgroundImage: "url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0')",
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0')",
         }}
       />
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/50" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center h-full px-5 md:px-16 text-white">
@@ -24,8 +25,9 @@ const MainDashboard: React.FC = () => {
             experiences at top hotels only with HOTELIO.
           </p>
         </div>
-
-        <SearchBox />
+        <div className="max-w-4xl my-7">
+          <SearchBox />
+        </div>
       </div>
     </div>
   );

@@ -46,7 +46,6 @@ const OrderPage = () => {
     },
   ];
 
-
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(photosMain[0]);
   const [activeTab, setActiveTab] = useState("overview");
@@ -232,7 +231,7 @@ const OrderPage = () => {
 
             {/* THUMBNAILS */}
             <div
-              className="w-full md:w-36 overflow-y-auto max-h-[70vh] flex flex-col gap-4 pr-1"
+              className="w-full md:w-36 overflow-y-auto max-h-[70vh] flex flex-col gap-4 pr-5"
             >
               {photosViewer.map((src, idx) => (
                 <img
