@@ -23,6 +23,7 @@ function App() {
       <div className="sticky top-0 left-0 z-100">
         <Navbar />
       </div>
+      
       <MainDashboard />
       <TopRecommendations />
       <GeneralRecomendations />

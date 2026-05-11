@@ -73,7 +73,7 @@ const HelpPage: React.FC = () => {
                 <Input
                   type="submit"
                   value="Submit"
-                  className="border-2 border-black bg-black text-white active:bg-blue-950 active:text-white cursor-pointer rounded-lg py-2 px-3 max-w-2xl"
+                  className="border-2 cursor-pointer rounded-lg "
                 />
               </div>
             </form>
