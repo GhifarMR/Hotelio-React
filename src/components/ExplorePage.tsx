@@ -3,7 +3,6 @@ import Footer from "./MainDashboard/Footer";
 import SearchBox from "./SearchBox/SearchBox";
 import CardExploreBox from "./ExplorePage/CardExploreBox";
 import FilterBox from "./ExplorePage/FilterBox";
-import { useState } from "react";
 import SearchSheet from "./SearchBox/SearchSheet";
 import FilterSheet from "./SearchBox/FilterSheet";
 
