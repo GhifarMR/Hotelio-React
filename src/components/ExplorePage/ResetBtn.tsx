@@ -1,6 +1,6 @@
 const ResetBtn = () => {
   return (
-    <button className="text-indigo-600 text-sm cursor-pointer">Reset</button>
+    <button type="reset" className="text-indigo-600 text-sm cursor-pointer">Reset</button>
   );
 };
 

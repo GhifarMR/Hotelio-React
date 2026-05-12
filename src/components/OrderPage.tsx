@@ -16,16 +16,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Star,
-  Wifi,
-  Wind,
-  Utensils,
-  Phone,
-  Car,
-  Waves,
-} from "lucide-react";
+import { Star, Wifi, Wind, Utensils, Phone, Car, Waves } from "lucide-react";
 import SearchSheet from "./SearchBox/SearchSheet";
+import { Link } from "@tanstack/react-router";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -210,13 +203,15 @@ const OrderPage = () => {
                         <p className="text-sm line-through text-muted-foreground">
                           Rp. {room.priceBefore.toLocaleString("id")}
                         </p>
-                        <p className="text-xl font-bold">Rp. {room.priceNow.toLocaleString("id")}</p>
+                        <p className="text-xl font-bold">
+                          Rp. {room.priceNow.toLocaleString("id")}
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           per night
                         </p>
                       </div>
                       <Button className="shrink-0 cursor-pointer">
-                        Book Now
+                        <Link to={"/book"}>Book Now</Link>
                       </Button>
                     </div>
                   </div>

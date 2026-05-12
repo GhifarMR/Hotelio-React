@@ -34,7 +34,7 @@ const HelpPage: React.FC = () => {
                 required
                 placeholder="Enter your email here"
               />{" "}
-              <br />
+
               <label htmlFor="" className="text-xl">
                 Subject:
               </label>
@@ -45,16 +45,22 @@ const HelpPage: React.FC = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Problem</SelectLabel>
-                    <SelectItem value="apple">Payment & Refund</SelectItem>
-                    <SelectItem value="banana">Booking Cancellation</SelectItem>
-                    <SelectItem value="blueberry">
+                    <SelectItem value="Payment & Refund">
+                      Payment & Refund
+                    </SelectItem>
+                    <SelectItem value="Booking Cancellation">
+                      Booking Cancellation
+                    </SelectItem>
+                    <SelectItem value="Check In / Check Out Issue">
                       Check In / Check Out Issue
                     </SelectItem>
-                    <SelectItem value="grapes">Account & Security</SelectItem>
-                    <SelectItem value="pineapple">
+                    <SelectItem value="Account & Security">
+                      Account & Security
+                    </SelectItem>
+                    <SelectItem value="Feedback & Suggestion">
                       Feedback & Suggestion
                     </SelectItem>
-                    <SelectItem value="pineapple">Other</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -73,7 +79,7 @@ const HelpPage: React.FC = () => {
                 <Input
                   type="submit"
                   value="Submit"
-                  className="border-2 cursor-pointer rounded-lg "
+                  className="border-2 cursor-pointer rounded-lg bg-black text-white hover:bg-blue-950"
                 />
               </div>
             </form>

@@ -29,7 +29,7 @@ const SearchBox = () => {
 
 
   return (
-    <div className="bg-white rounded-2xl p-4 flex flex-col md:flex-row gap-3 w-full mx-auto">
+    <form className="bg-white rounded-2xl p-4 flex flex-col md:flex-row gap-3 w-full mx-auto">
       {/* Location */}
       <div className="flex flex-col flex-1 relative">
         <label className="text-xs text-gray-500 mb-1 font-medium">
@@ -83,7 +83,7 @@ const SearchBox = () => {
       <div className="flex flex-col justify-end">
         <SearchButtonBox />
       </div>
-    </div>
+    </form>
   );
 };
 
