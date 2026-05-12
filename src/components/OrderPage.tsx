@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 import {
   Carousel,
   CarouselContent,
@@ -17,7 +17,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
-  Search,
   Star,
   Wifi,
   Wind,
@@ -26,6 +25,7 @@ import {
   Car,
   Waves,
 } from "lucide-react";
+import SearchSheet from "./SearchBox/SearchSheet";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -47,24 +47,24 @@ const photosViewer = [
 const rooms = [
   {
     name: "Superior King Room",
-    priceBefore: "USD 44.20",
-    priceNow: "USD 32.90",
+    priceBefore: 400000,
+    priceNow: 300000,
     size: "28m²",
     features: ["King Bed", "AC", "Hot Shower", "Breakfast"],
     img: photosMain[2],
   },
   {
     name: "Deluxe Family Room",
-    priceBefore: "USD 78.10",
-    priceNow: "USD 59.50",
+    priceBefore: 500000,
+    priceNow: 400000,
     size: "40m²",
     features: ["2 Beds", "AC", "Hot Shower", "TV", "Breakfast"],
     img: photosMain[3],
   },
   {
     name: "Executive Suite",
-    priceBefore: "USD 120.00",
-    priceNow: "USD 89.00",
+    priceBefore: 600000,
+    priceNow: 500000,
     size: "55m²",
     features: ["King Bed", "Living Room", "Premium Bathroom"],
     img: photosMain[1],
@@ -105,30 +105,17 @@ const OrderPage = () => {
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-
         {/* ── SEARCH BOX ── */}
         <div className="hidden md:flex justify-center mb-8">
           <SearchBox />
         </div>
-        
+
         <div className="md:hidden mb-6">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="w-full gap-2">
-                <Search size={16} />
-                Search rooms
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-auto rounded-t-2xl pb-10">
-              <div className="pt-4">
-                <SearchBox />
-              </div>
-            </SheetContent>
-          </Sheet>
+          <SearchSheet />
         </div>
 
         {/* ── TAB NAV (anchor links) ── */}
-        <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b mb-10">
+        <div className="sticky top-0 z-20 bg-white border-b mb-10">
           <div className="flex gap-1 overflow-x-auto">
             {TAB_KEYS.map((key) => (
               <button
@@ -166,8 +153,8 @@ const OrderPage = () => {
 
           {/* Rating */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-blue-600 text-white font-bold text-xl shrink-0">
-              8.4
+            <div className="flex items-center justify-center w-14 h-14 rounded-xl font-bold text-2xl shrink-0">
+              4.8
             </div>
             <div>
               <p className="font-semibold">Very Good</p>
@@ -182,28 +169,34 @@ const OrderPage = () => {
         <Separator className="mb-16" />
 
         {/* ══════════════════════════════════════════════════
-            SECTION: ROOMS
-        ══════════════════════════════════════════════════ */}
+          SECTION: ROOMS
+          ══════════════════════════════════════════════════ */}
         <section id="section-rooms" className="mb-16 scroll-mt-20">
           <h2 className="text-2xl font-bold mb-6">Rooms</h2>
           <div className="space-y-4">
             {rooms.map((room, idx) => (
-              <Card key={idx} className="overflow-hidden">
-                <CardContent className="p-0 flex flex-col md:flex-row">
+              <Card key={idx} className="overflow-hidden border-none shadow-sm">
+                <CardContent className="p-0 flex flex-col md:flex-row items-stretch">
+                  {/* Gambar: h-52 di mobile, h-auto + self-stretch di desktop agar nempel atas-bawah */}
                   <img
                     src={room.img}
                     onClick={() => openViewer(photosMain.indexOf(room.img))}
-                    className="w-full md:w-56 h-44 object-cover cursor-pointer hover:opacity-85 transition-opacity shrink-0"
+                    className="w-full md:w-64 h-52 md:h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity shrink-0 self-stretch"
                   />
-                  <div className="flex flex-col md:flex-row flex-1 gap-4 p-5">
-                    <div className="flex-1">
+
+                  <div className="flex flex-col md:flex-row flex-1 gap-4 p-5 md:px-6">
+                    <div className="flex-1 flex flex-col justify-center">
                       <h3 className="text-lg font-semibold">{room.name}</h3>
                       <p className="text-sm text-muted-foreground mt-1 mb-3">
                         {room.size}
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {room.features.map((f) => (
-                          <Badge key={f} variant="secondary" className="text-xs font-normal">
+                          <Badge
+                            key={f}
+                            variant="secondary"
+                            className="text-xs font-normal"
+                          >
                             {f}
                           </Badge>
                         ))}
@@ -212,17 +205,17 @@ const OrderPage = () => {
 
                     <Separator className="md:hidden" />
 
-                    <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-3 md:min-w-[130px]">
+                    <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-3 md:min-w-32">
                       <div className="text-left md:text-right">
                         <p className="text-sm line-through text-muted-foreground">
-                          {room.priceBefore}
+                          Rp. {room.priceBefore.toLocaleString("id")}
                         </p>
-                        <p className="text-xl font-bold text-orange-500">
-                          {room.priceNow}
+                        <p className="text-xl font-bold">Rp. {room.priceNow.toLocaleString("id")}</p>
+                        <p className="text-xs text-muted-foreground">
+                          per night
                         </p>
-                        <p className="text-xs text-muted-foreground">per night</p>
                       </div>
-                      <Button size="sm" className="shrink-0">
+                      <Button className="shrink-0 cursor-pointer">
                         Book Now
                       </Button>
                     </div>
@@ -283,7 +276,6 @@ const OrderPage = () => {
             Guests love the clean architecture and peaceful atmosphere.
           </p>
         </section>
-
       </div>
 
       {/* ══════════════════════════════════════════════════

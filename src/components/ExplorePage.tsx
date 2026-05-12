@@ -4,6 +4,8 @@ import SearchBox from "./SearchBox/SearchBox";
 import CardExploreBox from "./ExplorePage/CardExploreBox";
 import FilterBox from "./ExplorePage/FilterBox";
 import { useState } from "react";
+import SearchSheet from "./SearchBox/SearchSheet";
+import FilterSheet from "./SearchBox/FilterSheet";
 
 const ExplorePage = () => {
   const Hotels = [
@@ -144,39 +146,13 @@ const ExplorePage = () => {
     },
   ];
 
-  const [showSearch, setShowSearch] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
-
 
   return (
     <div>
       <Navbar />
 
-      {/* MOBILE BUTTONS */}
-      <div className="mt-20 flex gap-3 justify-end px-4 md:hidden">
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={() => {
-            setShowSearch(!showSearch);
-            setShowFilter(false);
-          }}
-        >
-          Search
-        </button>
-
-        <button
-          className="px-4 py-2 bg-gray-600 text-white rounded"
-          onClick={() => {
-            setShowFilter(!showFilter);
-            setShowSearch(false);
-          }}
-        >
-          Filter
-        </button>
-      </div>
-
       {/* SEARCH BOX */}
-      <div className="md:sticky md:top-0 md:z-40 bg-white">
+      <div className="md:sticky md:block md:top-0 md:z-40 bg-white hidden">
         <div className="max-w-5xl mx-auto">
           <SearchBox />
         </div>
@@ -190,11 +166,15 @@ const ExplorePage = () => {
           <FilterBox />
         </div>
 
-        {showFilter && (
-          <div className="lg:hidden">
-            <FilterBox />
+        <div className="sticky top-0 grid grid-cols-2 bg-white">
+          <div className="md:hidden">
+            <SearchSheet />
           </div>
-        )}
+
+          <div className="md:hidden">
+            <FilterSheet />
+          </div>
+        </div>
 
         {/* HOTEL LIST */}
         <div className="flex-1 space-y-6">
@@ -219,7 +199,6 @@ const ExplorePage = () => {
       </div>
 
       <Footer />
-
     </div>
   );
 };
