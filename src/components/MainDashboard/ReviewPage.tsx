@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -179,6 +180,15 @@ const ReviewPage = () => {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
 
+  const carouselPlugins = useMemo(
+    () => [
+      WheelGesturesPlugin({
+        forceWheelAxis: "x",
+      }),
+    ],
+    []
+  );
+
   useEffect(() => {
     if (!api) return;
 
@@ -209,7 +219,12 @@ const ReviewPage = () => {
       </h2>
 
       <div className="relative mx-auto max-w-7xl">
-        <Carousel opts={{ align: "start", loop: false }} setApi={setApi}>
+        <Carousel
+          opts={{ align: "start", loop: false, dragFree: true }}
+          plugins={carouselPlugins}
+          setApi={setApi}
+          className="cursor-grab active:cursor-grabbing"
+        >
           <CarouselContent className="-ml-4 sm:-ml-5 md:-ml-6">
             {REVIEWS.map((review) => (
               <CarouselItem
