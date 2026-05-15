@@ -2,17 +2,18 @@ import { Calendar, Receipt, ShieldCheck, CreditCard, User } from "lucide-react";
 import Navbar from "./Navbar";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Input } from "./ui/input";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const BookPage: React.FC = () => {
   return (
@@ -168,7 +169,7 @@ const BookPage: React.FC = () => {
 
                 <Field className="mt-4" orientation="horizontal">
                   <Checkbox id="terms-checkbox" name="terms-checkbox" />
-                  <Label htmlFor="terms-checkbox">
+                  <Label htmlFor="terms-checkbox" className="text-red-800">
                     Accept terms and conditions
                   </Label>
                 </Field>
