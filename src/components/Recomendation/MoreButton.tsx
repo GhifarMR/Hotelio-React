@@ -1,11 +1,19 @@
+import { Link } from "@tanstack/react-router";
+import { Button } from "../ui/button";
+
 const MoreButton = () => {
   return (
-    <a
-      href="#"
-      className="inline-block border border-black bg-white text-black text-sm px-4 py-2 rounded-full hover:bg-black hover:text-white transition active:bg-purple-950"
+    <Button
+      variant={"outline"}
+      className="bg-white text-black px-8 py-5 rounded-2xl font-semibold hover:bg-black hover:text-white active:bg-purple-950 active:text-white cursor-pointer transition"
     >
-      View More
-    </a>
+      <Link
+        to="/explore"
+        
+      >
+        View More
+      </Link>
+    </Button>
   );
 };
 
