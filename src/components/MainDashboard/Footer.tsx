@@ -44,7 +44,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="text-gray-500 text-xs px-6 mt-10 hover:text-pink-950 inline-block">
-        © 2025 Hotelio.com
+        © {new Date().getFullYear()} Hotelio.com
       </div>
       
     </footer>
