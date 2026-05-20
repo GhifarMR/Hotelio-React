@@ -10,19 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as OwnerDashboardRouteImport } from './routes/owner-dashboard'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as HotelConfigRouteImport } from './routes/hotel-config'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BeAPartnerRouteImport } from './routes/be-a-partner'
 import { Route as AdminDashboardEditRouteImport } from './routes/admin-dashboard-edit'
+import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard'
+import { Route as AddHotelRouteImport } from './routes/add-hotel'
 import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
+  id: '/owner-dashboard',
+  path: '/owner-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderRoute = OrderRouteImport.update({
@@ -33,6 +42,11 @@ const OrderRoute = OrderRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HotelConfigRoute = HotelConfigRouteImport.update({
+  id: '/hotel-config',
+  path: '/hotel-config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelpRoute = HelpRouteImport.update({
@@ -60,6 +74,16 @@ const AdminDashboardEditRoute = AdminDashboardEditRouteImport.update({
   path: '/admin-dashboard-edit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin-dashboard',
+  path: '/admin-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AddHotelRoute = AddHotelRouteImport.update({
+  id: '/add-hotel',
+  path: '/add-hotel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutUsRoute = AboutUsRouteImport.update({
   id: '/about-us',
   path: '/about-us',
@@ -74,38 +98,50 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/add-hotel': typeof AddHotelRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
+  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/add-hotel': typeof AddHotelRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
+  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
+  '/add-hotel': typeof AddHotelRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
+  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
@@ -113,50 +149,66 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about-us'
+    | '/add-hotel'
+    | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
+    | '/hotel-config'
     | '/login'
     | '/order'
+    | '/owner-dashboard'
     | '/register'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about-us'
+    | '/add-hotel'
+    | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
+    | '/hotel-config'
     | '/login'
     | '/order'
+    | '/owner-dashboard'
     | '/register'
   id:
     | '__root__'
     | '/'
     | '/about-us'
+    | '/add-hotel'
+    | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
+    | '/hotel-config'
     | '/login'
     | '/order'
+    | '/owner-dashboard'
     | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutUsRoute: typeof AboutUsRoute
+  AddHotelRoute: typeof AddHotelRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDashboardEditRoute: typeof AdminDashboardEditRoute
   BeAPartnerRoute: typeof BeAPartnerRoute
   BookRoute: typeof BookRoute
   ExploreRoute: typeof ExploreRoute
   HelpRoute: typeof HelpRoute
+  HotelConfigRoute: typeof HotelConfigRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
+  OwnerDashboardRoute: typeof OwnerDashboardRoute
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -167,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/owner-dashboard': {
+      id: '/owner-dashboard'
+      path: '/owner-dashboard'
+      fullPath: '/owner-dashboard'
+      preLoaderRoute: typeof OwnerDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order': {
@@ -181,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hotel-config': {
+      id: '/hotel-config'
+      path: '/hotel-config'
+      fullPath: '/hotel-config'
+      preLoaderRoute: typeof HotelConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/help': {
@@ -218,6 +284,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardEditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-dashboard': {
+      id: '/admin-dashboard'
+      path: '/admin-dashboard'
+      fullPath: '/admin-dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/add-hotel': {
+      id: '/add-hotel'
+      path: '/add-hotel'
+      fullPath: '/add-hotel'
+      preLoaderRoute: typeof AddHotelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about-us': {
       id: '/about-us'
       path: '/about-us'
@@ -238,13 +318,17 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutUsRoute: AboutUsRoute,
+  AddHotelRoute: AddHotelRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
   AdminDashboardEditRoute: AdminDashboardEditRoute,
   BeAPartnerRoute: BeAPartnerRoute,
   BookRoute: BookRoute,
   ExploreRoute: ExploreRoute,
   HelpRoute: HelpRoute,
+  HotelConfigRoute: HotelConfigRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
+  OwnerDashboardRoute: OwnerDashboardRoute,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
