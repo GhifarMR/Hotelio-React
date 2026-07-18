@@ -6,11 +6,9 @@ import {
   BedDouble,
   Settings2,
   TrendingUp,
-  Eye,
-  MoreVertical,
-  XCircle,
 } from "lucide-react";
-import NavbarOwner from "./NavbarOwner";
+import { Link } from "@tanstack/react-router";
+import Navbar from "../Navbar";
 
 // ─── Mock Data (ganti dengan props/fetch dari backend) ────────────────────────
 
@@ -94,12 +92,10 @@ function StarRow({ count }: { count: number }) {
 
 function HotelCard({
   hotel,
-  onConfigure,
 }: {
   hotel: Hotel;
-  onConfigure: (id: string) => void;
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [_menuOpen, _setMenuOpen] = useState(false);
   const soldOutCount = hotel.rooms.filter((r) => r.soldOut).length;
 
   return (
@@ -127,36 +123,7 @@ function HotelCard({
             </span>
           )}
         </div>
-        <div className="absolute top-3 right-3">
-          <div className="relative">
-            <button
-              onClick={() => setMenuOpen((p) => !p)}
-              className="bg-white/90 backdrop-blur-sm p-1.5 rounded-lg hover:bg-white transition-colors"
-            >
-              <MoreVertical size={16} className="text-slate-600" />
-            </button>
-            {menuOpen && (
-              <div className="absolute right-0 top-8 bg-white border border-slate-100 rounded-xl shadow-lg py-1 w-36 z-10 text-sm">
-                <button className="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700">
-                  <Eye size={14} /> View Page
-                </button>
-                <button
-                  className="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2 text-slate-700"
-                  onClick={() => {
-                    onConfigure(hotel.id);
-                    setMenuOpen(false);
-                  }}
-                >
-                  <Settings2 size={14} /> Configure
-                </button>
-                <hr className="my-1 border-slate-100" />
-                <button className="w-full text-left px-4 py-2 hover:bg-red-50 flex items-center gap-2 text-red-500">
-                  <XCircle size={14} /> Deactivate
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+        
       </div>
 
       {/* Content */}
@@ -197,26 +164,29 @@ function HotelCard({
             </p>
           </div>
           <div className="text-center border-x border-slate-100">
-            <p className="text-xs text-slate-400">Bookings</p>
+            <p className="text-xs text-slate-400">Active</p>
             <p className="font-semibold text-slate-700 text-sm">
-              {hotel.totalBookings}
+              {2}
             </p>
           </div>
           <div className="text-center">
-            <p className="text-xs text-slate-400">Revenue/mo</p>
+            <p className="text-xs text-slate-400">Sold Out</p>
             <p className="font-semibold text-slate-700 text-sm">
-              {formatRp(hotel.monthlyRevenue)}
+              {soldOutCount}
             </p>
           </div>
         </div>
 
         {/* Action */}
+        <Link to={"/hotel-config"}>
         <button
-          onClick={() => onConfigure(hotel.id)}
+          // onClick={() => onConfigure(hotel.id)}
           className="w-full mt-3 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-colors flex items-center justify-center gap-2"
         >
           <Settings2 size={15} /> Configure Hotel
         </button>
+        
+        </Link>
       </div>
     </div>
   );
@@ -225,11 +195,6 @@ function HotelCard({
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 const OwnerPage = () => {
-  // Untuk Inertia, ganti dengan: router.visit(`/owner/hotels/${id}/config`)
-  const handleConfigure = (id: string) => {
-    window.location.href = `/owner/hotels/${id}/config`;
-  };
-
   const totalRevenue = MOCK_HOTELS.reduce(
     (sum, h) => sum + h.monthlyRevenue,
     0,
@@ -242,24 +207,24 @@ const OwnerPage = () => {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       <div className="sticky top-0 z-50">
-        <NavbarOwner />
+        <Navbar />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800">My Hotels</h1>
-            <p className="text-sm text-slate-400 mt-1">
+          <div className="space-y-3">
+            <h1 className="text-2xl font-bold">My Hotels</h1>
+            <p className="text-sm">
               Manage your properties and room configurations
             </p>
           </div>
-          <a
-            href="/owner/hotels/add"
+          <Link
+            to="/add-hotel"
             className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-700 transition-colors"
           >
             <Plus size={16} /> Add Hotel
-          </a>
+          </Link>
         </div>
 
         {/* Summary Stats */}
@@ -283,9 +248,9 @@ const OwnerPage = () => {
           ].map((s) => (
             <div
               key={s.label}
-              className="bg-white border border-slate-100 rounded-2xl p-4 flex items-center gap-4"
+              className="bg-white border  rounded-2xl p-4 flex items-center gap-4"
             >
-              <div className="bg-slate-50 p-2.5 rounded-xl">{s.icon}</div>
+              <div className="p-2.5 rounded-xl">{s.icon}</div>
               <div>
                 <p className="text-xs text-slate-400">{s.label}</p>
                 <p className="font-bold text-slate-800 text-lg">{s.value}</p>
@@ -297,19 +262,8 @@ const OwnerPage = () => {
         {/* Hotel Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {MOCK_HOTELS.map((h) => (
-            <HotelCard key={h.id} hotel={h} onConfigure={handleConfigure} />
+            <HotelCard key={h.id} hotel={h} />
           ))}
-
-          {/* Add Hotel Card */}
-          <a
-            href="/owner/hotels/add"
-            className="border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center gap-3 min-h-64 text-slate-400 hover:border-indigo-400 hover:text-indigo-500 hover:bg-indigo-50 transition-colors"
-          >
-            <div className="bg-slate-100 p-4 rounded-full">
-              <Plus size={24} />
-            </div>
-            <span className="text-sm font-medium">Add New Hotel</span>
-          </a>
         </div>
       </div>
     </div>

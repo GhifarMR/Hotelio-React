@@ -5,6 +5,7 @@ import { Label } from "../ui/label";
 
 interface CardExploreBoxProps {
   name: string;
+  id: string;
   location: string;
   img: string;
   ratingNumbers: number;
@@ -19,6 +20,7 @@ interface CardExploreBoxProps {
 
 const CardExploreBox = ({
   name,
+  id,
   location,
   img,
   ratingNumbers,
@@ -34,7 +36,8 @@ const CardExploreBox = ({
     <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex flex-col md:flex-row">
         <Link
-          to="/order"
+          to="/hotels/$id"
+          params={{ id: String(id) }}
           className="w-full md:w-80 h-56 md:h-64 overflow-hidden block"
         >
           <img src={img} alt={name} className="w-full h-full object-cover" />
@@ -43,7 +46,8 @@ const CardExploreBox = ({
         <div className="flex-1 p-5 md:p-6 flex flex-col md:flex-row md:justify-between gap-4">
           <div className="flex-1">
             <Link
-              to="/order"
+              to="/hotels/$id"
+              params={{ id: String(id) }}
               className="text-xl md:text-2xl font-bold hover:bg-yellow-300 w-fit transition block mb-1"
             >
               {name}
@@ -66,7 +70,9 @@ const CardExploreBox = ({
               <span className="text-lg text-yellow-400">
                 {getRatingStars(ratingNumbers)}
               </span>
-              <span className="text-sm">{formatRatingLabel(ratingNumbers)}</span>
+              <span className="text-sm">
+                {formatRatingLabel(ratingNumbers)}
+              </span>
             </div>
 
             <div className="flex gap-4 mt-6 text-xs md:text-sm overflow-x-auto pb-2 md:pb-0">
@@ -86,7 +92,11 @@ const CardExploreBox = ({
               </div>
             </div>
 
-            <Link to="/order" className="md:mt-auto">
+            <Link
+              to="/hotels/$id"
+              params={{ id: String(id) }}
+              className="md:mt-auto"
+            >
               <Button
                 variant={"outline"}
                 className="border-black text-black hover:bg-black hover:text-white px-6 md:px-8 py-2 md:py-5 rounded-lg font-semibold transition cursor-pointer"

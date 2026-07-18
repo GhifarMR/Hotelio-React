@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useState, useRef, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
+import Navbar from "../Navbar";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -348,7 +349,7 @@ const AddHotel = () => {
   return (
     <div>
       <div className="sticky top-0 z-50">
-        <NavbarOwner />
+        <Navbar />
       </div>
 
       <form onSubmit={handleSubmit} className="min-h-screen font-sans">

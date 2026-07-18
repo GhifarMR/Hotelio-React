@@ -1,5 +1,5 @@
 // import { useState } from "react";
-// import AdminNavbar from "./AdminDashboard/adminNavbar";
+
 
 // interface Hotel {
 //   id: number;

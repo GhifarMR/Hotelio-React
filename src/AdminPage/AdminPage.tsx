@@ -1,11 +1,11 @@
-import NavbarAdmin from "./NavbarAdmin";
+// import NavbarAdmin from "./NavbarAdmin";
 
-const AdminPage = () => {
-    return (
-        <div>
-            <NavbarAdmin />
-        </div>
-    )
-}
+// const AdminPage = () => {
+//     return (
+//         <div>
+//             <NavbarAdmin />
+//         </div>
+//     )
+// }
 
-export default AdminPage;
+// export default AdminPage;

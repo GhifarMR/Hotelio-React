@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Logo from "./NavBar/Logo";
 import Sublogo from "./NavBar/SubLogo";
 import NavItem from "./NavBar/NavItem";
 import NavButton from "./NavBar/NavButton";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, ClipboardList } from "lucide-react";
 import Footer from "./MainDashboard/Footer";
+import { useNavigate } from "@tanstack/react-router";
 // import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    setUserName(name);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    setUserName(null);
+    navigate({ to: "/" });
+  };
 
   const menuItems = [
     { label: "Home", to: "/" },
@@ -35,15 +57,44 @@ const Navbar = () => {
               <NavItem key={item.label} item={item.label} to={item.to} />
             ))}
           </div>
-          <NavButton to="/login" className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">
-            Login
-          </NavButton>
-          <NavButton
-            to="/register"
-            className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6"
-          >
-            Register
-          </NavButton>
+
+          {userName ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 ml-3 mr-6 self-center px-3 py-1.5 rounded-full hover:bg-gray-100 transition">
+                  <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
+                    {userName.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="font-semibold text-sm">{userName}</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => navigate({ to: "/explore" })}>
+                  <ClipboardList className="mr-2 h-4 w-4" />
+                  My Orders
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-600 focus:text-red-600"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <NavButton to="/login" className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">
+                Login
+              </NavButton>
+              <NavButton
+                to="/register"
+                className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6"
+              >
+                Register
+              </NavButton>
+            </>
+          )}
         </div>
 
         {/* Menu Button (Mobile) */}
@@ -83,12 +134,40 @@ const Navbar = () => {
 
         {/* Buttons */}
         <div className="flex flex-col gap-3 mt-4">
-          <NavButton to="/login" className="w-full text-center py-2">
-            Login
-          </NavButton>
-          <NavButton to="/register" className="w-full text-center py-2">
-            Register
-          </NavButton>
+          {userName ? (
+            <>
+              <div className="flex items-center gap-2 py-1">
+                <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
+                  {userName.charAt(0).toUpperCase()}
+                </div>
+                <span className="font-semibold">{userName}</span>
+              </div>
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate({ to: "/explore" });
+                }}
+                className="w-full text-left py-2 text-sm text-gray-700 hover:text-black flex items-center gap-2"
+              >
+                <ClipboardList size={16} /> My Orders
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left py-2 text-sm text-red-600 hover:text-red-700 flex items-center gap-2"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavButton to="/login" className="w-full text-center py-2">
+                Login
+              </NavButton>
+              <NavButton to="/register" className="w-full text-center py-2">
+                Register
+              </NavButton>
+            </>
+          )}
         </div>
         <div className="mt-auto">
           <Footer />

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
   BedDouble,
-  ToggleLeft,
-  ToggleRight,
   Save,
   ChevronLeft,
   AlertCircle,
@@ -14,6 +12,9 @@ import {
 import NavbarOwner from "./NavbarOwner";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Switch } from "../ui/switch";
+import { Link } from "@tanstack/react-router";
+import Navbar from "../Navbar";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -109,9 +110,9 @@ function Toggle({
       }`}
     >
       {value ? (
-        <ToggleRight size={22} className={colorOn} />
+        <Switch  className={colorOn} />
       ) : (
-        <ToggleLeft size={22} className="text-slate-300" />
+        <Switch className="text-slate-300" />
       )}
       {value ? labelOn : labelOff}
     </button>
@@ -175,7 +176,10 @@ function PriceEditor({
             {formatRp(value)}
           </span>
           <button
-            onClick={() => { setDraft(String(value)); setEditing(true); }}
+            onClick={() => {
+              setDraft(String(value));
+              setEditing(true);
+            }}
             className="p-1 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600"
           >
             <Pencil size={13} />
@@ -200,7 +204,9 @@ function RoomConfigRow({
 
   const discount =
     room.priceBefore > 0
-      ? Math.round(((room.priceBefore - room.priceNow) / room.priceBefore) * 100)
+      ? Math.round(
+          ((room.priceBefore - room.priceNow) / room.priceBefore) * 100,
+        )
       : 0;
 
   return (
@@ -209,8 +215,8 @@ function RoomConfigRow({
         room.soldOut
           ? "border-red-100 bg-red-50/40"
           : room.isVisible
-          ? "border-slate-100 bg-white"
-          : "border-slate-100 bg-slate-50 opacity-60"
+            ? "border-slate-100 bg-white"
+            : "border-slate-100 bg-slate-50 opacity-60"
       }`}
     >
       {/* Header */}
@@ -309,24 +315,24 @@ const HotelConfig = () => {
 
   const allSoldOut = hotel.rooms.every((r) => r.soldOut);
   const availableCount = hotel.rooms.filter(
-    (r) => !r.soldOut && r.isVisible
+    (r) => !r.soldOut && r.isVisible,
   ).length;
 
   return (
     <div className="min-h-screen font-sans">
       <div className="sticky top-0 z-50">
-        <NavbarOwner />
+        <Navbar />
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-8">
         {/* Back + Header */}
         <div className="flex items-center gap-3 mb-6">
-          <a
-            href="/owner"
+          <Link
+            to="/owner-dashboard"
             className="p-2 rounded-xl hover:bg-white border border-transparent hover:border-slate-100 transition-colors text-slate-400 hover:text-slate-600"
           >
             <ChevronLeft size={20} />
-          </a>
+          </Link>
           <div>
             <h1 className="text-xl font-bold ">{hotel.name}</h1>
             <p className="text-xs ">{hotel.location}</p>
@@ -338,7 +344,6 @@ const HotelConfig = () => {
               labelOn="Hotel Active"
               labelOff="Hotel Inactive"
               colorOn=""
-              
             />
           </div>
         </div>

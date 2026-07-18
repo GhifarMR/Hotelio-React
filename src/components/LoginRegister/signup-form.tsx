@@ -17,7 +17,6 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,24 +28,26 @@ export function SignupForm({
     e.preventDefault();
     try {
       const res = await axios.post("http://127.0.0.1:8000/api/register", {
-      name: name,
-      email: email,
-      password: password,
-      password_confirmation: confirm,
-      phone: phone
-    })
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: confirm,
+        phone: phone,
+      });
+      
+      console.log(res);
 
-    console.log(res);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.user.role);
+      localStorage.setItem("name", res.data.user.name); 
 
-    navigate({
-      to: "/explore"
-    })
+      navigate({
+        to: "/explore",
+      });
     } catch (err) {
       console.log(err);
     }
-    
-
-  }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -97,13 +98,25 @@ export function SignupForm({
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <Input
+                      id="password"
+                      type="password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
                       Confirm Password
                     </FieldLabel>
-                    <Input id="confirm-password" type="password" required value={confirm} onChange={(e) => setConfirm(e.target.value)}/>
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      required
+                      value={confirm}
+                      onChange={(e) => setConfirm(e.target.value)}
+                    />
                   </Field>
                 </Field>
                 <FieldDescription>

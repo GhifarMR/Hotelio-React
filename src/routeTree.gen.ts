@@ -23,6 +23,9 @@ import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard'
 import { Route as AddHotelRouteImport } from './routes/add-hotel'
 import { Route as AboutUsRouteImport } from './routes/about-us'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnerIndexRouteImport } from './routes/owner/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as HotelsIdRouteImport } from './routes/hotels/$id'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -94,6 +97,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerIndexRoute = OwnerIndexRouteImport.update({
+  id: '/owner/',
+  path: '/owner/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HotelsIdRoute = HotelsIdRouteImport.update({
+  id: '/hotels/$id',
+  path: '/hotels/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +128,9 @@ export interface FileRoutesByFullPath {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/hotels/$id': typeof HotelsIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/owner/': typeof OwnerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -126,6 +147,9 @@ export interface FileRoutesByTo {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/hotels/$id': typeof HotelsIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/owner': typeof OwnerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +167,9 @@ export interface FileRoutesById {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/hotels/$id': typeof HotelsIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/owner/': typeof OwnerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +188,9 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/hotels/$id'
+    | '/admin/'
+    | '/owner/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +207,9 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/hotels/$id'
+    | '/admin'
+    | '/owner'
   id:
     | '__root__'
     | '/'
@@ -193,6 +226,9 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/hotels/$id'
+    | '/admin/'
+    | '/owner/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,6 +246,9 @@ export interface RootRouteChildren {
   OrderRoute: typeof OrderRoute
   OwnerDashboardRoute: typeof OwnerDashboardRoute
   RegisterRoute: typeof RegisterRoute
+  HotelsIdRoute: typeof HotelsIdRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  OwnerIndexRoute: typeof OwnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,6 +351,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/': {
+      id: '/owner/'
+      path: '/owner'
+      fullPath: '/owner/'
+      preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hotels/$id': {
+      id: '/hotels/$id'
+      path: '/hotels/$id'
+      fullPath: '/hotels/$id'
+      preLoaderRoute: typeof HotelsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -330,6 +390,9 @@ const rootRouteChildren: RootRouteChildren = {
   OrderRoute: OrderRoute,
   OwnerDashboardRoute: OwnerDashboardRoute,
   RegisterRoute: RegisterRoute,
+  HotelsIdRoute: HotelsIdRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  OwnerIndexRoute: OwnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
