@@ -2,83 +2,210 @@ import {
   Building,
   MapPin,
   Armchair,
-  ClipboardList,
   Plus,
   Trash2,
   DoorOpen,
+  Loader2,
+  ImagePlus,
+  Link2,
+  X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import NavbarOwner from "./NavbarOwner";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { useState, useRef, useCallback } from "react";
-import { Link } from "@tanstack/react-router";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import Navbar from "../Navbar";
+import api from "@/lib/axios";
+import { HOTEL_FACILITIES, ROOM_AMENITIES } from "@/constants/facilities";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-const ROOM_AMENITIES = [
-  "King Bed",
-  "Twin Bed",
-  "Double Bed",
-  "AC",
-  "Hot Shower",
-  "Bathtub",
-  "TV",
-  "Mini Bar",
-  "Safe",
-  "Balcony",
-  "Breakfast",
-  "Workspace",
-];
-
-const HOTEL_FACILITIES = [
-  "WiFi",
-  "Swimming Pool",
-  "Restaurant",
-  "Parking",
-  "Gym / Fitness",
-  "Spa",
-  "Room Service",
-  "Business Center",
-  "Kids Club",
-  "Laundry",
-  "Airport Shuttle",
-  "Pet Friendly",
-];
+interface ImageItem {
+  id: string;
+  kind: "file" | "url";
+  file?: File;
+  url?: string;
+  preview: string;
+  isPrimary: boolean;
+}
 
 interface Room {
   id: string;
   name: string;
-  size: string;
+  description: string;
   priceNow: string;
   priceBefore: string;
   maxGuests: string;
+  totalRooms: string;
   amenities: string[];
+  images: ImageItem[];
 }
 
 interface HotelForm {
   name: string;
   stars: number;
-  phone: string;
-  email: string;
   description: string;
   address: string;
   city: string;
   province: string;
-  country: string;
-  landmarks: string;
   facilities: string[];
-  checkinTime: string;
-  checkoutTime: string;
-  cancellationPolicy: string;
-  minAge: string;
-  policyNotes: string;
   rooms: Room[];
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
+// ─── Reusable Image Uploader (Upload OR Link) ──────────────────────────────────
+
+function ImageUploader({
+  images,
+  onAdd,
+  onRemove,
+  onSetPrimary,
+  small = false,
+}: {
+  images: ImageItem[];
+  onAdd: (item: ImageItem) => void;
+  onRemove: (id: string) => void;
+  onSetPrimary: (id: string) => void;
+  small?: boolean;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [mode, setMode] = useState<"upload" | "link">("upload");
+  const [urlDraft, setUrlDraft] = useState("");
+  const boxSize = small ? "h-20" : "h-24";
+
+  const handleFiles = (files: FileList) => {
+    Array.from(files).forEach((file) => {
+      onAdd({
+        id: crypto.randomUUID(),
+        kind: "file",
+        file,
+        preview: URL.createObjectURL(file),
+        isPrimary: images.length === 0,
+      });
+    });
+  };
+
+  const handleAddUrl = () => {
+    if (!urlDraft.trim()) return;
+    onAdd({
+      id: crypto.randomUUID(),
+      kind: "url",
+      url: urlDraft.trim(),
+      preview: urlDraft.trim(),
+      isPrimary: images.length === 0,
+    });
+    setUrlDraft("");
+  };
+
+  return (
+    <div>
+      <div className="flex gap-2 mb-2">
+        <button
+          type="button"
+          onClick={() => setMode("upload")}
+          className={`text-xs px-2.5 py-1 rounded-lg border flex items-center gap-1 ${
+            mode === "upload"
+              ? "bg-slate-900 text-white border-slate-900"
+              : "bg-white border-slate-200 text-slate-500"
+          }`}
+        >
+          <ImagePlus size={12} /> Upload
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode("link")}
+          className={`text-xs px-2.5 py-1 rounded-lg border flex items-center gap-1 ${
+            mode === "link"
+              ? "bg-slate-900 text-white border-slate-900"
+              : "bg-white border-slate-200 text-slate-500"
+          }`}
+        >
+          <Link2 size={12} /> Link
+        </button>
+      </div>
+
+      {mode === "link" && (
+        <div className="flex gap-2 mb-3">
+          <Input
+            value={urlDraft}
+            onChange={(e) => setUrlDraft(e.target.value)}
+            placeholder="https://example.com/photo.jpg"
+            className="text-sm"
+          />
+          <button
+            type="button"
+            onClick={handleAddUrl}
+            className="text-xs px-3 rounded-lg bg-slate-900 text-white shrink-0"
+          >
+            Add
+          </button>
+        </div>
+      )}
+
+      <div
+        className={`grid ${small ? "grid-cols-4" : "grid-cols-3 sm:grid-cols-4"} gap-2 mb-2`}
+      >
+        {images.map((img) => (
+          <div key={img.id} className="relative group">
+            <img
+              src={img.preview}
+              alt="preview"
+              className={`w-full ${boxSize} object-cover rounded-xl border-2 ${
+                img.isPrimary ? "border-slate-900" : "border-transparent"
+              }`}
+            />
+            <button
+              type="button"
+              onClick={() => onRemove(img.id)}
+              className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <X size={12} />
+            </button>
+            <button
+              type="button"
+              onClick={() => onSetPrimary(img.id)}
+              className={`absolute bottom-1 left-1 text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
+                img.isPrimary
+                  ? "bg-slate-900 text-white"
+                  : "bg-white/80 text-slate-600 opacity-0 group-hover:opacity-100"
+              } transition-opacity`}
+            >
+              {img.isPrimary ? "Primary" : "Set primary"}
+            </button>
+          </div>
+        ))}
+
+        {mode === "upload" && (
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            className={`${boxSize} rounded-xl border-2 border-dashed border-slate-200 hover:border-slate-300 flex flex-col items-center justify-center text-slate-400 gap-1 transition-colors`}
+          >
+            <ImagePlus size={16} />
+            <span className="text-[10px]">Add photo</span>
+          </button>
+        )}
+      </div>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+        hidden
+        onChange={(e) => {
+          if (e.target.files) handleFiles(e.target.files);
+          e.target.value = "";
+        }}
+      />
+      <p className="text-xs text-slate-400">
+        {mode === "upload"
+          ? "JPG, PNG, or WebP. Max 4MB each."
+          : "Paste a direct image URL."}
+      </p>
+    </div>
+  );
+}
 
 function AmenityTag({
   label,
@@ -104,6 +231,8 @@ function AmenityTag({
   );
 }
 
+// ─── Room Card ──────────────────────────────────────────────────────────────
+
 function RoomCard({
   room,
   index,
@@ -115,7 +244,7 @@ function RoomCard({
   onChange: (updated: Room) => void;
   onRemove: () => void;
 }) {
-  const set = (field: keyof Room, value: string | string[]) =>
+  const set = (field: keyof Room, value: any) =>
     onChange({ ...room, [field]: value });
 
   const toggleAmenity = (a: string) => {
@@ -123,6 +252,25 @@ function RoomCard({
       ? room.amenities.filter((x) => x !== a)
       : [...room.amenities, a];
     set("amenities", next);
+  };
+
+  const addImage = (item: ImageItem) => {
+    const merged = [...room.images, item];
+    set("images", merged);
+  };
+
+  const removeImage = (id: string) => {
+    const filtered = room.images.filter((i) => i.id !== id);
+    if (filtered.length > 0 && !filtered.some((i) => i.isPrimary))
+      filtered[0].isPrimary = true;
+    set("images", filtered);
+  };
+
+  const setPrimaryImage = (id: string) => {
+    set(
+      "images",
+      room.images.map((i) => ({ ...i, isPrimary: i.id === id })),
+    );
   };
 
   return (
@@ -153,16 +301,27 @@ function RoomCard({
         </div>
         <div>
           <Label className="text-xs text-slate-500 mb-1 block">
-            Room Size (m²)
+            Total Rooms *
           </Label>
           <Input
             type="number"
-            value={room.size}
-            onChange={(e) => set("size", e.target.value)}
-            placeholder="e.g. 28"
+            value={room.totalRooms}
+            onChange={(e) => set("totalRooms", e.target.value)}
+            placeholder="e.g. 5"
             min="1"
           />
         </div>
+      </div>
+
+      <div className="mb-3">
+        <Label className="text-xs text-slate-500 mb-1 block">
+          Description *
+        </Label>
+        <Input
+          value={room.description}
+          onChange={(e) => set("description", e.target.value)}
+          placeholder="Short description of this room"
+        />
       </div>
 
       <div className="grid grid-cols-3 gap-3 mb-3">
@@ -192,7 +351,7 @@ function RoomCard({
         </div>
         <div>
           <Label className="text-xs text-slate-500 mb-1 block">
-            Max Guests
+            Max Guests *
           </Label>
           <Input
             type="number"
@@ -204,17 +363,26 @@ function RoomCard({
         </div>
       </div>
 
+      <div className="mb-3">
+        <Label className="text-xs mb-2 block">Room Photos</Label>
+        <ImageUploader
+          images={room.images}
+          onAdd={addImage}
+          onRemove={removeImage}
+          onSetPrimary={setPrimaryImage}
+          small
+        />
+      </div>
+
       <div>
-        <Label className="text-xs  mb-2 block">
-          Room Amenities
-        </Label>
+        <Label className="text-xs mb-2 block">Room Amenities</Label>
         <div className="flex flex-wrap gap-2">
           {ROOM_AMENITIES.map((a) => (
             <AmenityTag
-              key={a}
-              label={a}
-              active={room.amenities.includes(a)}
-              onClick={() => toggleAmenity(a)}
+              key={a.value}
+              label={a.label}
+              active={room.amenities.includes(a.value)}
+              onClick={() => toggleAmenity(a.value)}
             />
           ))}
         </div>
@@ -223,26 +391,42 @@ function RoomCard({
   );
 }
 
-function MapEmbed({ query }: { query: string }) {
-  if (!query || query.trim().length < 6) {
+// ─── Map Preview (debounced, no API key needed) ────────────────────────────
+
+function MapPreview({
+  address,
+  city,
+  province,
+}: {
+  address: string;
+  city: string;
+  province: string;
+}) {
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const full = [address, city, province].filter(Boolean).join(", ");
+    const handle = setTimeout(() => setQuery(full), 600); // debounce, sama pola kayak explore filter
+    return () => clearTimeout(handle);
+  }, [address, city, province]);
+
+  if (!query.trim()) {
     return (
-      <div className="w-full h-48 rounded-xl border border-slate-100 bg-slate-50 flex flex-col items-center justify-center gap-2 text-slate-400">
-        <MapPin size={28} />
-        <span className="text-sm">Map will appear after entering address</span>
+      <div className="w-full h-48 rounded-xl border border-dashed border-slate-200 flex items-center justify-center text-sm text-slate-400">
+        Fill address, city and province to display a preview
       </div>
     );
   }
-  const src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed&z=15`;
+
   return (
-    <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-100">
+    <div className="w-full h-48 rounded-xl overflow-hidden border border-slate-200">
       <iframe
-        src={src}
+        title="Location preview"
         width="100%"
         height="100%"
-        style={{ border: "none" }}
-        allowFullScreen
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Hotel location map"
+        style={{ border: 0 }}
+        loading="lazy"
+        src={`https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
       />
     </div>
   );
@@ -251,57 +435,25 @@ function MapEmbed({ query }: { query: string }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const AddHotel = () => {
+  const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [form, setForm] = useState<HotelForm>({
     name: "",
-    stars: 0,
-    phone: "",
-    email: "",
+    stars: 3,
     description: "",
     address: "",
     city: "",
     province: "",
-    country: "Indonesia",
-    landmarks: "",
     facilities: [],
-    checkinTime: "14:00",
-    checkoutTime: "12:00",
-    cancellationPolicy: "Non-refundable",
-    minAge: "18",
-    policyNotes: "",
     rooms: [],
   });
 
-  // Debounced map query
-  const mapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [mapQuery, setMapQuery] = useState("");
+  const [hotelImages, setHotelImages] = useState<ImageItem[]>([]);
 
   const setField = <K extends keyof HotelForm>(key: K, value: HotelForm[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const triggerMapUpdate = useCallback(
-    (name: string, address: string, city: string) => {
-      if (mapTimerRef.current) clearTimeout(mapTimerRef.current);
-      mapTimerRef.current = setTimeout(() => {
-        const q = [name, address, city].filter(Boolean).join(", ");
-        if (q.length > 5) setMapQuery(q);
-      }, 900);
-    },
-    [],
-  );
-
-  const handleLocationField = (
-    field: "name" | "address" | "city",
-    value: string,
-  ) => {
-    setField(field, value);
-    const next = {
-      name: form.name,
-      address: form.address,
-      city: form.city,
-      [field]: value,
-    };
-    triggerMapUpdate(next.name, next.address, next.city);
   };
 
   const toggleFacility = (f: string) => {
@@ -313,37 +465,154 @@ const AddHotel = () => {
     );
   };
 
-  const addRoom = () => {
+  const addHotelImage = (item: ImageItem) => {
+    setHotelImages((prev) => [...prev, item]);
+  };
+
+  const removeHotelImage = (id: string) => {
+    setHotelImages((prev) => {
+      const filtered = prev.filter((i) => i.id !== id);
+      if (filtered.length > 0 && !filtered.some((i) => i.isPrimary))
+        filtered[0].isPrimary = true;
+      return filtered;
+    });
+  };
+
+  const setHotelPrimaryImage = (id: string) => {
+    setHotelImages((prev) =>
+      prev.map((i) => ({ ...i, isPrimary: i.id === id })),
+    );
+  };
+
+  function addRoom() {
     const newRoom: Room = {
       id: crypto.randomUUID(),
       name: "",
-      size: "",
+      description: "",
       priceNow: "",
       priceBefore: "",
       maxGuests: "",
+      totalRooms: "",
       amenities: [],
+      images: [],
     };
-    setField("rooms", [...form.rooms, newRoom]);
-  };
+    setForm((prev) => ({ ...prev, rooms: [...prev.rooms, newRoom] }));
+  }
 
   const updateRoom = (id: string, updated: Room) => {
-    setField(
-      "rooms",
-      form.rooms.map((r) => (r.id === id ? updated : r)),
-    );
+    setForm((prev) => ({
+      ...prev,
+      rooms: prev.rooms.map((r) => (r.id === id ? updated : r)),
+    }));
   };
 
   const removeRoom = (id: string) => {
-    setField(
-      "rooms",
-      form.rooms.filter((r) => r.id !== id),
-    );
+    setForm((prev) => ({
+      ...prev,
+      rooms: prev.rooms.filter((r) => r.id !== id),
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const uploadImage = async (
+    item: ImageItem,
+    endpoints: { file: string; url: string },
+  ) => {
+    if (item.kind === "file" && item.file) {
+      const fd = new FormData();
+      fd.append("image", item.file);
+      fd.append("is_primary", item.isPrimary ? "1" : "0");
+      await api.post(endpoints.file, fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    } else if (item.kind === "url" && item.url) {
+      await api.post(endpoints.url, {
+        image_url: item.url,
+        is_primary: item.isPrimary,
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Hotel form data:", form);
-    // TODO: submit to backend via Inertia router.post() or axios
+    setError(null);
+
+    if (!form.name || !form.address || !form.city || !form.province) {
+      setError("Please fill in all required hotel fields.");
+      return;
+    }
+    if (form.rooms.length === 0) {
+      setError("Add at least one room type.");
+      return;
+    }
+    for (const room of form.rooms) {
+      if (
+        !room.name ||
+        !room.description ||
+        !room.priceNow ||
+        !room.maxGuests ||
+        !room.totalRooms
+      ) {
+        setError(
+          `Room "${room.name || "#" + (form.rooms.indexOf(room) + 1)}" has missing required fields.`,
+        );
+        return;
+      }
+    }
+
+    setSubmitting(true);
+    try {
+      const hotelRes = await api.post("/hotels", {
+        name: form.name,
+        description: form.description,
+        address: form.address,
+        city: form.city,
+        province: form.province,
+        latitude: 0,
+        longitude: 0,
+        stars: form.stars,
+        facilities: form.facilities,
+      });
+
+      const hotelId = hotelRes.data.hotel.id;
+
+      for (const img of hotelImages) {
+        await uploadImage(img, {
+          file: `/hotels/${hotelId}/images`,
+          url: `/hotels/${hotelId}/images/url`,
+        });
+      }
+
+      for (const room of form.rooms) {
+        const roomRes = await api.post(`/hotels/${hotelId}/rooms`, {
+          name: room.name,
+          description: room.description,
+          price_per_night: Number(room.priceNow),
+          price_before: room.priceBefore ? Number(room.priceBefore) : null,
+          capacity: Number(room.maxGuests),
+          total_rooms: Number(room.totalRooms),
+          facilities: room.amenities,
+        });
+
+        const roomId = roomRes.data.room.id;
+
+        for (const img of room.images) {
+          await uploadImage(img, {
+            file: `/hotels/${hotelId}/rooms/${roomId}/images`,
+            url: `/hotels/${hotelId}/rooms/${roomId}/images/url`,
+          });
+        }
+      }
+
+      navigate({ to: "/owner" });
+    } catch (err: any) {
+      console.log(err);
+      setError(
+        err.response?.data?.message ??
+          "Failed to create hotel. Please check the form again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -354,47 +623,41 @@ const AddHotel = () => {
 
       <form onSubmit={handleSubmit} className="min-h-screen font-sans">
         <div className="max-w-4xl mx-auto px-4 py-10 space-y-6">
-          {/* ── Basic Information ── */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+              {error}
+            </div>
+          )}
+
           <Card>
             <CardHeader>
               <Building size={22} />
               <h2 className="text-xl font-bold">Basic Information</h2>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid gap-4">
-                <div>
-                  <Label className="text-sm mb-1 block">Hotel Name *</Label>
-                  <Input
-                    value={form.name}
-                    onChange={(e) =>
-                      handleLocationField("name", e.target.value)
-                    }
-                    placeholder="e.g. The Grand Horizon"
-                    required
-                  />
-                </div>
+              <div>
+                <Label className="text-sm mb-1 block">Hotel Name *</Label>
+                <Input
+                  value={form.name}
+                  onChange={(e) => setField("name", e.target.value)}
+                  placeholder="e.g. The Grand Horizon"
+                  required
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm mb-1 block">Phone Number *</Label>
-                  <Input
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => setField("phone", e.target.value)}
-                    placeholder="+62 812 3456 7890"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label className="text-sm mb-1 block">Email Address</Label>
-                  <Input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setField("email", e.target.value)}
-                    placeholder="info@hotel.com"
-                  />
-                </div>
+              <div>
+                <Label className="text-sm mb-1 block">Star Rating *</Label>
+                <select
+                  value={form.stars}
+                  onChange={(e) => setField("stars", Number(e.target.value))}
+                  className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                >
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <option key={s} value={s}>
+                      {s} Star
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
@@ -407,10 +670,19 @@ const AddHotel = () => {
                   className="w-full p-3 rounded-xl border focus:ring focus:ring-gray-200 outline-none text-sm resize-none"
                 />
               </div>
+
+              <div>
+                <Label className="text-sm mb-2 block">Hotel Photos</Label>
+                <ImageUploader
+                  images={hotelImages}
+                  onAdd={addHotelImage}
+                  onRemove={removeHotelImage}
+                  onSetPrimary={setHotelPrimaryImage}
+                />
+              </div>
             </CardContent>
           </Card>
 
-          {/* ── Location ── */}
           <Card>
             <CardHeader>
               <MapPin size={22} />
@@ -421,79 +693,44 @@ const AddHotel = () => {
                 <Label className="text-sm mb-1 block">Full Address *</Label>
                 <Input
                   value={form.address}
-                  onChange={(e) =>
-                    handleLocationField("address", e.target.value)
-                  }
+                  onChange={(e) => setField("address", e.target.value)}
                   placeholder="e.g. Jl. Sudirman No. 1, Jakarta Pusat"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm mb-1 block">City *</Label>
                   <Input
                     value={form.city}
-                    onChange={(e) =>
-                      handleLocationField("city", e.target.value)
-                    }
+                    onChange={(e) => setField("city", e.target.value)}
                     placeholder="e.g. Jakarta"
                     required
                   />
                 </div>
                 <div>
-                  <Label className="text-sm mb-1 block">Province</Label>
+                  <Label className="text-sm mb-1 block">Province *</Label>
                   <Input
                     value={form.province}
                     onChange={(e) => setField("province", e.target.value)}
                     placeholder="e.g. DKI Jakarta"
+                    required
                   />
                 </div>
-                <div>
-                  <Label className="text-sm mb-1 block">Country</Label>
-                  <select
-                    value={form.country}
-                    onChange={(e) => setField("country", e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
-                  >
-                    {[
-                      "Indonesia",
-                      "United States",
-                      "Singapore",
-                      "Malaysia",
-                      "Australia",
-                    ].map((c) => (
-                      <option key={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
               </div>
 
               <div>
-                <Label className="text-sm mb-1 block">
-                  Nearby Landmarks{" "}
-                  <span className="text-xs">(comma separated)</span>
-                </Label>
-                <Input
-                  value={form.landmarks}
-                  onChange={(e) => setField("landmarks", e.target.value)}
-                  placeholder="e.g. Bundaran HI, Grand Indonesia Mall"
+                <Label className="text-sm mb-2 block">Location Preview</Label>
+                <MapPreview
+                  address={form.address}
+                  city={form.city}
+                  province={form.province}
                 />
-              </div>
-
-              <div>
-                <Label className="text-sm mb-1 block">
-                  Map Preview{" "}
-                  <span className="text-xs">
-                    — updates automatically as you fill in the address
-                  </span>
-                </Label>
-                <MapEmbed query={mapQuery} />
               </div>
             </CardContent>
           </Card>
 
-          {/* ── Facilities ── */}
           <Card>
             <CardHeader>
               <Armchair size={22} />
@@ -503,23 +740,22 @@ const AddHotel = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {HOTEL_FACILITIES.map((f) => (
                   <label
-                    key={f}
+                    key={f.value}
                     className="flex items-center gap-2 text-sm cursor-pointer"
                   >
                     <input
                       type="checkbox"
-                      checked={form.facilities.includes(f)}
-                      onChange={() => toggleFacility(f)}
+                      checked={form.facilities.includes(f.value)}
+                      onChange={() => toggleFacility(f.value)}
                       className="rounded"
                     />
-                    {f}
+                    {f.label}
                   </label>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* ── Rooms ── */}
           <Card>
             <CardHeader>
               <DoorOpen size={22} />
@@ -531,7 +767,6 @@ const AddHotel = () => {
                   No room types added yet. Click below to add one.
                 </p>
               )}
-
               {form.rooms.map((room, i) => (
                 <RoomCard
                   key={room.id}
@@ -542,105 +777,37 @@ const AddHotel = () => {
                 />
               ))}
 
-              <Button
+              <button
                 type="button"
                 onClick={addRoom}
-                className="w-full py-3 border-2 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-600 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus size={16} />
                 Add Room Type
-              </Button>
+              </button>
             </CardContent>
           </Card>
 
-          {/* ── Policies ── */}
-          <Card>
-            <CardHeader>
-              <ClipboardList size={22} />
-              <h2 className="text-xl font-bold ">Policies</h2>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm mb-1 block">Check-in Time</Label>
-                  <Input
-                    type="time"
-                    value={form.checkinTime}
-                    onChange={(e) => setField("checkinTime", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label className="text-sm mb-1 block">Check-out Time</Label>
-                  <Input
-                    type="time"
-                    value={form.checkoutTime}
-                    onChange={(e) => setField("checkoutTime", e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm mb-1 block">
-                    Cancellation Policy
-                  </Label>
-                  <select
-                    value={form.cancellationPolicy}
-                    onChange={(e) =>
-                      setField("cancellationPolicy", e.target.value)
-                    }
-                    className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
-                  >
-                    {[
-                      "Non-refundable",
-                      "Free cancellation 24h before",
-                      "Free cancellation 48h before",
-                      "Free cancellation 7 days before",
-                    ].map((c) => (
-                      <option key={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <Label className="text-sm  mb-1 block">
-                    Min. Age to Book
-                  </Label>
-                  <Input
-                    type="number"
-                    value={form.minAge}
-                    onChange={(e) => setField("minAge", e.target.value)}
-                    min="0"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-sm mb-1 block">Additional Notes</Label>
-                <textarea
-                  value={form.policyNotes}
-                  onChange={(e) => setField("policyNotes", e.target.value)}
-                  placeholder="e.g. Valid government ID required. No smoking in rooms."
-                  rows={2}
-                  className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-gray-200 outline-none text-sm resize-none"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* ── Submit ── */}
           <div className="flex justify-end gap-3 pb-10">
-            <Link to={"/owner-dashboard"}>
-              <Button
+            <Link to="/owner">
+              <button
                 type="button"
-                variant="outline"
-                className="px-6 cursor-pointer"
+                className="px-6 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-50"
               >
                 Cancel
-              </Button>
+              </button>
             </Link>
-            <Button type="submit" className="px-8 cursor-pointer">
-              Publish Hotel
-            </Button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="px-8 py-2 rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-slate-700 disabled:opacity-60 flex items-center gap-2"
+            >
+              {submitting ? (
+                <Loader2 className="animate-spin" size={16} />
+              ) : (
+                "Publish Hotel"
+              )}
+            </button>
           </div>
         </div>
       </form>

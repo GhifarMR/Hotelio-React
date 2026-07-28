@@ -1,19 +1,21 @@
-import { useState } from "react";
 import FilterTitle from "./FilterTitle";
 import ResetBtn from "./ResetBtn";
 import { Slider } from "@/components/ui/slider";
 
-const BudgetBox = () => {
-  const [range, setRange] = useState([200000, 800000]);
+interface Props {
+  range: [number, number];
+  onChange: (range: [number, number]) => void;
+  onReset: () => void;
+}
 
-  const format = (val: number) =>
-    "Rp. " + val.toLocaleString("id-ID");
+const format = (val: number) => "Rp. " + val.toLocaleString("id-ID");
 
+const BudgetBox = ({ range, onChange, onReset }: Props) => {
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex justify-between items-center mb-2">
         <FilterTitle title="Budget" />
-        <ResetBtn />
+        <ResetBtn onClick={onReset} />
       </div>
       <p className="text-sm text-gray-500 mb-6">Per Room / Per Night</p>
 
@@ -22,7 +24,7 @@ const BudgetBox = () => {
         max={5000000}
         step={50000}
         value={range}
-        onValueChange={setRange}
+        onValueChange={(v) => onChange(v as [number, number])}
         className="mb-4"
       />
 

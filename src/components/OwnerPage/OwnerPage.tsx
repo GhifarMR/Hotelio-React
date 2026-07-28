@@ -1,82 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Building2,
   Plus,
   MapPin,
   BedDouble,
   Settings2,
-  TrendingUp,
+  Loader2,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import Navbar from "../Navbar";
+import api from "@/lib/axios";
 
-// ─── Mock Data (ganti dengan props/fetch dari backend) ────────────────────────
+// ─── Types (sesuai response backend) ───────────────────────────────────────────
 
 interface RoomSummary {
+  id: number;
   name: string;
-  price: number;
-  soldOut: boolean;
+  price_per_night: string;
+  available_rooms: number;
+  is_active: boolean;
 }
 
 interface Hotel {
-  id: string;
+  id: number;
   name: string;
-  location: string;
+  city: string;
+  province: string;
   stars: number;
-  rating: number;
-  reviewCount: number;
-  facilities: string[];
+  status: "pending" | "approved" | "rejected";
+  rating_avg: number;
+  rejection_reason: string | null;
   rooms: RoomSummary[];
-  imageUrl: string;
-  isActive: boolean;
-  totalBookings: number;
-  monthlyRevenue: number;
+  primary_image?: { image_url: string } | null;
 }
-
-const MOCK_HOTELS: Hotel[] = [
-  {
-    id: "1",
-    name: "Great Ghifar Hotel",
-    location: "Manhattan, NYC",
-    stars: 5,
-    rating: 4.8,
-    reviewCount: 690,
-    facilities: ["WiFi", "Pool", "Restaurant", "Parking"],
-    rooms: [
-      { name: "Superior King", price: 1300000, soldOut: false },
-      { name: "Deluxe Family", price: 1800000, soldOut: true },
-      { name: "Executive Suite", price: 2500000, soldOut: false },
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
-    isActive: true,
-    totalBookings: 142,
-    monthlyRevenue: 48500000,
-  },
-  {
-    id: "2",
-    name: "Hampton Inn New York-JFK",
-    location: "JFK Airport, NY",
-    stars: 3,
-    rating: 1.9,
-    reviewCount: 690,
-    facilities: ["WiFi", "Pool", "Restaurant"],
-    rooms: [
-      { name: "Standard Room", price: 611000, soldOut: false },
-      { name: "Double Room", price: 877000, soldOut: false },
-    ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80",
-    isActive: true,
-    totalBookings: 87,
-    monthlyRevenue: 21300000,
-  },
-];
 
 // ─── Helper ───────────────────────────────────────────────────────────────────
 
-function formatRp(n: number) {
-  return "Rp " + n.toLocaleString("id-ID");
+const STATUS_STYLE: Record<string, string> = {
+  approved: "bg-green-100 text-green-700",
+  pending: "bg-amber-100 text-amber-700",
+  rejected: "bg-red-100 text-red-700",
+};
+
+function resolveImageUrl(path: string) {
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path;
+  }
+  return `http://127.0.0.1:8000/storage/${path}`;
 }
 
 function StarRow({ count }: { count: number }) {
@@ -90,32 +60,30 @@ function StarRow({ count }: { count: number }) {
 
 // ─── Hotel Card ───────────────────────────────────────────────────────────────
 
-function HotelCard({
-  hotel,
-}: {
-  hotel: Hotel;
-}) {
-  const [_menuOpen, _setMenuOpen] = useState(false);
-  const soldOutCount = hotel.rooms.filter((r) => r.soldOut).length;
+function HotelCard({ hotel }: { hotel: Hotel }) {
+  const soldOutCount = hotel.rooms.filter((r) => r.available_rooms <= 0).length;
+  const activeCount = hotel.rooms.filter((r) => r.is_active).length;
 
   return (
     <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
       {/* Image */}
-      <div className="relative h-44 overflow-hidden">
-        <img
-          src={hotel.imageUrl}
-          alt={hotel.name}
-          className="w-full h-full object-cover"
-        />
+      <div className="relative h-44 overflow-hidden bg-slate-100">
+        {hotel.primary_image ? (
+          <img
+            src={resolveImageUrl(hotel.primary_image.image_url)}
+            alt={hotel.name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-slate-300">
+            <Building2 size={32} />
+          </div>
+        )}
         <div className="absolute top-3 left-3 flex gap-2">
           <span
-            className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-              hotel.isActive
-                ? "bg-green-100 text-green-700"
-                : "bg-slate-100 text-slate-500"
-            }`}
+            className={`text-xs font-medium px-2.5 py-1 rounded-full ${STATUS_STYLE[hotel.status]}`}
           >
-            {hotel.isActive ? "Active" : "Inactive"}
+            {hotel.status.charAt(0).toUpperCase() + hotel.status.slice(1)}
           </span>
           {soldOutCount > 0 && (
             <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-red-100 text-red-700">
@@ -123,7 +91,6 @@ function HotelCard({
             </span>
           )}
         </div>
-        
       </div>
 
       {/* Content */}
@@ -133,30 +100,25 @@ function HotelCard({
             {hotel.name}
           </h3>
           <div className="flex items-center gap-1 text-sm font-semibold text-slate-700 shrink-0 ml-2">
-            ⭐ {hotel.rating}
+            Rating: {hotel.rating_avg?.toFixed(1) ?? "0.0"}
           </div>
         </div>
 
         <div className="flex items-center gap-1 text-xs text-slate-400 mb-2">
           <MapPin size={11} />
-          {hotel.location}
+          {hotel.city}, {hotel.province}
         </div>
 
         <StarRow count={hotel.stars} />
 
-        <div className="flex flex-wrap gap-1.5 mt-2 mb-3">
-          {hotel.facilities.map((f) => (
-            <span
-              key={f}
-              className="text-xs bg-slate-50 border border-slate-100 text-slate-500 px-2 py-0.5 rounded-md"
-            >
-              {f}
-            </span>
-          ))}
-        </div>
+        {hotel.status === "rejected" && hotel.rejection_reason && (
+          <p className="text-xs text-red-500 mt-2">
+            Rejection reason: {hotel.rejection_reason}
+          </p>
+        )}
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100">
+        <div className="grid grid-cols-3 gap-2 pt-3 mt-3 border-t border-slate-100">
           <div className="text-center">
             <p className="text-xs text-slate-400">Rooms</p>
             <p className="font-semibold text-slate-700 text-sm">
@@ -166,7 +128,7 @@ function HotelCard({
           <div className="text-center border-x border-slate-100">
             <p className="text-xs text-slate-400">Active</p>
             <p className="font-semibold text-slate-700 text-sm">
-              {2}
+              {activeCount}
             </p>
           </div>
           <div className="text-center">
@@ -178,14 +140,13 @@ function HotelCard({
         </div>
 
         {/* Action */}
-        <Link to={"/hotel-config"}>
-        <button
-          // onClick={() => onConfigure(hotel.id)}
-          className="w-full mt-3 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-colors flex items-center justify-center gap-2"
+        <Link
+          to="/owner/hotels/$hotelId"
+          params={{ hotelId: String(hotel.id) }}
         >
-          <Settings2 size={15} /> Configure Hotel
-        </button>
-        
+          <button className="w-full mt-3 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-colors flex items-center justify-center gap-2">
+            <Settings2 size={15} /> Configure Hotel
+          </button>
         </Link>
       </div>
     </div>
@@ -195,14 +156,18 @@ function HotelCard({
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 const OwnerPage = () => {
-  const totalRevenue = MOCK_HOTELS.reduce(
-    (sum, h) => sum + h.monthlyRevenue,
-    0,
-  );
-  const totalBookings = MOCK_HOTELS.reduce(
-    (sum, h) => sum + h.totalBookings,
-    0,
-  );
+  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .get("/owner/hotels")
+      .then((res) => setHotels(res.data.data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const totalRooms = hotels.reduce((sum, h) => sum + h.rooms.length, 0);
+  const pendingCount = hotels.filter((h) => h.status === "pending").length;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -220,7 +185,7 @@ const OwnerPage = () => {
             </p>
           </div>
           <Link
-            to="/add-hotel"
+            to="/owner/add-hotel"
             className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-700 transition-colors"
           >
             <Plus size={16} /> Add Hotel
@@ -228,27 +193,22 @@ const OwnerPage = () => {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-2 gap-4 mb-8">
           {[
             {
               label: "Total Properties",
-              value: MOCK_HOTELS.length,
+              value: hotels.length,
               icon: <Building2 size={18} className="text-indigo-500" />,
             },
             {
-              label: "Total Bookings",
-              value: totalBookings,
+              label: "Total Rooms",
+              value: totalRooms,
               icon: <BedDouble size={18} className="text-emerald-500" />,
-            },
-            {
-              label: "Monthly Revenue",
-              value: formatRp(totalRevenue),
-              icon: <TrendingUp size={18} className="text-amber-500" />,
             },
           ].map((s) => (
             <div
               key={s.label}
-              className="bg-white border  rounded-2xl p-4 flex items-center gap-4"
+              className="bg-white border rounded-2xl p-4 flex items-center gap-4"
             >
               <div className="p-2.5 rounded-xl">{s.icon}</div>
               <div>
@@ -259,12 +219,28 @@ const OwnerPage = () => {
           ))}
         </div>
 
+        {pendingCount > 0 && (
+          <p className="text-xs text-amber-600 mb-4">
+            {pendingCount} {pendingCount === 1 ? "hotel is" : "hotels are"} waiting for admin approval.
+          </p>
+        )}
+
         {/* Hotel Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {MOCK_HOTELS.map((h) => (
-            <HotelCard key={h.id} hotel={h} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center gap-2 text-sm text-slate-400 py-10 justify-center">
+            <Loader2 className="animate-spin" size={16} /> Loading...
+          </div>
+        ) : hotels.length === 0 ? (
+          <p className="text-sm text-slate-400">
+            No hotels yet. Click "Add Hotel" to add your first property.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {hotels.map((h) => (
+              <HotelCard key={h.id} hotel={h} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

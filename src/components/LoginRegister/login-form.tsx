@@ -25,27 +25,27 @@ export function LoginForm({
     e.preventDefault();
     try {
       const res = await axios.post("http://127.0.0.1:8000/api/login", {
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
-      console.log(res);
-
       const { token, user } = res.data;
+
+      if (!token || !user) {
+        alert(res.data.message ?? "Login failed");
+        return;
+      }
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", user.role);
       localStorage.setItem("name", user.name);
 
-      if (user.role === "admin") {
-        navigate({ to: "/admin" });
-      } else if (user.role === "owner") {
-        navigate({ to: "/owner" });
-      } else {
-        navigate({ to: "/explore" });
-      }
-    } catch (err) {
+      if (user.role === "admin") navigate({ to: "/admin" });
+      else if (user.role === "owner") navigate({ to: "/owner" });
+      else navigate({ to: "/explore" });
+    } catch (err: any) {
       console.log(err);
+      alert(err.response?.data?.message ?? "An error occured");
     }
   };
 

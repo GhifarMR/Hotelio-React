@@ -1,35 +1,59 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 
 import SearchButtonBox from "./SearchButtonBox";
 import GuestSelector from "./GuestSelectorBox";
 import DateBox from "./DateBox";
 
-const POPULAR_CITIES = [
-  "Bali, Indonesia",
-  "Jakarta, Indonesia",
-  "Yogyakarta, Indonesia",
-  "Bandung, Indonesia",
-  "Surabaya, Indonesia",
-  "New York, USA",
-  "Tokyo, Japan",
-  "Paris, France",
+const SUGGESTED_CITIES = [
+  "Bali",
+  "Jakarta",
+  "Yogyakarta",
+  "Bandung",
+  "Surabaya",
+  "Semarang",
+  "Medan",
 ];
 
 const SearchBox = () => {
+  const navigate = useNavigate();
+
   const [location, setLocation] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState(1);
+  const [rooms, setRooms] = useState(1);
 
+  // Substring match, case-insensitive — typing "yogya" or "yogyakarta"
+  // both still match "Yogyakarta".
   const filtered =
-    location.length > 0
-      ? POPULAR_CITIES.filter((c) =>
-          c.toLowerCase().includes(location.toLowerCase()),
+    location.trim().length > 0
+      ? SUGGESTED_CITIES.filter((c) =>
+          c.toLowerCase().includes(location.trim().toLowerCase())
         )
-      : POPULAR_CITIES;
+      : SUGGESTED_CITIES;
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate({
+      to: "/explore",
+      search: {
+        location: location.trim() || undefined,
+        checkIn: checkIn || undefined,
+        checkOut: checkOut || undefined,
+        guests,
+        rooms,
+      },
+    });
+  };
 
   return (
-    <form className="bg-white rounded-2xl p-4 flex flex-col md:flex-row gap-3 w-full mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-2xl p-4 flex flex-col md:flex-row gap-3 w-full mx-auto"
+    >
       {/* Location */}
       <div className="flex flex-col flex-1 relative">
         <label className="text-xs text-gray-500 mb-1 font-medium">
@@ -55,6 +79,7 @@ const SearchBox = () => {
             {filtered.map((city) => (
               <button
                 key={city}
+                type="button"
                 className="w-full text-left px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 flex items-center gap-2"
                 onMouseDown={() => {
                   setLocation(city);
@@ -71,12 +96,26 @@ const SearchBox = () => {
 
       {/* Date */}
       <div className="flex flex-col flex-1">
-        <DateBox />
+        <DateBox
+          checkIn={checkIn}
+          checkOut={checkOut}
+          onChange={(from: string, to: string) => {
+            setCheckIn(from);
+            setCheckOut(to);
+          }}
+        />
       </div>
 
       {/* Guest & Room */}
       <div className="flex flex-col flex-1">
-        <GuestSelector />
+        <GuestSelector
+          guests={guests}
+          rooms={rooms}
+          onChange={(g: number, r: number) => {
+            setGuests(g);
+            setRooms(r);
+          }}
+        />
       </div>
 
       {/* Search Button */}

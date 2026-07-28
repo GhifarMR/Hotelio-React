@@ -1,31 +1,29 @@
-import { useState } from "react";
 import ResetBtn from "./ResetBtn";
 import FilterTitle from "./FilterTitle";
 import { Checkbox } from "@/components/ui/checkbox";
 
-const FilterStar = () => {
-  const [selected, setSelected] = useState<string[]>([]);
+interface Props {
+  selected: number[];
+  onChange: (selected: number[]) => void;
+  onReset: () => void;
+}
 
-  const toggle = (val: string) => {
-    setSelected((prev) =>
-      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
-    );
+const FilterStar = ({ selected, onChange, onReset }: Props) => {
+  const toggle = (val: number) => {
+    onChange(selected.includes(val) ? selected.filter((v) => v !== val) : [...selected, val]);
   };
 
   return (
     <div className="bg-white rounded-xl p-6">
       <div className="flex justify-between items-center mb-4">
-        <FilterTitle title="Rating" />
-        <ResetBtn />
+        <FilterTitle title="Hotel Stars" />
+        <ResetBtn onClick={onReset} />
       </div>
       <div className="space-y-3">
-        {["★★★★★", "★★★★", "★★★", "★★", "★"].map((item) => (
-          <label key={item} className="flex items-center gap-3 cursor-pointer">
-            <Checkbox
-              checked={selected.includes(item)}
-              onCheckedChange={() => toggle(item)}
-            />
-            <span className="text-yellow-400">{item}</span>
+        {[5, 4, 3, 2, 1].map((n) => (
+          <label key={n} className="flex items-center gap-3 cursor-pointer">
+            <Checkbox checked={selected.includes(n)} onCheckedChange={() => toggle(n)} />
+            <span className="text-yellow-400">{"★".repeat(n)}</span>
           </label>
         ))}
       </div>

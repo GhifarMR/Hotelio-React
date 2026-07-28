@@ -13,19 +13,21 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as OwnerDashboardRouteImport } from './routes/owner-dashboard'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as HotelConfigRouteImport } from './routes/hotel-config'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BeAPartnerRouteImport } from './routes/be-a-partner'
 import { Route as AdminDashboardEditRouteImport } from './routes/admin-dashboard-edit'
 import { Route as AdminDashboardRouteImport } from './routes/admin-dashboard'
-import { Route as AddHotelRouteImport } from './routes/add-hotel'
 import { Route as AboutUsRouteImport } from './routes/about-us'
+import { Route as OwnerRouteRouteImport } from './routes/owner/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnerIndexRouteImport } from './routes/owner/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as OwnerBookingsRouteImport } from './routes/owner/bookings'
+import { Route as OwnerAddHotelRouteImport } from './routes/owner/add-hotel'
 import { Route as HotelsIdRouteImport } from './routes/hotels/$id'
+import { Route as OwnerHotelsHotelIdRouteImport } from './routes/owner/hotels.$hotelId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -45,11 +47,6 @@ const OrderRoute = OrderRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HotelConfigRoute = HotelConfigRouteImport.update({
-  id: '/hotel-config',
-  path: '/hotel-config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelpRoute = HelpRouteImport.update({
@@ -82,14 +79,14 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/admin-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AddHotelRoute = AddHotelRouteImport.update({
-  id: '/add-hotel',
-  path: '/add-hotel',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AboutUsRoute = AboutUsRouteImport.update({
   id: '/about-us',
   path: '/about-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerRouteRoute = OwnerRouteRouteImport.update({
+  id: '/owner',
+  path: '/owner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -98,157 +95,180 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const OwnerIndexRoute = OwnerIndexRouteImport.update({
-  id: '/owner/',
-  path: '/owner/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerRouteRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerBookingsRoute = OwnerBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => OwnerRouteRoute,
+} as any)
+const OwnerAddHotelRoute = OwnerAddHotelRouteImport.update({
+  id: '/add-hotel',
+  path: '/add-hotel',
+  getParentRoute: () => OwnerRouteRoute,
+} as any)
 const HotelsIdRoute = HotelsIdRouteImport.update({
   id: '/hotels/$id',
   path: '/hotels/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerHotelsHotelIdRoute = OwnerHotelsHotelIdRouteImport.update({
+  id: '/hotels/$hotelId',
+  path: '/hotels/$hotelId',
+  getParentRoute: () => OwnerRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/owner': typeof OwnerRouteRouteWithChildren
   '/about-us': typeof AboutUsRoute
-  '/add-hotel': typeof AddHotelRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
-  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/hotels/$id': typeof HotelsIdRoute
+  '/owner/add-hotel': typeof OwnerAddHotelRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
   '/admin/': typeof AdminIndexRoute
   '/owner/': typeof OwnerIndexRoute
+  '/owner/hotels/$hotelId': typeof OwnerHotelsHotelIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-us': typeof AboutUsRoute
-  '/add-hotel': typeof AddHotelRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
-  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/hotels/$id': typeof HotelsIdRoute
+  '/owner/add-hotel': typeof OwnerAddHotelRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
   '/admin': typeof AdminIndexRoute
   '/owner': typeof OwnerIndexRoute
+  '/owner/hotels/$hotelId': typeof OwnerHotelsHotelIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/owner': typeof OwnerRouteRouteWithChildren
   '/about-us': typeof AboutUsRoute
-  '/add-hotel': typeof AddHotelRoute
   '/admin-dashboard': typeof AdminDashboardRoute
   '/admin-dashboard-edit': typeof AdminDashboardEditRoute
   '/be-a-partner': typeof BeAPartnerRoute
   '/book': typeof BookRoute
   '/explore': typeof ExploreRoute
   '/help': typeof HelpRoute
-  '/hotel-config': typeof HotelConfigRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/hotels/$id': typeof HotelsIdRoute
+  '/owner/add-hotel': typeof OwnerAddHotelRoute
+  '/owner/bookings': typeof OwnerBookingsRoute
   '/admin/': typeof AdminIndexRoute
   '/owner/': typeof OwnerIndexRoute
+  '/owner/hotels/$hotelId': typeof OwnerHotelsHotelIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/owner'
     | '/about-us'
-    | '/add-hotel'
     | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
-    | '/hotel-config'
     | '/login'
     | '/order'
     | '/owner-dashboard'
     | '/register'
     | '/hotels/$id'
+    | '/owner/add-hotel'
+    | '/owner/bookings'
     | '/admin/'
     | '/owner/'
+    | '/owner/hotels/$hotelId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about-us'
-    | '/add-hotel'
     | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
-    | '/hotel-config'
     | '/login'
     | '/order'
     | '/owner-dashboard'
     | '/register'
     | '/hotels/$id'
+    | '/owner/add-hotel'
+    | '/owner/bookings'
     | '/admin'
     | '/owner'
+    | '/owner/hotels/$hotelId'
   id:
     | '__root__'
     | '/'
+    | '/owner'
     | '/about-us'
-    | '/add-hotel'
     | '/admin-dashboard'
     | '/admin-dashboard-edit'
     | '/be-a-partner'
     | '/book'
     | '/explore'
     | '/help'
-    | '/hotel-config'
     | '/login'
     | '/order'
     | '/owner-dashboard'
     | '/register'
     | '/hotels/$id'
+    | '/owner/add-hotel'
+    | '/owner/bookings'
     | '/admin/'
     | '/owner/'
+    | '/owner/hotels/$hotelId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OwnerRouteRoute: typeof OwnerRouteRouteWithChildren
   AboutUsRoute: typeof AboutUsRoute
-  AddHotelRoute: typeof AddHotelRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDashboardEditRoute: typeof AdminDashboardEditRoute
   BeAPartnerRoute: typeof BeAPartnerRoute
   BookRoute: typeof BookRoute
   ExploreRoute: typeof ExploreRoute
   HelpRoute: typeof HelpRoute
-  HotelConfigRoute: typeof HotelConfigRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
   OwnerDashboardRoute: typeof OwnerDashboardRoute
   RegisterRoute: typeof RegisterRoute
   HotelsIdRoute: typeof HotelsIdRoute
   AdminIndexRoute: typeof AdminIndexRoute
-  OwnerIndexRoute: typeof OwnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -279,13 +299,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hotel-config': {
-      id: '/hotel-config'
-      path: '/hotel-config'
-      fullPath: '/hotel-config'
-      preLoaderRoute: typeof HotelConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/help': {
@@ -330,18 +343,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/add-hotel': {
-      id: '/add-hotel'
-      path: '/add-hotel'
-      fullPath: '/add-hotel'
-      preLoaderRoute: typeof AddHotelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/about-us': {
       id: '/about-us'
       path: '/about-us'
       fullPath: '/about-us'
       preLoaderRoute: typeof AboutUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/owner': {
+      id: '/owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof OwnerRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -353,10 +366,10 @@ declare module '@tanstack/react-router' {
     }
     '/owner/': {
       id: '/owner/'
-      path: '/owner'
+      path: '/'
       fullPath: '/owner/'
       preLoaderRoute: typeof OwnerIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof OwnerRouteRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -365,6 +378,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/bookings': {
+      id: '/owner/bookings'
+      path: '/bookings'
+      fullPath: '/owner/bookings'
+      preLoaderRoute: typeof OwnerBookingsRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
+    '/owner/add-hotel': {
+      id: '/owner/add-hotel'
+      path: '/add-hotel'
+      fullPath: '/owner/add-hotel'
+      preLoaderRoute: typeof OwnerAddHotelRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
     '/hotels/$id': {
       id: '/hotels/$id'
       path: '/hotels/$id'
@@ -372,27 +399,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HotelsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/hotels/$hotelId': {
+      id: '/owner/hotels/$hotelId'
+      path: '/hotels/$hotelId'
+      fullPath: '/owner/hotels/$hotelId'
+      preLoaderRoute: typeof OwnerHotelsHotelIdRouteImport
+      parentRoute: typeof OwnerRouteRoute
+    }
   }
 }
 
+interface OwnerRouteRouteChildren {
+  OwnerAddHotelRoute: typeof OwnerAddHotelRoute
+  OwnerBookingsRoute: typeof OwnerBookingsRoute
+  OwnerIndexRoute: typeof OwnerIndexRoute
+  OwnerHotelsHotelIdRoute: typeof OwnerHotelsHotelIdRoute
+}
+
+const OwnerRouteRouteChildren: OwnerRouteRouteChildren = {
+  OwnerAddHotelRoute: OwnerAddHotelRoute,
+  OwnerBookingsRoute: OwnerBookingsRoute,
+  OwnerIndexRoute: OwnerIndexRoute,
+  OwnerHotelsHotelIdRoute: OwnerHotelsHotelIdRoute,
+}
+
+const OwnerRouteRouteWithChildren = OwnerRouteRoute._addFileChildren(
+  OwnerRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OwnerRouteRoute: OwnerRouteRouteWithChildren,
   AboutUsRoute: AboutUsRoute,
-  AddHotelRoute: AddHotelRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDashboardEditRoute: AdminDashboardEditRoute,
   BeAPartnerRoute: BeAPartnerRoute,
   BookRoute: BookRoute,
   ExploreRoute: ExploreRoute,
   HelpRoute: HelpRoute,
-  HotelConfigRoute: HotelConfigRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
   OwnerDashboardRoute: OwnerDashboardRoute,
   RegisterRoute: RegisterRoute,
   HotelsIdRoute: HotelsIdRoute,
   AdminIndexRoute: AdminIndexRoute,
-  OwnerIndexRoute: OwnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

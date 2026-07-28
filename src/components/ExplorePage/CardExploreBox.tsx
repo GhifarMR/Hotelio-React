@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { formatRatingLabel, getRatingStars } from "@/lib/rating";
+import { formatRatingLabel } from "@/lib/rating";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 
@@ -8,14 +8,13 @@ interface CardExploreBoxProps {
   id: string;
   location: string;
   img: string;
-  ratingNumbers: number;
+  stars: number;
+  guestRating: number;
   discount: number;
   reviews: number;
-  facilities1: string;
-  facilities2: string;
-  facilities3: string;
-  price: number;
-  priceBefore: number;
+  facilities: string[];
+  price: number | null;
+  priceBefore: number | null;
 }
 
 const CardExploreBox = ({
@@ -23,12 +22,11 @@ const CardExploreBox = ({
   id,
   location,
   img,
-  ratingNumbers,
+  stars,
+  guestRating,
   discount,
   reviews,
-  facilities1,
-  facilities2,
-  facilities3,
+  facilities,
   price,
   priceBefore,
 }: CardExploreBoxProps) => {
@@ -55,41 +53,49 @@ const CardExploreBox = ({
             <p className="text-sm md:text-base mb-4">{location}</p>
 
             <div className="flex flex-wrap items-center gap-3">
-              <span className="bg-green-600 text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded">
-                {discount}% OFF
+              {discount > 0 && (
+                <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">
+                  {discount}% OFF
+                </span>
+              )}
+
+              <span className="text-2xl font-bold">
+                {guestRating.toFixed(1)}
               </span>
-              <span className="text-xl md:text-2xl font-bold text-gray-900">
-                {ratingNumbers.toFixed(1)}
-              </span>
-              <span className="text-gray-500 text-xs md:text-sm">
-                {reviews} Reviews
-              </span>
+
+              <span className="text-gray-500">({reviews} reviews)</span>
             </div>
 
-            <div className="mt-2 flex items-center gap-2">
-              <span className="text-lg text-yellow-400">
-                {getRatingStars(ratingNumbers)}
-              </span>
-              <span className="text-sm">
-                {formatRatingLabel(ratingNumbers)}
-              </span>
+            <div className="flex items-center gap-2 mt-3">
+              <div className="text-yellow-400 text-lg">{"★".repeat(stars)}</div>
+
+              <span className="text-sm text-gray-500">Hotel {stars} Star</span>
             </div>
 
-            <div className="flex gap-4 mt-6 text-xs md:text-sm overflow-x-auto pb-2 md:pb-0">
-              <Label>{facilities1}</Label>
-              <Label>{facilities2}</Label>
-              <Label>{facilities3}</Label>
-            </div>
+            {facilities.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-6">
+                {facilities.slice(0, 3).map((facility) => (
+                  <Label
+                    key={facility}
+                    className="rounded-full border bg-slate-100 px-3 py-1 text-xs"
+                  >
+                    {facility}
+                  </Label>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-row md:flex-col justify-between items-end md:items-end md:justify-start border-t md:border-t-0 pt-4 md:pt-0 mt-2 md:mt-0">
             <div className="text-left md:text-right">
               <div className="text-lg md:text-2xl font-bold hover:bg-green-900 hover:text-white">
-                Rp {price.toLocaleString("id-ID")}
+                Rp {(price ?? 0).toLocaleString("id-ID")}
               </div>
-              <div className="text-xs md:text-sm line-through">
-                Rp {priceBefore.toLocaleString("id-ID")}
-              </div>
+              {priceBefore != null && priceBefore > 0 && (
+                <div className="text-xs md:text-sm line-through">
+                  Rp {priceBefore.toLocaleString("id-ID")}
+                </div>
+              )}
             </div>
 
             <Link
