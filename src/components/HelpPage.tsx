@@ -34,7 +34,6 @@ const HelpPage: React.FC = () => {
                 required
                 placeholder="Enter your email here"
               />{" "}
-
               <label htmlFor="" className="text-xl">
                 Subject:
               </label>

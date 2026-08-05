@@ -350,7 +350,9 @@ const OrderPage = () => {
                               to="/book"
                               search={{ hotelId: hotel.id, roomId: room.id }}
                             >
-                              {room.available_rooms > 0 ? "Book Now" : "Sold Out"}
+                              {room.available_rooms > 0
+                                ? "Book Now"
+                                : "Sold Out"}
                             </Link>
                           </Button>
                         </div>

@@ -27,6 +27,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as OwnerBookingsRouteImport } from './routes/owner/bookings'
 import { Route as OwnerAddHotelRouteImport } from './routes/owner/add-hotel'
 import { Route as HotelsIdRouteImport } from './routes/hotels/$id'
+import { Route as BookingsIdRouteImport } from './routes/bookings.$id'
 import { Route as OwnerHotelsHotelIdRouteImport } from './routes/owner/hotels.$hotelId'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -119,6 +120,11 @@ const HotelsIdRoute = HotelsIdRouteImport.update({
   path: '/hotels/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingsIdRoute = BookingsIdRouteImport.update({
+  id: '/bookings/$id',
+  path: '/bookings/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OwnerHotelsHotelIdRoute = OwnerHotelsHotelIdRouteImport.update({
   id: '/hotels/$hotelId',
   path: '/hotels/$hotelId',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/bookings/$id': typeof BookingsIdRoute
   '/hotels/$id': typeof HotelsIdRoute
   '/owner/add-hotel': typeof OwnerAddHotelRoute
   '/owner/bookings': typeof OwnerBookingsRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/bookings/$id': typeof BookingsIdRoute
   '/hotels/$id': typeof HotelsIdRoute
   '/owner/add-hotel': typeof OwnerAddHotelRoute
   '/owner/bookings': typeof OwnerBookingsRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/order': typeof OrderRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
+  '/bookings/$id': typeof BookingsIdRoute
   '/hotels/$id': typeof HotelsIdRoute
   '/owner/add-hotel': typeof OwnerAddHotelRoute
   '/owner/bookings': typeof OwnerBookingsRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/bookings/$id'
     | '/hotels/$id'
     | '/owner/add-hotel'
     | '/owner/bookings'
@@ -224,6 +234,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/bookings/$id'
     | '/hotels/$id'
     | '/owner/add-hotel'
     | '/owner/bookings'
@@ -245,6 +256,7 @@ export interface FileRouteTypes {
     | '/order'
     | '/owner-dashboard'
     | '/register'
+    | '/bookings/$id'
     | '/hotels/$id'
     | '/owner/add-hotel'
     | '/owner/bookings'
@@ -267,6 +279,7 @@ export interface RootRouteChildren {
   OrderRoute: typeof OrderRoute
   OwnerDashboardRoute: typeof OwnerDashboardRoute
   RegisterRoute: typeof RegisterRoute
+  BookingsIdRoute: typeof BookingsIdRoute
   HotelsIdRoute: typeof HotelsIdRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -399,6 +412,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HotelsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bookings/$id': {
+      id: '/bookings/$id'
+      path: '/bookings/$id'
+      fullPath: '/bookings/$id'
+      preLoaderRoute: typeof BookingsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/owner/hotels/$hotelId': {
       id: '/owner/hotels/$hotelId'
       path: '/hotels/$hotelId'
@@ -441,6 +461,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrderRoute: OrderRoute,
   OwnerDashboardRoute: OwnerDashboardRoute,
   RegisterRoute: RegisterRoute,
+  BookingsIdRoute: BookingsIdRoute,
   HotelsIdRoute: HotelsIdRoute,
   AdminIndexRoute: AdminIndexRoute,
 }

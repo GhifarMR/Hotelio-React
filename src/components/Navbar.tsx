@@ -50,10 +50,16 @@ const Navbar = () => {
   };
 
   const menuItems =
-    role === "owner" ? OWNER_MENU : role === "admin" ? ADMIN_MENU : CUSTOMER_MENU;
+    role === "owner"
+      ? OWNER_MENU
+      : role === "admin"
+        ? ADMIN_MENU
+        : CUSTOMER_MENU;
 
   const primaryAction = () =>
-    navigate({ to: role === "owner" ? "/owner" : "/explore" });
+    navigate({
+      to: role === "owner" ? "/owner" : role === "admin" ? "/admin" : "/orders",
+    });
 
   return (
     <>
@@ -99,21 +105,29 @@ const Navbar = () => {
               <NavButton to="/login" className="pl-4 pr-4 pt-1.5 pb-1.5 ml-3">
                 Login
               </NavButton>
-              <NavButton to="/register" className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6">
+              <NavButton
+                to="/register"
+                className="pl-3 pr-3 pt-1.5 pb-1.5 ml-1 mr-6"
+              >
                 Register
               </NavButton>
             </>
           )}
         </div>
 
-        <button className="md:hidden flex items-center p-2 z-50" onClick={() => setIsOpen(!isOpen)}>
+        <button
+          className="md:hidden flex items-center p-2 z-50"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {isOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
       <div
         className={`fixed inset-0 bg-black/40 z-40 md:hidden transition-opacity duration-300 ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
       />
@@ -149,7 +163,8 @@ const Navbar = () => {
                 }}
                 className="w-full text-left py-2 text-sm text-gray-700 hover:text-black flex items-center gap-2"
               >
-                <ClipboardList size={16} /> {role === "owner" ? "My Hotels" : "My Orders"}
+                <ClipboardList size={16} />{" "}
+                {role === "owner" ? "My Hotels" : "My Orders"}
               </button>
               <button
                 onClick={handleLogout}
@@ -160,8 +175,12 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <NavButton to="/login" className="w-full text-center py-2">Login</NavButton>
-              <NavButton to="/register" className="w-full text-center py-2">Register</NavButton>
+              <NavButton to="/login" className="w-full text-center py-2">
+                Login
+              </NavButton>
+              <NavButton to="/register" className="w-full text-center py-2">
+                Register
+              </NavButton>
             </>
           )}
         </div>
