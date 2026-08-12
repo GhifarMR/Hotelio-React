@@ -97,10 +97,23 @@ const ExplorePage = () => {
               Showing results for{" "}
               <span className="font-semibold">{location}</span>
               {checkIn && checkOut && (
-                <> · {checkIn} – {checkOut}</>
+                <>
+                  {" "}
+                  · {checkIn} – {checkOut}
+                </>
               )}
-              {guests && <> · {guests} guest{guests > 1 ? "s" : ""}</>}
-              {rooms && <> · {rooms} room{rooms > 1 ? "s" : ""}</>}
+              {guests && (
+                <>
+                  {" "}
+                  · {guests} guest{guests > 1 ? "s" : ""}
+                </>
+              )}
+              {rooms && (
+                <>
+                  {" "}
+                  · {rooms} room{rooms > 1 ? "s" : ""}
+                </>
+              )}
             </p>
           )}
 

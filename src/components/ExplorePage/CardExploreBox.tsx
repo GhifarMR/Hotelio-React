@@ -89,11 +89,11 @@ const CardExploreBox = ({
           <div className="flex flex-row md:flex-col justify-between items-end md:items-end md:justify-start border-t md:border-t-0 pt-4 md:pt-0 mt-2 md:mt-0">
             <div className="text-left md:text-right">
               <div className="text-lg md:text-2xl font-bold hover:bg-green-900 hover:text-white">
-                Rp {(price ?? 0).toLocaleString("id-ID")}
+                Rp {Number(price ?? 0).toLocaleString("id-ID")}
               </div>
               {priceBefore != null && priceBefore > 0 && (
                 <div className="text-xs md:text-sm line-through">
-                  Rp {priceBefore.toLocaleString("id-ID")}
+                  Rp {Number(priceBefore).toLocaleString("id-ID")}
                 </div>
               )}
             </div>

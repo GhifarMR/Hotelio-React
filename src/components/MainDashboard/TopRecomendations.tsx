@@ -1,34 +1,50 @@
+import { useState, useEffect } from "react";
+import api from "@/lib/axios";
 import BigCards from "../Recomendation/BigCards";
 import HeadLine from "../Recomendation/HeadLine";
 import SmallCards from "../Recomendation/SmallCards";
 
+interface HotelApiItem {
+  id: string;
+  name: string;
+  location: string;
+  img: string | null;
+  stars: number;
+  guestRating: number;
+}
+
+interface HotelCard {
+  id: string;
+  name: string;
+  location: string;
+  img: string;
+  ratingStars: string;
+  ratingNumbers: string;
+}
+
+const FALLBACK_IMG =
+  "https://images.unsplash.com/photo-1479502806991-251c94be6b15?q=80&w=1170&auto=format&fit=crop";
+
 const TopRecommendations = () => {
-  const hotels = [
-    {
-      id: 1,
-      name: "Grand Ghifar Hotel",
-      location: "Kertek, Indonesia",
-      img: "https://images.unsplash.com/photo-1479502806991-251c94be6b15?q=80&w=1170&auto=format&fit=crop",
-      ratingStars: "★★★★★",
-      ratingNumbers: "5.0 stars",
-    },
-    {
-      id: 2,
-      name: "Ghifar Ocean View Resort",
-      location: "Garung, Indonesia",
-      img: "https://plus.unsplash.com/premium_photo-1687960116497-0dc41e1808a2?w=600&auto=format&fit=crop",
-      ratingStars: "★★★★★",
-      ratingNumbers: "4.8 stars",
-    },
-    {
-      id: 3,
-      name: "Ghifar Blue Lagoon Hotel",
-      location: "Sawangan, Indonesia",
-      img: "https://images.unsplash.com/photo-1529316275402-0462fcc4abd6?w=600&auto=format&fit=crop",
-      ratingStars: "★★★★★",
-      ratingNumbers: "4.9 stars",
-    },
-  ];
+  const [hotels, setHotels] = useState<HotelCard[]>([]);
+
+  useEffect(() => {
+    api
+      .get("/hotels", { params: { sort_by: "stars", sort_order: "desc", per_page: 3 } })
+      .then((res) => {
+        const items: HotelApiItem[] = res.data?.data ?? [];
+        setHotels(
+          items.map((h) => ({
+            id: h.id,
+            name: h.name,
+            location: h.location,
+            img: h.img ?? FALLBACK_IMG,
+            ratingStars: "★".repeat(h.stars ?? 0),
+            ratingNumbers: `${Number(h.guestRating ?? 0).toFixed(1)} stars`,
+          }))
+        );
+      });
+  }, []);
 
   return (
     <div className="w-full px-6 md:px-16 my-16 mt-30">
@@ -43,6 +59,7 @@ const TopRecommendations = () => {
         {hotels.slice(0, 1).map((item) => (
           <BigCards
             key={item.id}
+            id={item.id}
             name={item.name}
             location={item.location}
             img={item.img}
@@ -55,6 +72,7 @@ const TopRecommendations = () => {
           {hotels.slice(1).map((item) => (
             <SmallCards
               key={item.id}
+              id={item.id}
               name={item.name}
               location={item.location}
               img={item.img}
@@ -63,7 +81,6 @@ const TopRecommendations = () => {
             />
           ))}
         </div>
-
       </div>
 
       {/* Grid for mobile */}
@@ -71,6 +88,7 @@ const TopRecommendations = () => {
         {hotels.map((item) => (
           <BigCards
             key={item.id}
+            id={item.id}
             name={item.name}
             location={item.location}
             img={item.img}

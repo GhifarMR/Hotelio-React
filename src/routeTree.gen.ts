@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as OwnerDashboardRouteImport } from './routes/owner-dashboard'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelpRouteImport } from './routes/help'
@@ -38,6 +39,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
   id: '/owner-dashboard',
   path: '/owner-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderRoute = OrderRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/orders': typeof OrdersRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/bookings/$id': typeof BookingsIdRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/orders': typeof OrdersRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/bookings/$id': typeof BookingsIdRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/order': typeof OrderRoute
+  '/orders': typeof OrdersRoute
   '/owner-dashboard': typeof OwnerDashboardRoute
   '/register': typeof RegisterRoute
   '/bookings/$id': typeof BookingsIdRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/order'
+    | '/orders'
     | '/owner-dashboard'
     | '/register'
     | '/bookings/$id'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/order'
+    | '/orders'
     | '/owner-dashboard'
     | '/register'
     | '/bookings/$id'
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/order'
+    | '/orders'
     | '/owner-dashboard'
     | '/register'
     | '/bookings/$id'
@@ -277,6 +289,7 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   LoginRoute: typeof LoginRoute
   OrderRoute: typeof OrderRoute
+  OrdersRoute: typeof OrdersRoute
   OwnerDashboardRoute: typeof OwnerDashboardRoute
   RegisterRoute: typeof RegisterRoute
   BookingsIdRoute: typeof BookingsIdRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/owner-dashboard'
       fullPath: '/owner-dashboard'
       preLoaderRoute: typeof OwnerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order': {
@@ -459,6 +479,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   LoginRoute: LoginRoute,
   OrderRoute: OrderRoute,
+  OrdersRoute: OrdersRoute,
   OwnerDashboardRoute: OwnerDashboardRoute,
   RegisterRoute: RegisterRoute,
   BookingsIdRoute: BookingsIdRoute,

@@ -1,6 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { Calendar as CalendarIcon, Receipt, ShieldCheck, User } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  Receipt,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 import { format } from "date-fns";
 import Navbar from "./Navbar";
 import { Card, CardContent, CardHeader } from "./ui/card";
@@ -10,7 +15,11 @@ import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { Field } from "@/components/ui/field";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import axios from "@/lib/axios";
 import type { DateRange } from "react-day-picker";
 
@@ -114,7 +123,9 @@ const BookPage: React.FC = () => {
       try {
         const res = await axios.get(`/hotels/${hotelId}`);
         const data: HotelDetail = res.data?.data ?? res.data;
-        const matchedRoom = data.rooms?.find((r) => String(r.id) === String(roomId));
+        const matchedRoom = data.rooms?.find(
+          (r) => String(r.id) === String(roomId),
+        );
 
         if (!matchedRoom) {
           if (!cancelled) setFetchError("Room not found.");
@@ -133,21 +144,28 @@ const BookPage: React.FC = () => {
     };
 
     fetchDetail();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [hotelId, roomId]);
 
   // Prefill data kontak dari akun, tapi tetap editable
   useEffect(() => {
     let cancelled = false;
-    axios.get<UserProfile>("/user").then(({ data }) => {
-      if (cancelled) return;
-      setCustomerName(data.name ?? "");
-      setCustomerEmail(data.email ?? "");
-      setCustomerPhone(data.phone ?? "");
-    }).catch(() => {
-      // biarkan kosong kalau gagal, user masih bisa isi manual
-    });
-    return () => { cancelled = true; };
+    axios
+      .get<UserProfile>("/user")
+      .then(({ data }) => {
+        if (cancelled) return;
+        setCustomerName(data.name ?? "");
+        setCustomerEmail(data.email ?? "");
+        setCustomerPhone(data.phone ?? "");
+      })
+      .catch(() => {
+        // biarkan kosong kalau gagal, user masih bisa isi manual
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Load Midtrans Snap script sekali
@@ -165,8 +183,9 @@ const BookPage: React.FC = () => {
       ? Math.max(
           1,
           Math.round(
-            (dateRange.to.getTime() - dateRange.from.getTime()) / (1000 * 60 * 60 * 24)
-          )
+            (dateRange.to.getTime() - dateRange.from.getTime()) /
+              (1000 * 60 * 60 * 24),
+          ),
         )
       : 0;
 
@@ -175,14 +194,26 @@ const BookPage: React.FC = () => {
   const tax = Math.round(roomTotal * 0.11);
   const grandTotal = roomTotal + tax;
 
+  const termsRef = useRef<HTMLDivElement>(null);
+
   const handleBooking = async () => {
-    if (!room) { setError("Room data is not loaded yet."); return; }
-    if (!checkIn || !checkOut) { setError("Please choose check-in and check-out dates."); return; }
+    if (!room) {
+      setError("Room data is not loaded yet.");
+      return;
+    }
+    if (!checkIn || !checkOut) {
+      setError("Please choose check-in and check-out dates.");
+      return;
+    }
     if (!customerName.trim() || !customerEmail.trim()) {
       setError("Please fill in your name and email.");
       return;
     }
-    if (!agreed) { setError("You need to accept the terms and conditions first."); return; }
+    if (!agreed) {
+      setError("You need to accept the terms and conditions first.");
+      termsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -198,7 +229,9 @@ const BookPage: React.FC = () => {
       });
 
       if (!window.snap) {
-        setError("Payment system is still loading, please wait a moment and try again.");
+        setError(
+          "Payment system is still loading, please wait a moment and try again.",
+        );
         setLoading(false);
         return;
       }
@@ -206,11 +239,19 @@ const BookPage: React.FC = () => {
       window.snap.pay(data.snap_token, {
         onSuccess: () => {
           setLoading(false);
-          navigate({ to: "/bookings/$id", params: { id: String(data.booking.id) }, search: { status: "processing" } });
+          navigate({
+            to: "/bookings/$id",
+            params: { id: String(data.booking.id) },
+            search: { status: "processing" },
+          });
         },
         onPending: () => {
           setLoading(false);
-          navigate({ to: "/bookings/$id", params: { id: String(data.booking.id) }, search: { status: "pending" } });
+          navigate({
+            to: "/bookings/$id",
+            params: { id: String(data.booking.id) },
+            search: { status: "pending" },
+          });
         },
         onError: () => {
           setLoading(false);
@@ -223,29 +264,43 @@ const BookPage: React.FC = () => {
       });
     } catch (err: any) {
       setLoading(false);
-      const message = err?.response?.data?.message ?? "Failed to create the booking, please try again.";
+      const message =
+        err?.response?.data?.message ??
+        "Failed to create the booking, please try again.";
       setError(message);
     }
   };
 
   if (fetchingRoom) {
-    return <div className="min-h-screen flex items-center justify-center text-slate-400">Loading booking details...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-400">
+        Loading booking details...
+      </div>
+    );
   }
 
   if (fetchError || !room || !hotel) {
-    return <div className="min-h-screen flex items-center justify-center text-slate-400">{fetchError ?? "Unable to load this booking."}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-400">
+        {fetchError ?? "Unable to load this booking."}
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen font-sans">
-      <div className="sticky top-0 z-40"><Navbar /></div>
+      <div className="sticky top-0 z-40">
+        <Navbar />
+      </div>
       <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 my-10 px-4">
         <div className="lg:col-span-2 space-y-6">
           {/* Booking Contact — sekarang editable */}
           <Card>
             <CardHeader>
               <User size={24} />
-              <h2 className="text-xl font-bold text-slate-800">Booking Contact</h2>
+              <h2 className="text-xl font-bold text-slate-800">
+                Booking Contact
+              </h2>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -272,7 +327,8 @@ const BookPage: React.FC = () => {
                 />
               </div>
               <p className="text-xs text-slate-500 mt-2">
-                We prefilled this from your account — feel free to edit it for this booking.
+                We prefilled this from your account — feel free to edit it for
+                this booking.
               </p>
             </CardContent>
           </Card>
@@ -314,7 +370,8 @@ const BookPage: React.FC = () => {
               <Receipt size={24} />
               <h2 className="text-xl font-bold text-slate-800">Payment</h2>
               <p className="text-sm text-slate-500">
-                You'll be redirected to Midtrans' secure payment page after clicking the button below.
+                You'll be redirected to Midtrans' secure payment page after
+                clicking the button below.
               </p>
             </CardHeader>
           </Card>
@@ -332,16 +389,18 @@ const BookPage: React.FC = () => {
                 <li>Valid ID is required upon arrival.</li>
               </ul>
 
-              <Field className="mt-4" orientation="horizontal">
-                <Checkbox
-                  id="terms-checkbox"
-                  checked={agreed}
-                  onCheckedChange={(v) => setAgreed(Boolean(v))}
-                />
-                <Label htmlFor="terms-checkbox" className="text-red-800">
-                  Accept terms and conditions
-                </Label>
-              </Field>
+              <div ref={termsRef}>
+                <Field className="mt-4" orientation="horizontal">
+                  <Checkbox
+                    id="terms-checkbox"
+                    checked={agreed}
+                    onCheckedChange={(v) => setAgreed(Boolean(v))}
+                  />
+                  <Label htmlFor="terms-checkbox" className="text-red-800">
+                    Accept terms and conditions
+                  </Label>
+                </Field>
+              </div>
 
               {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
             </CardContent>
@@ -359,7 +418,9 @@ const BookPage: React.FC = () => {
               <p className="font-bold">{hotel.name}</p>
               <p className="text-sm text-slate-500">{room.name}</p>
               <p className="text-sm">
-                {nights > 0 ? `${nights} Nights (${checkIn} - ${checkOut})` : "Choose your dates"}
+                {nights > 0
+                  ? `${nights} Nights (${checkIn} - ${checkOut})`
+                  : "Choose your dates"}
               </p>
             </div>
 
@@ -371,11 +432,15 @@ const BookPage: React.FC = () => {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span>Room x {nights} Nights</span>
-                <span className="font-medium">Rp {roomTotal.toLocaleString("id-ID")}</span>
+                <span className="font-medium">
+                  Rp {roomTotal.toLocaleString("id-ID")}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Taxes & Fees</span>
-                <span className="font-medium">Rp {tax.toLocaleString("id-ID")}</span>
+                <span className="font-medium">
+                  Rp {tax.toLocaleString("id-ID")}
+                </span>
               </div>
               <div className="pt-3 border-t border-slate-100 flex justify-between text-base font-bold">
                 <span>Total Price</span>
@@ -383,7 +448,11 @@ const BookPage: React.FC = () => {
               </div>
             </div>
 
-            <Button className="w-full mt-8 cursor-pointer" onClick={handleBooking} disabled={loading}>
+            <Button
+              className="w-full mt-8 cursor-pointer"
+              onClick={handleBooking}
+              disabled={loading}
+            >
               {loading ? "Processing..." : "Complete Booking"}
             </Button>
           </aside>

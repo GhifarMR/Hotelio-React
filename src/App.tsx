@@ -9,18 +9,9 @@ import Footer from "./components/MainDashboard/Footer";
 
 function App() {
 
-  // const [data,setData] = useState([])
-  // useEffect(() => {
-  //   async function res() {
-  //     const response = await axios.get("http://127.0.0.1:8000/api/hotels?page=2");
-  //     setData(response.data)
-  //   }
-  //   res();
-  // }, []);
-
   return (
     <>
-      <div className="sticky top-0 left-0 z-100">
+      <div className="sticky top-0 left-0 z-50">
         <Navbar />
       </div>
       
