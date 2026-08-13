@@ -15,6 +15,7 @@ interface CardExploreBoxProps {
   facilities: string[];
   price: number | null;
   priceBefore: number | null;
+  isSoldOut: boolean;
 }
 
 const CardExploreBox = ({
@@ -29,6 +30,7 @@ const CardExploreBox = ({
   facilities,
   price,
   priceBefore,
+  isSoldOut
 }: CardExploreBoxProps) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
@@ -53,18 +55,23 @@ const CardExploreBox = ({
             <p className="text-sm md:text-base mb-4">{location}</p>
 
             <div className="flex flex-wrap items-center gap-3">
-              {discount > 0 && (
-                <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  {discount}% OFF
-                </span>
-              )}
+  {isSoldOut && (
+    <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+      Sold Out
+    </span>
+  )}
+  {discount > 0 && !isSoldOut && (
+    <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded">
+      {discount}% OFF
+    </span>
+  )}
 
-              <span className="text-2xl font-bold">
-                {guestRating.toFixed(1)}
-              </span>
+  <span className="text-2xl font-bold">
+    {guestRating.toFixed(1)}
+  </span>
 
-              <span className="text-gray-500">({reviews} reviews)</span>
-            </div>
+  <span className="text-gray-500">({reviews} reviews)</span>
+</div>
 
             <div className="flex items-center gap-2 mt-3">
               <div className="text-yellow-400 text-lg">{"★".repeat(stars)}</div>

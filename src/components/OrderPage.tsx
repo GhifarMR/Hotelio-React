@@ -53,8 +53,6 @@ const facilityLabels: Record<string, string> = {
   pet_friendly: "Pet Friendly",
 };
 
-// Builds a usable <img src> from whatever the backend sends.
-// Handles absolute URLs, relative storage paths, and missing values.
 const getImageUrl = (url?: string | null) => {
   if (!url) return "https://placehold.co/800x600?text=No+Image";
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
@@ -62,7 +60,6 @@ const getImageUrl = (url?: string | null) => {
   return `${base}/storage/${url}`;
 };
 
-// Defensive extractor: some APIs return `image_url`, others `url` or `path`.
 const extractImageUrl = (img: unknown): string | null => {
   if (!img || typeof img !== "object") return null;
   const obj = img as Record<string, unknown>;
@@ -72,7 +69,7 @@ const extractImageUrl = (img: unknown): string | null => {
 
 const formatRupiah = (n: number) => `Rp. ${Number(n).toLocaleString("id")}`;
 
-// ─── TYPES (adjust to match your actual HotelResource) ────────────────────
+// ─── TYPES ──────────────────────────────────────────────────────────────
 
 type HotelImage = { id: number; image_url: string; is_primary: boolean };
 type Room = {
@@ -83,6 +80,7 @@ type Room = {
   capacity: number;
   facilities: string[];
   available_rooms: number;
+  is_active: boolean; // ← WAJIB ADA, dari HotelResource yang udah diupdate
   images: HotelImage[];
 };
 type Review = {
@@ -101,7 +99,7 @@ type HotelDetail = {
   facilities: string[];
   images: HotelImage[];
   rooms: Room[];
-  reviewsList: Review[]; // ← berubah dari `reviews`
+  reviewsList: Review[];
 };
 
 // ─── DATA FETCH ─────────────────────────────────────────────────────────
@@ -187,8 +185,6 @@ const OrderPage = () => {
     );
   }
 
-  // Combine hotel-level images with all room images as a fallback gallery,
-  // so the overview isn't stuck on "No Image" when only room photos exist.
   const hotelPhotoUrls = (hotel.images ?? [])
     .map(extractImageUrl)
     .filter((u): u is string => Boolean(u));
@@ -234,7 +230,6 @@ const OrderPage = () => {
           </div>
         </div>
 
-        {/* OVERVIEW */}
         {/* OVERVIEW */}
         <section id="section-overview" className="mb-16 scroll-mt-20">
           <h1 className="text-3xl font-bold mb-6">{hotel.name}</h1>
@@ -297,6 +292,10 @@ const OrderPage = () => {
                   ? photos.findIndex((p) => p === getImageUrl(roomImgUrl))
                   : -1;
 
+                // Room dianggap sold out kalau available_rooms habis
+                // ATAU owner nge-disable (is_active = false).
+                const soldOut = room.available_rooms <= 0 || !room.is_active;
+
                 return (
                   <Card
                     key={room.id}
@@ -313,7 +312,11 @@ const OrderPage = () => {
                       />
                       <div className="flex flex-col md:flex-row flex-1 gap-4 p-5 md:px-6">
                         <div className="flex-1 flex flex-col justify-center">
-                          <h3 className="text-lg font-semibold">{room.name}</h3>
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <h3 className="text-lg font-semibold">
+                              {room.name}
+                            </h3>
+                          </div>
                           <p className="text-sm text-muted-foreground mt-1 mb-3">
                             Max {room.capacity} guests · {room.available_rooms}{" "}
                             rooms available
@@ -334,28 +337,42 @@ const OrderPage = () => {
                         <Separator className="md:hidden" />
 
                         <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-3 md:min-w-32">
-                          <div className="text-left md:text-right">
-                            <p className="text-xl font-bold">
-                              {formatRupiah(room.price_per_night)}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              per night
-                            </p>
-                          </div>
-                          <Button
-                            className="shrink-0 cursor-pointer"
-                            disabled={room.available_rooms <= 0}
-                            asChild
-                          >
-                            <Link
-                              to="/book"
-                              search={{ hotelId: hotel.id, roomId: room.id }}
-                            >
-                              {room.available_rooms > 0
-                                ? "Book Now"
-                                : "Sold Out"}
-                            </Link>
-                          </Button>
+                          {!soldOut ? (
+                            <div className="text-left md:text-right">
+                              <p className="text-xl font-bold">
+                                {formatRupiah(room.price_per_night)}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                per night
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="text-left md:text-right">
+                              <p className="text-xl font-semibold border-2 border-red-800 py-1 px-3 text-red-800 rounded ">
+                                Sold Out
+                              </p>
+                            </div>
+                          )}
+
+                          {soldOut || (
+                            <div>
+                              <Button
+                                className="shrink-0 cursor-pointer"
+                                disabled={soldOut}
+                                asChild
+                              >
+                                <Link
+                                  to="/book"
+                                  search={{
+                                    hotelId: hotel.id,
+                                    roomId: room.id,
+                                  }}
+                                >
+                                  {soldOut ? "Sold Out" : "Book Now"}
+                                </Link>
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </CardContent>

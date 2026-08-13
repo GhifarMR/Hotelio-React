@@ -21,6 +21,7 @@ interface Hotel {
   facilities: string[];
   price: number | null;
   priceBefore: number | null;
+  isSoldOut: boolean;
 }
 
 const ExplorePage = () => {
@@ -140,6 +141,7 @@ const ExplorePage = () => {
                 facilities={hotel.facilities}
                 price={hotel.price}
                 priceBefore={hotel.priceBefore}
+                isSoldOut={hotel.isSoldOut}
               />
             ))
           )}

@@ -568,8 +568,6 @@ const AddHotel = () => {
         address: form.address,
         city: form.city,
         province: form.province,
-        latitude: 0,
-        longitude: 0,
         stars: form.stars,
         facilities: form.facilities,
       });
