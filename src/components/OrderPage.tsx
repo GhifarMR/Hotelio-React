@@ -268,7 +268,8 @@ const OrderPage = () => {
               <p className="font-semibold">
                 {hotel.address}, {hotel.city}
               </p>
-              <p className="text-sm text-muted-foreground flex items-center gap-1">
+
+              <p className="text-sm text-muted-foreground flex  items-center gap-1">
                 <Star size={13} className="fill-yellow-400 text-yellow-400" />
                 {hotel.reviewsList?.length ?? 0} Reviews
               </p>
@@ -285,7 +286,7 @@ const OrderPage = () => {
         <Separator className="mb-16" />
 
         {/* ROOMS */}
-        <section id="section-rooms" className="mb-16 scroll-mt-20">
+        <section id="section-rooms" className="mb-16 scroll-mt-20 ">
           <h2 className="text-2xl font-bold mb-6">Rooms</h2>
           <div className="space-y-4">
             {hotel.rooms?.length ? (
@@ -308,7 +309,7 @@ const OrderPage = () => {
                         onClick={() =>
                           openViewer(roomPhotoIndex >= 0 ? roomPhotoIndex : 0)
                         }
-                        className="w-full md:w-64 h-52 md:h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity shrink-0 self-stretch"
+                        className="w-full md:w-64 h-52 md:h-52 object-cover cursor-pointer hover:opacity-90 transition-opacity shrink-0"
                       />
                       <div className="flex flex-col md:flex-row flex-1 gap-4 p-5 md:px-6">
                         <div className="flex-1 flex flex-col justify-center">

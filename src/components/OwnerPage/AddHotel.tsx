@@ -535,6 +535,7 @@ const AddHotel = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    console.log("STARS: " + form.stars);
 
     if (!form.name || !form.address || !form.city || !form.province) {
       setError("Please fill in all required hotel fields.");
